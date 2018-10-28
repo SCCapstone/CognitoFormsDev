@@ -155,10 +155,7 @@ const handlers = {
           this.response.speak(STOP_MESSAGE);
           this.emit(':responseReady');
       },
- 'AwesomeIntent': function(){
-     this.response.speak("awesome");
-      this.emit(':responseReady');
- },
+ 
 
 
 
