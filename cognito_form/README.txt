@@ -11,6 +11,7 @@ Requirements:
 Node.js, npm, Alexa Skills Kit Command Line Interface (npm install -g ask-cli once node.js and npm installed.).
 Amazon develper account, and AWS amazon account
 
+Style guide: https://google.github.io/styleguide/jsguide.html
 
 
 Intents:
