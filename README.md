@@ -59,8 +59,10 @@ Tests can be run from the test tab of the Amazon developer console. In addition,
 ## Authors
 
 •	Jeffrey Cocklin - Initial work – tjcocklin
+
 •	See also:  Ayla El-Mereebi, Jaret Kiser, Jake Meisten, Nicholas Belegrino
 
 ## License
+
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
