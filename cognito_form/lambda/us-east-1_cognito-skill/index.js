@@ -17,12 +17,17 @@ const https= require('https');
 const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE = 'You can say cognito form get new form, or, you can say exit... What can I help you with?';
+const HELP_MESSAGE = 'You can say cognito get new form followed by a form name, or, you can say exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
 const STOP_MESSAGE = 'Leaving cognito form goodbye!';
 
+const HOST_NAME = 'https://services.cognitoforms.com/forms/api/';
+const DIR='/forms/';
+
+var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var form;
+
 var questionCounter = -1;
 var answers= [];
 
@@ -39,53 +44,79 @@ const handlers = {
 
 
     'GetNewFormIntent': function () {
+       var statusCode = '';
 
-        const speechOutput='Readying requested form';
-        //https request
-        https.get('https://tjcocklin.github.io/form_one.json', (res) => {
+       var formName = this.event.request.intent.slots.form_name.value;
+       var speechOutput='did not set';
+
+
+         //https request to cognito using CognitoformsDev apikey
+        https.get(HOST_NAME+apiKey+DIR+formName, (res) => {
+
           console.log('statusCode:', res.statusCode);
           console.log('headers:', res.headers);
 
-          var returnData='';
+
+          var returnData = '';
 
           res.on('data', (d) => {
-             returnData+=d;
+               returnData+=d;
           });
 
           res.on('end', () => {
-            form = JSON.parse(returnData);
-             questionCounter = 0;
-            this.response.speak(speechOutput);
-            this.emit(':responseReady');
-          });
+              if(returnData != ''){               // the form requested exists.
+                 form = JSON.parse(returnData);
+                 questionCounter = 0;
 
-        });
+                  speechOutput='Readying form, '+formName;
+                  this.response.speak(speechOutput);
+                  this.emit(':responseReady');
+              }
+              else{                              // the form requested does not exist.
+                  speechOutput="I'm sorry, that form is unavailable";
+                  this.response.speak(speechOutput);
+                  this.emit(':responseReady');
+              }
+         });
+
+    });
+
 
   },
 
-
+//Todo make intent work with cognitoforms
   'nextQuestionIntent' : function(){
-    var speechOutput = '';
+    // var speechOutput = '';
+    //
+    // if(questionCounter >= 0 && questionCounter < form.Questions.length){
+    //
+    //      speechOutput = 'I have a Question for you, ' + form.Questions[questionCounter].Question +
+    //                       ' the options are, ';
+    //     for( var i = 0; i < form.Questions[questionCounter].options.length; i++){
+    //         speechOutput+= form.Questions[questionCounter].options[i]+', ';
+    //     }
+    // }
+    // else{
+    //     speechOutput = 'there are no questions left.';
+    // }
+    //
+    // this.response.speak(speechOutput);
+    // this.emit(':responseReady');
 
+    //Test code that shows GetNewFormIntent is now working with apikey
+    // NOT INTENDED FOR VIDAL DEMO PURPOSES.
 
-    if(questionCounter >= 0 && questionCounter < form.Questions.length){
+    var speechOutput = 'I have a question for you, ';
+    var question = form.Fields[0].Name;
 
-         speechOutput = 'I have a Question for you, ' + form.Questions[questionCounter].Question +
-                          ' the options are, ';
-        for( var i = 0; i < form.Questions[questionCounter].options.length; i++){
-            speechOutput+= form.Questions[questionCounter].options[i]+', ';
-        }
-    }
-    else{
-        speechOutput = 'there are no questions left.';
-    }
-
+    speechOutput += question;
     this.response.speak(speechOutput);
+
     this.emit(':responseReady');
 
   },
 
-    // update questionCounter if answer is valid
+//Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
      var speechOutput ='ok';
      var ans = Number(this.event.request.intent.slots.number.value);
@@ -112,13 +143,13 @@ const handlers = {
       this.response.speak(speechOutput);
       this.emit(':responseReady');
 
- },
+  },
 
-// Reprompt Intent
   'repromptIntent' : function(){
      this.emit('nextQuestionIntent');
   },
-//Submit Intent
+
+//Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
       var speechOutput;
       if(answers.length == form.Questions.length){
@@ -130,11 +161,16 @@ const handlers = {
         }
       }
       else{
-          speechOutput='please answer all the questions before submitting the form.'
+          speechOutput='please answer all the questions before submitting the form.';
       }
       this.response.speak(speechOutput);
       this.emit(':responseReady');
   },
+
+//Todo create voiceAnswersIntent
+
+
+//end of voiceAnswersIntent
 
   'AMAZON.HelpIntent': function () {
           const speechOutput = HELP_MESSAGE;
@@ -155,11 +191,7 @@ const handlers = {
           this.response.speak(STOP_MESSAGE);
           this.emit(':responseReady');
       },
- 
-
-
-
-};
+  };
 
 
 exports.handler = function (event, context, callback) {

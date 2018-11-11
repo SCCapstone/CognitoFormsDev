@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cognito form",
+            "invocationName": "cognito",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -27,15 +27,24 @@
                 },
                 {
                     "name": "GetNewFormIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "form_name",
+                            "type": "form_name",
+                            "samples": [
+                                "{form_name} form",
+                                "{form_name}"
+                            ]
+                        }
+                    ],
                     "samples": [
-                        "to show form",
-                        "to add form",
-                        "to get form",
-                        "show me form",
-                        "give me form",
-                        "get new form",
-                        "get form"
+                        "to show form {form_name}",
+                        "to add form {form_name}",
+                        "to get form {form_name}",
+                        "show me form {form_name}",
+                        "give me form {form_name}",
+                        "get new form {form_name}",
+                        "get form {form_name}"
                     ]
                 },
                 {
@@ -74,7 +83,33 @@
                     ]
                 }
             ],
-            "types": []
+            "types": [
+                {
+                    "name": "form_name",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "demoform"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "states"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "multichoice"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "aylademo"
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         "dialog": {
             "intents": [
@@ -93,6 +128,22 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "GetNewFormIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "form_name",
+                            "type": "form_name",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.1448191672376.743314090488"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -103,6 +154,15 @@
                     {
                         "type": "PlainText",
                         "value": "tell me an option"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.1448191672376.743314090488",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "please give me a form name."
                     }
                 ]
             }
