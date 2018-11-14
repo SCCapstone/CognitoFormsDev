@@ -29,22 +29,22 @@
                     "name": "GetNewFormIntent",
                     "slots": [
                         {
-                            "name": "form_name",
-                            "type": "form_name",
+                            "name": "form",
+                            "type": "AMAZON.SearchQuery",
                             "samples": [
-                                "{form_name} form",
-                                "{form_name}"
+                                "get {form}",
+                                "{form}"
                             ]
                         }
                     ],
                     "samples": [
-                        "to show form {form_name}",
-                        "to add form {form_name}",
-                        "to get form {form_name}",
-                        "show me form {form_name}",
-                        "give me form {form_name}",
-                        "get new form {form_name}",
-                        "get form {form_name}"
+                        "to show form {form}",
+                        "to add form {form}",
+                        "to get form {form}",
+                        "show me form {form}",
+                        "give me form {form}",
+                        "get new form {form}",
+                        "get form {form}"
                     ]
                 },
                 {
@@ -60,12 +60,18 @@
                     "name": "answerIntent",
                     "slots": [
                         {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER"
+                            "name": "ans",
+                            "type": "AMAZON.SearchQuery",
+                            "samples": [
+                                "{ans}"
+                            ]
                         }
                     ],
                     "samples": [
-                        "option {number}"
+                        "my answer is {ans}",
+                        "I want {ans}",
+                        "I choose {ans}",
+                        "answer {ans}"
                     ]
                 },
                 {
@@ -83,33 +89,7 @@
                     ]
                 }
             ],
-            "types": [
-                {
-                    "name": "form_name",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "demoform"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "states"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "multichoice"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "aylademo"
-                            }
-                        }
-                    ]
-                }
-            ]
+            "types": []
         },
         "dialog": {
             "intents": [
@@ -119,12 +99,12 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER",
+                            "name": "ans",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.320058184487.1149066116793"
+                                "elicitation": "Elicit.Slot.374458317624.497889492056"
                             }
                         }
                     ]
@@ -135,12 +115,12 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "form_name",
-                            "type": "form_name",
+                            "name": "form",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
-                                "elicitation": "Elicit.Slot.1448191672376.743314090488"
+                                "elicitation": "Elicit.Slot.80850642168.358810002969"
                             }
                         }
                     ]
@@ -149,20 +129,29 @@
         },
         "prompts": [
             {
-                "id": "Elicit.Slot.320058184487.1149066116793",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "tell me an option"
-                    }
-                ]
-            },
-            {
                 "id": "Elicit.Slot.1448191672376.743314090488",
                 "variations": [
                     {
                         "type": "PlainText",
                         "value": "please give me a form name."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.80850642168.358810002969",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Give me a form name"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.374458317624.497889492056",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "what is your answer?"
                     }
                 ]
             }

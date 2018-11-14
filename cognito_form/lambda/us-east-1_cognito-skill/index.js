@@ -42,16 +42,25 @@ const handlers = {
         this.emit(':responseReady');
     },
 
-
+  /** Todo: change GetNewFormIntent to work with cognitoforms**/
     'GetNewFormIntent': function () {
-       var statusCode = '';
 
-       var formName = this.event.request.intent.slots.form_name.value;
-       var speechOutput='did not set';
+       var speechOutput;
+       var formName = this.event.request.intent.slots.form.value.trim();
 
+       var space= formName.indexOf(' ');
+
+       if(space !=-1){   //remove space inbetween words for formName
+
+          var temp= formName.slice(0,space);
+          var temp2= formName.slice(space + 1);
+
+          formName= temp+temp2;
+
+       }
 
          //https request to cognito using CognitoformsDev apikey
-        https.get(HOST_NAME+apiKey+DIR+formName, (res) => {
+        https.get(HOST_NAME+apiKey+DIR+formName , (res) => {
 
           console.log('statusCode:', res.statusCode);
           console.log('headers:', res.headers);
@@ -84,7 +93,7 @@ const handlers = {
 
   },
 
-//Todo make intent work with cognitoforms
+/**Todo make intent work with cognitoforms**/
   'nextQuestionIntent' : function(){
     // var speechOutput = '';
     //
@@ -116,32 +125,34 @@ const handlers = {
 
   },
 
-//Todo make answerIntent work with cognitoform
+/**Todo make answerIntent work with cognitoform**/
   'answerIntent' : function(){
-     var speechOutput ='ok';
-     var ans = Number(this.event.request.intent.slots.number.value);
+     // var speechOutput ='ok';
+     // var ans = Number(this.event.request.intent.slots.number.value);
+     //
+     // var optionAns;
+     // var optionsLength = form.Questions[questionCounter].options.length;
+     //
+     //  for(var i = 0; i < optionsLength; i++){
+     //     optionAns=Number(form.Questions[questionCounter].valid_Options[i]);
+     //
+     //     if(ans == optionAns) {   // valid answer given
+     //       answers.push(ans);
+     //       speechOutput='Storing answer, '+ans;
+     //
+     //       questionCounter++; //make next question available
+     //       i=optionsLength;
+     //
+     //       this.response.speak(speechOutput);
+     //       this.emit(':responseReady');
+     //     }
+     // }
+     //  //invalid answer
+     //  speechOutput='Im sorry, that answer is invalid, say reprompt to repeat the question';
+     //  this.response.speak(speechOutput);
+     //  this.emit(':responseReady');
+     var ans = this.event.intent.slots.ans.value;
 
-     var optionAns;
-     var optionsLength = form.Questions[questionCounter].options.length;
-
-      for(var i = 0; i < optionsLength; i++){
-         optionAns=Number(form.Questions[questionCounter].valid_Options[i]);
-
-         if(ans == optionAns) {   // valid answer given
-           answers.push(ans);
-           speechOutput='Storing answer, '+ans;
-
-           questionCounter++; //make next question available
-           i=optionsLength;
-
-           this.response.speak(speechOutput);
-           this.emit(':responseReady');
-         }
-     }
-      //invalid answer
-      speechOutput='Im sorry, that answer is invalid, say reprompt to repeat the question';
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');
 
   },
 
@@ -149,25 +160,25 @@ const handlers = {
      this.emit('nextQuestionIntent');
   },
 
-//Todo make submitIntent create a form entry to cognitoforms
+/**Todo make submitIntent create a form entry to cognitoforms**/
   'submitIntent' : function(){
-      var speechOutput;
-      if(answers.length == form.Questions.length){
-         speechOutput='submitting answers, ';
-
-         for(var i=0; i < form.Questions.length; i++ ){
-            speechOutput+='answer '+(i+1)+' option '+answers[i]+', ';
-
-        }
-      }
-      else{
-          speechOutput='please answer all the questions before submitting the form.';
-      }
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');
+      // var speechOutput;
+      // if(answers.length == form.Questions.length){
+      //    speechOutput='submitting answers, ';
+      //
+      //    for(var i=0; i < form.Questions.length; i++ ){
+      //       speechOutput+='answer '+(i+1)+' option '+answers[i]+', ';
+      //
+      //   }
+      // }
+      // else{
+      //     speechOutput='please answer all the questions before submitting the form.';
+      // }
+      // this.response.speak(speechOutput);
+      // this.emit(':responseReady');
   },
 
-//Todo create voiceAnswersIntent
+/**Todo create voiceAnswersIntent**/
 
 
 //end of voiceAnswersIntent
