@@ -29,7 +29,8 @@ var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var form;
 
 var questionCounter = -1;
-var answers= [];
+var answers = [];
+var questionAr = []
 
 //=========================================================================================================================================
 //Handler and function sections
@@ -108,7 +109,7 @@ const handlers = {
 
     var speechOutput = 'I have a question for you, ';
     var question = form.Fields[0].Name;
-
+      questionAr[questionCounter] = question;
     speechOutput += question;
     this.response.speak(speechOutput);
 
@@ -128,7 +129,7 @@ const handlers = {
          optionAns=Number(form.Questions[questionCounter].valid_Options[i]);
 
          if(ans == optionAns) {   // valid answer given
-           answers.push(ans);
+             answers[questionCounter] = ans;
            speechOutput='Storing answer, '+ans;
 
            questionCounter++; //make next question available
@@ -168,7 +169,22 @@ const handlers = {
   },
 
 //Todo create voiceAnswersIntent
-
+    'repeatAnswerIntent': function () {
+        var i;
+        if (questionCounter <= 0) {
+            speechOutput = 'You havent given me any answers yet. Please fill out your form first, then I will be able to repeat your given answers.';
+        }
+        else {
+            for (i = 0; i < questionCounter; i++) {
+                var int = questionCounter + 1;
+                speechOutput = 'For question: ' + int + ' , ' + questionAr[i] + '. You gave :' + answers[i] + ' ,  ' + form.Questions[questionCounter].options[answers[i]] + ', as your answer.';
+                this.response.speak(speechOutput);
+            }
+            speechOutput = 'Are these answers correct?';
+            this.response.speak(speechOutput);
+            this.emit(':responseReady')
+        }
+    },
 
 //end of voiceAnswersIntent
 
@@ -190,7 +206,16 @@ const handlers = {
   'AMAZON.StopIntent': function () {
           this.response.speak(STOP_MESSAGE);
           this.emit(':responseReady');
-      },
+    },
+    'AMAZON.YesIntent': function () {
+        this.response.speak('Perfect!');
+        this.emit(':nextQuestionIntent');
+    },
+
+    'AMAZON.NoIntent': function () {
+        this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
+        this.emit(':GetNewFormIntent');
+    }
   };
 
 

@@ -2,87 +2,115 @@
     "interactionModel": {
         "languageModel": {
             "invocationName": "cognito",
-            "intents": [
+          "intents": [
+            {
+              "name": "AMAZON.FallbackIntent",
+              "samples": []
+            },
+            {
+              "name": "AMAZON.CancelIntent",
+              "samples": []
+            },
+            {
+              "name": "AMAZON.HelpIntent",
+              "samples": []
+            },
+            {
+              "name": "AMAZON.StopIntent",
+              "samples": [
+                "exit"
+              ]
+            },
+            {
+              "name": "AMAZON.NavigateHomeIntent",
+              "samples": []
+            },
+            {
+              "name": "GetNewFormIntent",
+              "slots": [
                 {
-                    "name": "AMAZON.FallbackIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.CancelIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.HelpIntent",
-                    "samples": []
-                },
-                {
-                    "name": "AMAZON.StopIntent",
-                    "samples": [
-                        "exit"
-                    ]
-                },
-                {
-                    "name": "AMAZON.NavigateHomeIntent",
-                    "samples": []
-                },
-                {
-                    "name": "GetNewFormIntent",
-                    "slots": [
-                        {
-                            "name": "form_name",
-                            "type": "form_name",
-                            "samples": [
-                                "{form_name} form",
-                                "{form_name}"
-                            ]
-                        }
-                    ],
-                    "samples": [
-                        "to show form {form_name}",
-                        "to add form {form_name}",
-                        "to get form {form_name}",
-                        "show me form {form_name}",
-                        "give me form {form_name}",
-                        "get new form {form_name}",
-                        "get form {form_name}"
-                    ]
-                },
-                {
-                    "name": "nextQuestionIntent",
-                    "slots": [],
-                    "samples": [
-                        "anymore questions",
-                        "next",
-                        "next question"
-                    ]
-                },
-                {
-                    "name": "answerIntent",
-                    "slots": [
-                        {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER"
-                        }
-                    ],
-                    "samples": [
-                        "option {number}"
-                    ]
-                },
-                {
-                    "name": "repromptIntent",
-                    "slots": [],
-                    "samples": [
-                        "reprompt"
-                    ]
-                },
-                {
-                    "name": "submitIntent",
-                    "slots": [],
-                    "samples": [
-                        "submit form"
-                    ]
+                  "name": "form_name",
+                  "type": "form_name",
+                  "samples": [
+                    "{form_name} form",
+                    "{form_name}"
+                  ]
                 }
-            ],
+              ],
+              "samples": [
+                "to show form {form_name}",
+                "to add form {form_name}",
+                "to get form {form_name}",
+                "show me form {form_name}",
+                "give me form {form_name}",
+                "get new form {form_name}",
+                "get form {form_name}"
+              ]
+            },
+            {
+              "name": "nextQuestionIntent",
+              "slots": [],
+              "samples": [
+                "anymore questions",
+                "next",
+                "next question"
+              ]
+            },
+            {
+              "name": "answerIntent",
+              "slots": [
+                {
+                  "name": "number",
+                  "type": "AMAZON.NUMBER"
+                }
+              ],
+              "samples": [
+                "option {number}"
+              ]
+            },
+            {
+              "name": "repromptIntent",
+              "slots": [],
+              "samples": [
+                "reprompt"
+              ]
+            },
+            {
+              "name": "AMAZON.YesIntent",
+              "slots": [],
+              "samples": [
+                "yes",
+                "yes please",
+                "sure"
+              ]
+
+            },
+            {
+              "name": "AMAZON.NoIntent",
+              "slots": [],
+              "samples": [
+                "no",
+                "no thanks"
+              ]
+
+            },
+            {
+              "name": "repeatAnswerIntent",
+              "slots": [],
+              "samples": [
+                "repeat form answers",
+                "repeat my answers",
+                "repeat answers"
+              ]
+            }
+            {
+              "name": "submitIntent",
+              "slots": [],
+              "samples": [
+                "submit form"
+              ]
+            }
+          ],
             "types": [
                 {
                     "name": "form_name",
