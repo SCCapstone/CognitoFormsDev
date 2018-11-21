@@ -28,9 +28,9 @@ const DIR='/forms/';
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var form;
 
-var questionCounter = -1;
+var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var answers = [];
-var questionAr = []
+
 
 //=========================================================================================================================================
 //Handler and function sections
@@ -118,13 +118,13 @@ const handlers = {
 //Todo create voiceAnswersIntent
     'repeatAnswerIntent': function () {
         var i;
-        if (questionCounter <= 0) {
+        if (questionCounter < 0 || answers.length != form.Fields.length) {
             speechOutput = 'You havent given me any answers yet. Please fill out your form first, then I will be able to repeat your given answers.';
         }
         else {
-            for (i = 0; i < questionCounter; i++) {
+            for (i = 0; i < answers.length; i++) {
                 var int = questionCounter + 1;
-                speechOutput = 'For question: ' + int + ' , ' + questionAr[i] + '. You gave :' + answers[i] + ' ,  ' + form.Questions[questionCounter].options[answers[i]] + ', as your answer.';
+                speechOutput = 'For question: ' + int + ' , ' +  form.Fields[i].Name + '. You gave :' + answers[i] + ', as your answer.';
                 this.response.speak(speechOutput);
             }
             speechOutput = 'Are these answers correct?';
