@@ -43,7 +43,6 @@ const handlers = {
         this.emit(':responseReady');
     },
 
-
     'GetNewFormIntent': function () {
        var statusCode = '';
 
