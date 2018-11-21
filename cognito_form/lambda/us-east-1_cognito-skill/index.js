@@ -86,22 +86,6 @@ const handlers = {
 
 //Todo make intent work with cognitoforms
   'nextQuestionIntent' : function(){
-    // var speechOutput = '';
-    //
-    // if(questionCounter >= 0 && questionCounter < form.Questions.length){
-    //
-    //      speechOutput = 'I have a Question for you, ' + form.Questions[questionCounter].Question +
-    //                       ' the options are, ';
-    //     for( var i = 0; i < form.Questions[questionCounter].options.length; i++){
-    //         speechOutput+= form.Questions[questionCounter].options[i]+', ';
-    //     }
-    // }
-    // else{
-    //     speechOutput = 'there are no questions left.';
-    // }
-    //
-    // this.response.speak(speechOutput);
-    // this.emit(':responseReady');
 
     //Test code that shows GetNewFormIntent is now working with apikey
     // NOT INTENDED FOR VIDAL DEMO PURPOSES.
@@ -118,30 +102,7 @@ const handlers = {
 
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
-     var speechOutput ='ok';
-     var ans = Number(this.event.request.intent.slots.number.value);
 
-     var optionAns;
-     var optionsLength = form.Questions[questionCounter].options.length;
-
-      for(var i = 0; i < optionsLength; i++){
-         optionAns=Number(form.Questions[questionCounter].valid_Options[i]);
-
-         if(ans == optionAns) {   // valid answer given
-             answers[questionCounter] = ans;
-           speechOutput='Storing answer, '+ans;
-
-           questionCounter++; //make next question available
-           i=optionsLength;
-
-           this.response.speak(speechOutput);
-           this.emit(':responseReady');
-         }
-     }
-      //invalid answer
-      speechOutput='Im sorry, that answer is invalid, say reprompt to repeat the question';
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');
 
   },
 
@@ -151,20 +112,7 @@ const handlers = {
 
 //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
-      var speechOutput;
-      if(answers.length == form.Questions.length){
-         speechOutput='submitting answers, ';
 
-         for(var i=0; i < form.Questions.length; i++ ){
-            speechOutput+='answer '+(i+1)+' option '+answers[i]+', ';
-
-        }
-      }
-      else{
-          speechOutput='please answer all the questions before submitting the form.';
-      }
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');
   },
 
 //Todo create voiceAnswersIntent
@@ -187,6 +135,7 @@ const handlers = {
 
 //end of voiceAnswersIntent
 
+//built in intents just ignore them
   'AMAZON.HelpIntent': function () {
           const speechOutput = HELP_MESSAGE;
           const reprompt = HELP_REPROMPT;
@@ -215,6 +164,7 @@ const handlers = {
         this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
         this.emit(':GetNewFormIntent');
     }
+// end of built in intents
   };
 
 
