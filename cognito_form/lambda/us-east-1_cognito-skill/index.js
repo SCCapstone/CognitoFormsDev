@@ -92,7 +92,6 @@ const handlers = {
 
     var speechOutput = 'I have a question for you, ';
     var question = form.Fields[0].Name;
-      questionAr[questionCounter] = question;
     speechOutput += question;
     this.response.speak(speechOutput);
 
@@ -102,7 +101,27 @@ const handlers = {
 
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
+      var ans = Number(this.event.request.intent.slots.number.value);
+      var speechOutput = 'Storing answer, option '+ ans;
 
+      // Ensures answer given is within the bounds of the available choices
+      if(ans < form.Fields[questionCounter].Choices.length && ans > 0) {
+        this.response.speak(speechOutput);
+        answers[questionCounter] = ans;
+        questionCounter++;
+      }
+      else {
+        this.response.speak('Something went wrong with your answer');
+        this.emit(':responseReady'); //TODO jump to next question
+      }
+
+      if(questionCounter > form.Fields.length) {
+        this.response.speak('All questions have been answered');
+        this.emit(':responseReady'); // TODO jump to either repeat or submit
+      }
+      else {
+        this.emit(':responseReady'); // TODO jump to recovery
+      }
 
   },
 
