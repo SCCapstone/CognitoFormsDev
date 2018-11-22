@@ -35,6 +35,11 @@ var answers = [];
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
+function ansObject(question, ans){
+    this.key = question;
+    this.value= ans;
+
+}
 
 const handlers = {
     'LaunchRequest': function () {
@@ -44,7 +49,6 @@ const handlers = {
     },
 
     'GetNewFormIntent': function () {
-       var statusCode = '';
 
        var formName = this.event.request.intent.slots.form_name.value;
        var speechOutput='did not set';
@@ -101,13 +105,35 @@ const handlers = {
 
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
+
       var ans = Number(this.event.request.intent.slots.number.value);
-      var speechOutput = 'Storing answer, option '+ ans;
+      var speechOutput;// = 'Storing answer, option '+ ans;
+
+      var question= form.Fields[questionCounter];
+      var formAns;
 
       // Ensures answer given is within the bounds of the available choices
-      if(ans < form.Fields[questionCounter].Choices.length && ans > 0) {
+      if(ans <= form.Fields[questionCounter].Choices.length && ans > 0) {
+
+
+        //storing a "key":"value" pair in answers[], this is what we have to send to cognito after we format it.
+        formAns = question.Choices[ans-1].Label;
+
+        if(question.FieldType == "YesNo"){ // answer must be changed or form submission will be rejected.
+
+               if(formAns =="Yes"){
+                  formAns='true';
+
+                }else if(formAns =="No"){
+                  formAns='false';
+                }
+           }
+
+        answers.push(new ansObject(question.InternalName, formAns));
+
+        speechOutput= 'Storing answer, option '+ ans+', '+formAns;
         this.response.speak(speechOutput);
-        answers[questionCounter] = ans;
+
         questionCounter++;
       }
       else {
@@ -129,27 +155,33 @@ const handlers = {
      this.emit('nextQuestionIntent');
   },
 
-//Todo make submitIntent create a form entry to cognitoforms
+  //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
+   //TodoFormat the data in answers[] into proper json form and send it to cognito using apikey
 
   },
 
 //Todo create voiceAnswersIntent
     'repeatAnswerIntent': function () {
         var i;
-        if (questionCounter < 0 || answers.length != form.Fields.length) {
-            speechOutput = 'You havent given me any answers yet. Please fill out your form first, then I will be able to repeat your given answers.';
-        }
+        var speechOutput;
+
+         if (answers.length <= 0) {
+             speechOutput = "You haven't given me enough answers yet. Please fill out your form first, then I will be able to repeat your given answers.";
+         }
         else {
             for (i = 0; i < answers.length; i++) {
-                var int = questionCounter + 1;
-                speechOutput = 'For question: ' + int + ' , ' +  form.Fields[i].Name + '. You gave :' + answers[i] + ', as your answer.';
-                this.response.speak(speechOutput);
+
+                speechOutput = 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : ' + answers[i].value + ', as your answer.';
+
             }
-            speechOutput = 'Are these answers correct?';
-            this.response.speak(speechOutput);
-            this.emit(':responseReady')
-        }
+            var prompt = ' Are these answers correct?';
+            speechOutput+= prompt;
+
+       }
+        this.response.speak(speechOutput);
+        this.emit(':responseReady');
+
     },
 
 //end of voiceAnswersIntent
@@ -174,11 +206,14 @@ const handlers = {
           this.response.speak(STOP_MESSAGE);
           this.emit(':responseReady');
     },
+
+   // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.YesIntent': function () {
         this.response.speak('Perfect!');
         this.emit(':nextQuestionIntent');
     },
 
+   // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.NoIntent': function () {
         this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
         this.emit(':GetNewFormIntent');
