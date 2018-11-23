@@ -27,9 +27,9 @@ A prompt asking to choose a template will appear, select “Start from scratch�
 Navigate to the folder containing the Cognito form project. Select the en.US.json file located: CognitoFormsDev->cognito_form->models->en.US.json.
 
 
-Open a new tab in your browser and navigate to the Amazon Web Services and login. Select “lambda” under the services menu. Select “create function’, followed by “blue prints”; in the search bar lookup “Alex-skill-kit-sdk-factskill” and select the option. At the button of the page select “configure”
-Give a name for your lambda function, and under the existing role drop down choose “lambda_basic_execution”, scroll to the bottom of the page and click “create function” 
-We must now add a trigger for the function, select “Alexa skill skit” from the add trigger option. Make note of the lambda endpoint Id, located at the top right of the page, that is preceded by “ARN-”. 
+Open a new tab in your browser and navigate to the Amazon Web Services and login. Select “lambda” under the services menu. Select “create function’, followed by “blue prints”; in the search bar lookup “alexa-skill-kit-sdk-factskill” and select the option. At the button of the page select “configure”
+Give a name for your lambda function, and under the existing role drop down choose “lambda_basic_execution”, scroll to the bottom of the page and click “create function”
+We must now add a trigger for the function, select “Alexa skills kit” from the add trigger option. Make note of the lambda endpoint Id, located at the top right of the page, that is preceded by “ARN-”. 
 
 
 Return to your first tab containing the Amazon developer portal. Select “endpoint” under the build tab and select the “AWS Lambda ARN” option. In the default Region box, place the lambda endpoint Id. Copy the skill Id featured above the default Region box, before returning to the tab with your lambda function configuration.
@@ -39,7 +39,7 @@ Scroll to the bottom of the page and fill in the Skill-ID box with, the skill Id
 From the downloaded project, copy the “index.js” file located: CognitoFormsDev->cognito_form->lambda->us-east-1_cognito-skill->index.js. to the editor containing the lambda code and hit the “Save” button in the top right corner of the page.
 
 
-Return to the tab with endpoint, and save the endpoints, save the model, and build the model. You are now ready to test the skill. 
+Return to the tab with endpoint, and save the endpoints, save the model, and build the model. You are now ready to test the skill.
 
 ## Running the tests
 
@@ -65,4 +65,3 @@ Tests can be run from the test tab of the Amazon developer console. In addition,
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
-

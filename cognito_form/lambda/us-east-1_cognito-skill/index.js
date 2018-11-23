@@ -90,13 +90,19 @@ const handlers = {
     //Test code that shows GetNewFormIntent is now working with apikey
     // NOT INTENDED FOR VIDAL DEMO PURPOSES.
 
-    var speechOutput = 'I have a question for you, ';
-    var question = form.Fields[0].Name;
-    speechOutput += question;
+    if(questionCounter <= 0){
+      var speechOutput = 'There are no more questions';
+      this.response.speak(speechOutput);
+
+      this.emit(':submitIntent');
+    }
+    var speechOutput = 'I have a question for you, '; //starts by inputing default beginning
+    var question = form.Fields[questionCounter].Name; //gets curr quest based on questionCounter
+    speechOutput += question; //adds current question to the speech response
     this.response.speak(speechOutput);
 
-    this.emit(':responseReady');
-
+    this.emit(':answerIntent');
+    //this.emit(':responseReady'); instead???
   },
 
 //Todo make answerIntent work with cognitoform
@@ -126,7 +132,7 @@ const handlers = {
   },
 
   'repromptIntent' : function(){
-     this.emit('nextQuestionIntent');
+     this.emit(':nextQuestionIntent');
   },
 
 //Todo make submitIntent create a form entry to cognitoforms
@@ -135,22 +141,22 @@ const handlers = {
   },
 
 //Todo create voiceAnswersIntent
-    'repeatAnswerIntent': function () {
-        var i;
-        if (questionCounter < 0 || answers.length != form.Fields.length) {
-            speechOutput = 'You havent given me any answers yet. Please fill out your form first, then I will be able to repeat your given answers.';
-        }
-        else {
-            for (i = 0; i < answers.length; i++) {
-                var int = questionCounter + 1;
-                speechOutput = 'For question: ' + int + ' , ' +  form.Fields[i].Name + '. You gave :' + answers[i] + ', as your answer.';
-                this.response.speak(speechOutput);
-            }
-            speechOutput = 'Are these answers correct?';
-            this.response.speak(speechOutput);
-            this.emit(':responseReady')
-        }
-    },
+  'repeatAnswerIntent': function () {
+      var i;
+      if (questionCounter < 0 || answers.length != form.Fields.length) {
+          speechOutput = 'You havent given me any answers yet. Please fill out your form first, then I will be able to repeat your given answers.';
+      }
+      else {
+          for (i = 0; i < answers.length; i++) {
+              var int = questionCounter + 1;
+              speechOutput = 'For question: ' + int + ' , ' +  form.Fields[i].Name + '. You gave :' + answers[i] + ', as your answer.';
+              this.response.speak(speechOutput);
+          }
+          speechOutput = 'Are these answers correct?';
+          this.response.speak(speechOutput);
+          this.emit(':responseReady');
+      }
+  },
 
 //end of voiceAnswersIntent
 
