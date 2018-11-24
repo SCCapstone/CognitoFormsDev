@@ -216,14 +216,16 @@ const handlers = {
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.YesIntent': function () {
-        this.response.speak('Perfect!');
-        this.emit(':nextQuestionIntent');
+        var speechOutput = 'Perfect!';
+        this.response.speak(speechOutput);
+        this.emit(':responseReady')
     },
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.NoIntent': function () {
-        this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
-        this.emit(':GetNewFormIntent');
+        var speechOutput = 'Oops, let us fix that. To ensure accuracy form will be restarted';
+        this.response.speak(speechOutput);
+        this.emit(':responseReady')
     }
 // end of built in intents
   };
