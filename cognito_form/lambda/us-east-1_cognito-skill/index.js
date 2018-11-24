@@ -106,48 +106,55 @@ const handlers = {
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
 
-      var ans = Number(this.event.request.intent.slots.number.value);
-      var speechOutput;// = 'Storing answer, option '+ ans;
+    var ans = Number(this.event.request.intent.slots.number.value);
 
-      var question= form.Fields[questionCounter];
-      var formAns;
+    var speechOutput;
+    var formAns;
 
-      // Ensures answer given is within the bounds of the available choices
-      if(ans <= form.Fields[questionCounter].Choices.length && ans > 0) {
+    if( questionCounter < 0){ // no form loaded illegal access
+      this.response.speak('You have not loaded a form yet.');
+      this.emit(':responseReady');
+    }
+    else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
+
+      this.response.speak('All questions have been answered, you can say repeat my answers, or submit form');
+       this.emit(':responseReady');
+    }
+    else {
+
+         var question= form.Fields[questionCounter]; // moved to prevent out of order access errors
+        // Ensures answer given is within the bounds of the available choices
+         if(ans <= form.Fields[questionCounter].Choices.length && ans > 0) {
 
 
-        //storing a "key":"value" pair in answers[], this is what we have to send to cognito after we format it.
-        formAns = question.Choices[ans-1].Label;
+           //storing a "key":"value" pair in answers[], this is what we have to send to cognito after we format it.
+           formAns = question.Choices[ans-1].Label;
 
-        if(question.FieldType == "YesNo"){ // answer must be changed or form submission will be rejected.
+            if(question.FieldType == "YesNo"){ // answer must be changed or form submission will be rejected.
 
-               if(formAns =="Yes"){
-                  formAns='true';
+                  if(formAns =="Yes"){
+                      formAns='true';
+                    }else if(formAns =="No"){
+                      formAns='false';
+                    }
+            }
 
-                }else if(formAns =="No"){
-                  formAns='false';
-                }
-           }
+            answers.push(new ansObject(question.InternalName, formAns));
 
-        answers.push(new ansObject(question.InternalName, formAns));
+            speechOutput= 'Storing answer, option '+ ans+', '+formAns;
+            questionCounter++;
 
-        speechOutput= 'Storing answer, option '+ ans+', '+formAns;
-        this.response.speak(speechOutput);
-
-        questionCounter++;
-      }
-      else {
-        this.response.speak('Something went wrong with your answer');
-        this.emit(':responseReady'); //TODO jump to next question
-      }
-
-      if(questionCounter > form.Fields.length) {
-        this.response.speak('All questions have been answered');
-        this.emit(':responseReady'); // TODO jump to either repeat or submit
-      }
-      else {
-        this.emit(':responseReady'); // TODO jump to recovery
-      }
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
+         }
+          else {
+            this.response.speak('Something went wrong with your answer, say reprompt to repeat the question.');
+            this.emit(':responseReady');
+          }
+     }
+     //TODO jump to next question 
+     //TODO jump to recovery
+     //TODO jump to repeat or submit
 
   },
 
