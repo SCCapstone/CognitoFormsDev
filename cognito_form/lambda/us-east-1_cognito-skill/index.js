@@ -88,20 +88,28 @@ const handlers = {
 
   },
 
-//Todo make intent work with cognitoforms
-  'nextQuestionIntent' : function(){
+  //Todo make intent work with cognitoforms
+    'nextQuestionIntent' : function(){
 
-    //Test code that shows GetNewFormIntent is now working with apikey
-    // NOT INTENDED FOR VIDAL DEMO PURPOSES.
+      //Test code that shows GetNewFormIntent is now working with apikey
+      // NOT INTENDED FOR VIDAL DEMO PURPOSES.
+      var i;
 
-    var speechOutput = 'I have a question for you, ';
-    var question = form.Fields[0].Name;
-    speechOutput += question;
-    this.response.speak(speechOutput);
+      if(questionCounter <= 0){
+        var speechOutput = 'There are no more questions';
+        this.response.speak(speechOutput);
 
-    this.emit(':responseReady');
+        this.emit(':responseReady');
+      }
+      var speechOutput = 'I have a question for you, '; //starts by inputing default beginning
+      var question = form.Fields[questionCounter].Name; //gets curr quest based on questionCounter
+      var options = form.Fields[questionCounter].Choices;
+      speechOutput += question + 'the options are' + options; //adds current question and options to the speech response
+      this.response.speak(speechOutput);
 
-  },
+      this.emit(':responseReady');
+      //this.emit(':responseReady'); instead???
+    },
 
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
@@ -152,7 +160,7 @@ const handlers = {
             this.emit(':responseReady');
           }
      }
-     //TODO jump to next question 
+     //TODO jump to next question
      //TODO jump to recovery
      //TODO jump to repeat or submit
 
@@ -164,15 +172,15 @@ const handlers = {
 
   //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
-      
+
       var speechOutput = '';
-      
+
       var HOST = 'services.cognitoforms.com';
       var formName = form.InternalName;
       var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
-      
+
       var postData = '';
-      
+
       //format the answers data into appropriate JSON syntax
       for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
       {
@@ -180,7 +188,7 @@ const handlers = {
       }
       postData = postData.replace(/,+$/, "");  //remove the trailing comma
       postData = JSON.stringify({postData});
-      
+
       var options = {
         hostname: HOST,
         port: 443,
@@ -191,30 +199,30 @@ const handlers = {
         'Content-Length': postData.length
         }
       };
-      
+
       var req = https.request(options, function(res) {
-        
+
         console.log('Status: ' + res.statusCode);
         console.log('Headers: ' + JSON.stringify(res.headers));
-        
+
         var returnData = '';
-        
+
         res.on('data', function (body) {
           console.log('Body: ' + body);
           returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
         });
-        
+
         res.on('end', () => {
           speechOutput="your form has been submitted";
           this.response.speak(speechOutput);
           this.emit(':responseReady');
         });
-        
+
       });
-      
+
       req.write(postData);
       req.end();
-      
+
    //TodoFormat the data in answers[] into proper json form and send it to cognito using apikey
 
   },
