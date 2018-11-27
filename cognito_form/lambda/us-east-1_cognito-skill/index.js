@@ -26,6 +26,7 @@ const HOST_NAME = 'https://services.cognitoforms.com/forms/api/';
 const DIR='/forms/';
 
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
+var formName;
 var form;
 
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
@@ -50,7 +51,7 @@ const handlers = {
 
     'GetNewFormIntent': function () {
 
-       var formName = this.event.request.intent.slots.form_name.value;
+       formName = this.event.request.intent.slots.form_name.value;
        var speechOutput='did not set';
 
 
@@ -218,7 +219,7 @@ const handlers = {
   this.response.speak(speechOutput);
   this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
 
-  
+
   },
 
 //Todo create voiceAnswersIntent
