@@ -152,7 +152,7 @@ const handlers = {
             this.emit(':responseReady');
           }
      }
-     //TODO jump to next question 
+     //TODO jump to next question
      //TODO jump to recovery
      //TODO jump to repeat or submit
 
@@ -164,59 +164,61 @@ const handlers = {
 
   //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
-      
-      var speechOutput = '';
-      
-      var HOST = 'services.cognitoforms.com';
-      var formName = form.InternalName;
-      var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
-      
-      var postData = '';
-      
-      //format the answers data into appropriate JSON syntax
-      for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
-      {
-          postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-      }
-      postData = postData.replace(/,+$/, "");  //remove the trailing comma
-      postData = JSON.stringify({postData});
-      
-      var options = {
-        hostname: HOST,
-        port: 443,
-        path: fullPath,
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': postData.length
-        }
-      };
-      
-      var req = https.request(options, function(res) {
-        
-        console.log('Status: ' + res.statusCode);
-        console.log('Headers: ' + JSON.stringify(res.headers));
-        
-        var returnData = '';
-        
-        res.on('data', function (body) {
-          console.log('Body: ' + body);
-          returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
-        });
-        
-        res.on('end', () => {
-          speechOutput="your form has been submitted";
-          this.response.speak(speechOutput);
-          this.emit(':responseReady');
-        });
-        
-      });
-      
-      req.write(postData);
-      req.end();
-      
-   //TodoFormat the data in answers[] into proper json form and send it to cognito using apikey
 
+    //Todo Format the data in answers[] into proper json form and send it to cognito using apikey
+   var speechOutput = '';
+
+    var HOST = 'services.cognitoforms.com';
+
+    var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
+
+    var postData = '{';// added '{' for json formatting
+
+    //format the answers data into appropriate JSON syntax
+    for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
+    {
+        postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+    }
+    postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma// added '}' forjson formating
+   //don't need to stringify it's already a string.
+
+    var options = {
+      hostname: HOST,
+      port: 443,
+      path: fullPath,
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      'Content-Length': postData.length
+      }
+    };
+
+    var req = https.request(options, function(res) {
+
+      console.log('Status: ' + res.statusCode);
+      console.log('Headers: ' + JSON.stringify(res.headers));
+
+      var returnData = '';
+
+      res.on('data', function (body) {
+        console.log('Body: ' + body);
+        returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+      });
+
+      res.on('end', () => {
+
+      });
+
+    });
+
+    req.write(postData);
+    req.end();
+
+  speechOutput="your form has been submitted.";
+  this.response.speak(speechOutput);
+  this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
+
+  
   },
 
 //Todo create voiceAnswersIntent
