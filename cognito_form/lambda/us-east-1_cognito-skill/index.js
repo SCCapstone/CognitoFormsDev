@@ -26,10 +26,11 @@ const HOST_NAME = 'https://services.cognitoforms.com/forms/api/';
 const DIR='/forms/';
 
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
+var formName;
 var form;
 
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
-var answers = [];
+var answers;
 
 
 //=========================================================================================================================================
@@ -50,7 +51,7 @@ const handlers = {
 
     'GetNewFormIntent': function () {
 
-       var formName = this.event.request.intent.slots.form_name.value;
+       formName = this.event.request.intent.slots.form_name.value;
        var speechOutput='did not set';
 
 
@@ -73,6 +74,8 @@ const handlers = {
                  questionCounter = 0;
 
                   speechOutput='Readying form, '+formName;
+
+                  answers=[form.Fields.length];
                   this.response.speak(speechOutput);
                   this.emit(':responseReady');
               }
@@ -95,7 +98,7 @@ const handlers = {
       // NOT INTENDED FOR VIDAL DEMO PURPOSES.
       var i;
 
-      if(questionCounter >= 0 && questionCounter < form.fields.length){
+      if(questionCounter >= 0 && questionCounter >= form.fields.length){
         var speechOutput = 'There are no more questions';
         this.response.speak(speechOutput);
 
@@ -105,7 +108,7 @@ const handlers = {
       var options;
       var question = form.Fields[questionCounter].Name; //gets curr quest based on questionCounter
       for(i = 0; i < form.Fields[questionCounter].Choices.length; i++){
-        var optionstemp = form.Fields[questionCounter].Choices;
+        var optionstemp = form.Fields[questionCounter].Choices[i].Label;
         options += optionstemp;
       }
 
@@ -152,7 +155,7 @@ const handlers = {
                     }
             }
 
-            answers.push(new ansObject(question.InternalName, formAns));
+            answers[questionCounter]= new ansObject(question.InternalName, formAns);//changed for better memory management
 
             speechOutput= 'Storing answer, option '+ ans+', '+formAns;
             questionCounter++;
@@ -165,9 +168,9 @@ const handlers = {
             this.emit(':responseReady');
           }
      }
-     //TODO jump to next question
-     //TODO jump to recovery
-     //TODO jump to repeat or submit
+       //TODO jump to next question
+       //TODO jump to recovery
+       //TODO jump to repeat or submit
 
   },
 
@@ -178,57 +181,65 @@ const handlers = {
   //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
 
-      var speechOutput = '';
+   //Todo Format the data in answers[] into proper json form and send it to cognito using apikey
+    if(answers.length == form.Fields.length){ //submission only allowed if all questions answered
+       var speechOutput = '';
 
-      var HOST = 'services.cognitoforms.com';
-      var formName = form.InternalName;
-      var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
+        var HOST = 'services.cognitoforms.com';
 
-      var postData = '';
+        var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
 
-      //format the answers data into appropriate JSON syntax
-      for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
-      {
-          postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-      }
-      postData = postData.replace(/,+$/, "");  //remove the trailing comma
-      postData = JSON.stringify({postData});
+        var postData = '{';// added '{' for json formatting
 
-      var options = {
-        hostname: HOST,
-        port: 443,
-        path: fullPath,
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': postData.length
+        //format the answers data into appropriate JSON syntax
+        for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
+        {
+            postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
         }
-      };
+        postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma// added '}' forjson formating
+       //don't need to stringify it's already a string.
 
-      var req = https.request(options, function(res) {
+        var options = {
+          hostname: HOST,
+          port: 443,
+          path: fullPath,
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': postData.length
+          }
+        };
 
-        console.log('Status: ' + res.statusCode);
-        console.log('Headers: ' + JSON.stringify(res.headers));
+        var req = https.request(options, function(res) {
 
-        var returnData = '';
+          console.log('Status: ' + res.statusCode);
+          console.log('Headers: ' + JSON.stringify(res.headers));
 
-        res.on('data', function (body) {
-          console.log('Body: ' + body);
-          returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+          var returnData = '';
+
+          res.on('data', function (body) {
+            console.log('Body: ' + body);
+            returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+          });
+
+          res.on('end', () => {
+
+          });
+
         });
 
-        res.on('end', () => {
-          speechOutput="your form has been submitted";
-          this.response.speak(speechOutput);
-          this.emit(':responseReady');
-        });
+        req.write(postData);
+        req.end();
 
-      });
-
-      req.write(postData);
-      req.end();
-
-   //TodoFormat the data in answers[] into proper json form and send it to cognito using apikey
+      speechOutput="your form has been submitted.";
+      this.response.speak(speechOutput);
+      this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
+    }
+    else{
+      speechOutput="Please answer all questions before you submit your form.";
+      this.response.speak(speechOutput);
+      this.emit(':responseReady');
+    }
 
   },
 
@@ -280,16 +291,14 @@ const handlers = {
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.YesIntent': function () {
-        var speechOutput = 'Perfect! Please say, Next Question';
-        this.response.speak(speechOutput);
-        this.emit(':responseReady')
+        this.response.speak('Perfect!');
+        this.emit(':nextQuestionIntent');
     },
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.NoIntent': function () {
-        var speechOutput = 'Oops, let us fix that. To ensure accuracy , please say, Cognito get form';
-        this.response.speak(speechOutput);
-        this.emit(':responseReady')
+        this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
+        this.emit(':GetNewFormIntent');
     }
 // end of built in intents
   };
