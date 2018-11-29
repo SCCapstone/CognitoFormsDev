@@ -91,20 +91,33 @@ const handlers = {
 
   },
 
-//Todo make intent work with cognitoforms
-  'nextQuestionIntent' : function(){
+  //Todo make intent work with cognitoforms
+    'nextQuestionIntent' : function(){
 
-    //Test code that shows GetNewFormIntent is now working with apikey
-    // NOT INTENDED FOR VIDAL DEMO PURPOSES.
+      //Test code that shows GetNewFormIntent is now working with apikey
+      // NOT INTENDED FOR VIDAL DEMO PURPOSES.
+      var i;
 
-    var speechOutput = 'I have a question for you, ';
-    var question = form.Fields[0].Name;
-    speechOutput += question;
-    this.response.speak(speechOutput);
+      if(questionCounter >= 0 && questionCounter >= form.fields.length){
+        var speechOutput = 'There are no more questions';
+        this.response.speak(speechOutput);
 
-    this.emit(':responseReady');
+        this.emit(':responseReady');
+      }
+      var speechOutput = 'I have a question for you, '; //starts by inputing default beginning
+      var options;
+      var question = form.Fields[questionCounter].Name; //gets curr quest based on questionCounter
+      for(i = 0; i < form.Fields[questionCounter].Choices.length; i++){
+        var optionstemp = form.Fields[questionCounter].Choices[i].Label;
+        options += optionstemp;
+      }
 
-  },
+      speechOutput += question + 'the options are' + options; //adds current question and options to the speech response
+      this.response.speak(speechOutput);
+
+      this.emit(':responseReady');
+      //this.emit(':responseReady'); instead???
+    },
 
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
