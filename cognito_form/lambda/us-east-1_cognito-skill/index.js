@@ -30,7 +30,7 @@ var formName;
 var form;
 
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
-var answers;
+var answers=[];
 
 
 //=========================================================================================================================================
@@ -71,11 +71,11 @@ const handlers = {
           res.on('end', () => {
               if(returnData != ''){               // the form requested exists.
                  form = JSON.parse(returnData);
+
                  questionCounter = 0;
+                 speechOutput='Readying form, '+formName;
 
-                  speechOutput='Readying form, '+formName;
 
-                  answers=[form.Fields.length];
                   this.response.speak(speechOutput);
                   this.emit(':responseReady');
               }
@@ -94,29 +94,28 @@ const handlers = {
   //Todo make intent work with cognitoforms
     'nextQuestionIntent' : function(){
 
-      //Test code that shows GetNewFormIntent is now working with apikey
-      // NOT INTENDED FOR VIDAL DEMO PURPOSES.
-      var i;
+      var speechOutput;
 
-      if(questionCounter >= 0 && questionCounter >= form.fields.length){
-        var speechOutput = 'There are no more questions';
+      if(questionCounter < 0 || questionCounter >= form.Fields.length){ //>= 0 && questionCounter >= form.fields.length){
+        speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
         this.response.speak(speechOutput);
 
         this.emit(':responseReady');
       }
-      var speechOutput = 'I have a question for you, '; //starts by inputing default beginning
-      var options;
-      var question = form.Fields[questionCounter].Name; //gets curr quest based on questionCounter
-      for(i = 0; i < form.Fields[questionCounter].Choices.length; i++){
-        var optionstemp = form.Fields[questionCounter].Choices[i].Label;
-        options += optionstemp;
+      else{
+
+            var question = form.Fields[questionCounter]; //gets curr quest based on questionCounter
+            speechOutput = 'I have a question for you, '+question.Name+', the options are: '; //starts by inputing default beginning
+
+
+            for(var i = 0; i < question.Choices.length; i++){
+              speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+
+            }
+
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
       }
-
-      speechOutput += question + 'the options are' + options; //adds current question and options to the speech response
-      this.response.speak(speechOutput);
-
-      this.emit(':responseReady');
-      //this.emit(':responseReady'); instead???
     },
 
 //Todo make answerIntent work with cognitoform
@@ -134,7 +133,7 @@ const handlers = {
     else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
       this.response.speak('All questions have been answered, you can say repeat my answers, or submit form');
-       this.emit(':responseReady');
+      this.emit(':responseReady');
     }
     else {
 
@@ -155,7 +154,7 @@ const handlers = {
                     }
             }
 
-            answers[questionCounter]= new ansObject(question.InternalName, formAns);//changed for better memory management
+            answers.push( new ansObject(question.InternalName, formAns));//reverted for functionality
 
             speechOutput= 'Storing answer, option '+ ans+', '+formAns;
             questionCounter++;
@@ -245,16 +244,21 @@ const handlers = {
 
 //Todo create voiceAnswersIntent
     'repeatAnswerIntent': function () {
-        var i;
-        var speechOutput;
 
-         if (answers.length <= 0) {
-             speechOutput = "You haven't given me enough answers yet. Please fill out your form first, then I will be able to repeat your given answers.";
+        var speechOutput='';
+
+         if (questionCounter < 0 || answers.length <= 0) {
+             speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
+             "then I will be able to repeat your given answers.";
+
+             this.response.speak(speechOutput);
+             this.emit(':responseReady');
          }
         else {
-            for (i = 0; i < answers.length; i++) {
+            for (var i = 0; i < answers.length; i++) {
 
-                speechOutput = 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : ' + answers[i].value + ', as your answer.';
+                speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : '
+                + answers[i].value + ', as your answer. ';
 
             }
             var prompt = ' Are these answers correct?';
@@ -292,13 +296,15 @@ const handlers = {
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.YesIntent': function () {
         this.response.speak('Perfect!');
-        this.emit(':nextQuestionIntent');
+        this.emit(':responseReady');
     },
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.NoIntent': function () {
-        this.response.speak('Oops, let us fix that. To ensure accuracy form will be restarted');
-        this.emit(':GetNewFormIntent');
+        this.response.speak('Oops, let us fix that. say cognito get form,'+
+        'followed by the form name to restart your form.');
+
+        this.emit(':responseReady');
     }
 // end of built in intents
   };
