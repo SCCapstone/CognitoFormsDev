@@ -113,7 +113,7 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say tell cognito option, followed by a number.'
+            speechOutput+= ' you can say tell cognito option, followed by a number.';
             this.response.speak(speechOutput);
             this.emit(':responseReady');
       }
@@ -174,8 +174,8 @@ const handlers = {
             this.emit(':responseReady');
          }
           else {
-            this.response.speak("I'm sorry you answer is outside the given options,"
-             +"if you want to hear the question and choices again say reprompt.");
+            this.response.speak("I'm sorry, your answer is outside the given options,"
+             +" if you want to hear the question and choices again, say reprompt.");
             this.emit(':responseReady');
           }
      }
@@ -313,7 +313,7 @@ const handlers = {
 
    // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
     'AMAZON.NoIntent': function () {
-        this.response.speak('Oops, let us fix that. say cognito get form,'+
+        this.response.speak('Oops, let us fix that. say tell cognito get form,'+
         'followed by the form name to restart your form.');
 
         this.emit(':responseReady');
