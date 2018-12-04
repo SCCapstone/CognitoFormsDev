@@ -73,7 +73,7 @@ const handlers = {
                  form = JSON.parse(returnData);
 
                  questionCounter = 0;
-                 speechOutput='Readying form, '+formName;
+                 speechOutput='Readying form, '+formName+ ', you can say tell cognito next for the next question.';
 
 
                   this.response.speak(speechOutput);
@@ -97,7 +97,7 @@ const handlers = {
       var speechOutput;
 
       if(questionCounter < 0 || questionCounter >= form.Fields.length){ //>= 0 && questionCounter >= form.fields.length){
-        speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
+        speechOutput = 'All questions have been answered, you can say tell cognito repeat my answers, or submit form';
         this.response.speak(speechOutput);
 
         this.emit(':responseReady');
@@ -113,6 +113,7 @@ const handlers = {
 
             }
 
+            speechOutput+= ' you can say tell cognito option, followed by a number.'
             this.response.speak(speechOutput);
             this.emit(':responseReady');
       }
@@ -121,10 +122,20 @@ const handlers = {
 //Todo make answerIntent work with cognitoform
   'answerIntent' : function(){
 
-    var ans = Number(this.event.request.intent.slots.number.value);
+    var slotVal= this.event.request.intent.slots.number.value;
+    var ans;
 
     var speechOutput;
     var formAns;
+
+    if (isNaN(slotVal)){ //catch non-number input
+        speechOutput ="I'm sorry, but could you say tell cognito option, followed by a number instead?";
+        this.response.speak(speechOutput);
+        this.emit(':responseReady');
+    }
+    else
+       ans= Number(slotVal);
+
 
     if( questionCounter < 0){ // no form loaded illegal access
       this.response.speak('You have not loaded a form yet.');
@@ -163,7 +174,8 @@ const handlers = {
             this.emit(':responseReady');
          }
           else {
-            this.response.speak('Something went wrong with your answer, say reprompt to repeat the question.');
+            this.response.speak("I'm sorry you answer is outside the given options,"
+             +"if you want to hear the question and choices again say reprompt.");
             this.emit(':responseReady');
           }
      }
