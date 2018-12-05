@@ -36,8 +36,9 @@ var answers=[];
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
-function ansObject(question, ans){
+function ansObject(question, ansLabel, ans){
     this.key = question;
+    this.ansLabel= ansLabel;
     this.value= ans;
 
 }
@@ -91,7 +92,7 @@ const handlers = {
 
   },
 
-  //Todo make intent work with cognitoforms
+  
     'nextQuestionIntent' : function(){
 
       var speechOutput;
@@ -119,7 +120,7 @@ const handlers = {
       }
     },
 
-//Todo make answerIntent work with cognitoform
+
   'answerIntent' : function(){
 
     var slotVal= this.event.request.intent.slots.number.value;
@@ -149,14 +150,19 @@ const handlers = {
     else {
 
          var question= form.Fields[questionCounter]; // moved to prevent out of order access errors
+         var ansLabel;
         // Ensures answer given is within the bounds of the available choices
          if(ans <= form.Fields[questionCounter].Choices.length && ans > 0) {
 
 
            //storing a "key":"value" pair in answers[], this is what we have to send to cognito after we format it.
            formAns = question.Choices[ans-1].Label;
+           ansLabel= formAns;
 
-            if(question.FieldType == "YesNo"){ // answer must be changed or form submission will be rejected.
+           speechOutput= 'Storing answer, option '+ ans +', '+ansLabel;
+
+           // change the format of the answer for submission.
+           if(question.FieldType == "YesNo"){
 
                   if(formAns =="Yes"){
                       formAns='true';
@@ -164,10 +170,14 @@ const handlers = {
                       formAns='false';
                     }
             }
+            else if(question.FieldSubType == "Checkboxes"){
+                var temp = formAns;
+                formAns= '["'+ temp +'"]';
+            }
 
-            answers.push( new ansObject(question.InternalName, formAns));//reverted for functionality
+            answers.push( new ansObject(question.InternalName, ansLabel, formAns));
 
-            speechOutput= 'Storing answer, option '+ ans+', '+formAns;
+
             questionCounter++;
 
             this.response.speak(speechOutput);
@@ -192,23 +202,29 @@ const handlers = {
   //Todo make submitIntent create a form entry to cognitoforms
   'submitIntent' : function(){
 
-   //Todo Format the data in answers[] into proper json form and send it to cognito using apikey
+
     if(answers.length == form.Fields.length){ //submission only allowed if all questions answered
-       var speechOutput = '';
+        var speechOutput = '';
+        var question;
 
         var HOST = 'services.cognitoforms.com';
-
         var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
 
-        var postData = '{';// added '{' for json formatting
+        var postData = '{';
 
         //format the answers data into appropriate JSON syntax
         for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
         {
-            postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+            question = form.Fields[i];
+
+            if(question.FieldSubType == "Checkboxes"){
+              postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else
+               postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
         }
-        postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma// added '}' forjson formating
-       //don't need to stringify it's already a string.
+
+        postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
         var options = {
           hostname: HOST,
@@ -254,7 +270,7 @@ const handlers = {
 
   },
 
-//Todo create voiceAnswersIntent
+
     'repeatAnswerIntent': function () {
 
         var speechOutput='';
@@ -270,7 +286,7 @@ const handlers = {
             for (var i = 0; i < answers.length; i++) {
 
                 speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : '
-                + answers[i].value + ', as your answer. ';
+                + answers[i].ansLabel + ', as your answer. ';
 
             }
             var prompt = ' Are these answers correct?';
@@ -282,7 +298,6 @@ const handlers = {
 
     },
 
-//end of voiceAnswersIntent
 
 //built in intents just ignore them
   'AMAZON.HelpIntent': function () {
@@ -305,13 +320,13 @@ const handlers = {
           this.emit(':responseReady');
     },
 
-   // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
+
     'AMAZON.YesIntent': function () {
         this.response.speak('Perfect!');
         this.emit(':responseReady');
     },
 
-   // needs to be fixed Alexa can use emit to shift control to another intent, or speak but not both.
+
     'AMAZON.NoIntent': function () {
         this.response.speak('Oops, let us fix that. say tell cognito get form,'+
         'followed by the form name to restart your form.');
