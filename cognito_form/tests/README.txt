@@ -66,8 +66,9 @@ Step8: open the package.json you created in Step6, in your preferred editor. The
       Replace "test": "echo \"Error: no test specified\" && exit 1", with the following:
 
       "test1": "node ./tests/launch/test.js",
-      "test2": "node ./tests/get_new_form/test.js"
-
+      "test2": "node ./tests/get_new_form/test.js",
+      "test3": "node ./tests/get_next_question/test.js",
+      "behave1": "npm-run-all test[1-3]"
 
 Step9: to run a unit test or behavior test, navigate back to the root folder "cognito_form" and give the following command:
 
