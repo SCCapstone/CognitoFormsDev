@@ -30,7 +30,7 @@
                     "slots": [
                         {
                             "name": "form_name",
-                            "type": "form_name",
+                            "type": "AMAZON.SearchQuery",
                             "samples": [
                                 "{form_name} form",
                                 "{form_name}"
@@ -60,17 +60,12 @@
                     "name": "answerIntent",
                     "slots": [
                         {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER"
-                        },
-                        {
-                            "name": "wut",
+                            "name": "response",
                             "type": "AMAZON.SearchQuery"
                         }
                     ],
                     "samples": [
-                        "option {wut}",
-                        "option {number}"
+                        "answer {response}"
                     ]
                 },
                 {
@@ -112,33 +107,7 @@
                     ]
                 }
             ],
-            "types": [
-                {
-                    "name": "form_name",
-                    "values": [
-                        {
-                            "name": {
-                                "value": "demoform"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "states"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "multichoice"
-                            }
-                        },
-                        {
-                            "name": {
-                                "value": "aylademo"
-                            }
-                        }
-                    ]
-                }
-            ]
+            "types": []
         },
         "dialog": {
             "intents": [
@@ -148,14 +117,7 @@
                     "prompts": {},
                     "slots": [
                         {
-                            "name": "number",
-                            "type": "AMAZON.NUMBER",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
-                        },
-                        {
-                            "name": "wut",
+                            "name": "response",
                             "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
@@ -170,7 +132,7 @@
                     "slots": [
                         {
                             "name": "form_name",
-                            "type": "form_name",
+                            "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": true,
                             "prompts": {
@@ -179,7 +141,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
         },
         "prompts": [
             {

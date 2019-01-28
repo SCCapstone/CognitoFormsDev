@@ -24,7 +24,7 @@ utterance- [tell|ask] cognito [ to show form|
                                     show me form|
                                     give me form|
                                     get new form|
-                                    get form]
+                                    get form] <response>
 
 
 nextQuestionIntent- prompts alexa to ask the next questions.
@@ -35,7 +35,7 @@ utterance- [tell|ask] cognito [ anymore questions|next|next question]
 
 answerIntent- listens for the answer to a form question.
 
-utterance- tell cognito option [number]
+utterance- tell cognito answer <response>
 
 
 repromptIntent- reprompts the user with the current question and options.
@@ -49,14 +49,6 @@ If no questions have been Alexa will tell the user they have not provided any an
 utterance- tell cognito repeat [my form answers|my answers|answers]
 
 
-YesIntent- Follow up confirmation that the users stored answers are correct. When triggered Alexa replies "perfect!"
-
-utterance- tell cognito Yes
-
-
-NoIntent- Follow up confirmation that the users stored answers are incorrect. When triggered Alexa prompts the user to restart the form.
-
-utterance tell cognito No
 
 submitIntent- prompts Alexa to submit the completed form to cognitoforms.com
 

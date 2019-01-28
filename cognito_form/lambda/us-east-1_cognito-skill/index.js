@@ -36,9 +36,8 @@ var answers=[];
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
-function ansObject(question, ansLabel, ans){
+function ansObject(question, ans){
     this.key = question;
-    this.ansLabel= ansLabel;
     this.value= ans;
 
 }
@@ -53,14 +52,21 @@ const handlers = {
     'GetNewFormIntent': function () {
 
        formName = this.event.request.intent.slots.form_name.value;
-       var speechOutput='did not set';
+       var speechOutput;
 
+       if(formName.indexOf(' ') != -1){ //remove spaces from formName with spoken input.
+          var temp= formName.split(' ');
+          formName='';
+
+          for(var i=0; i< temp.length; i++)
+              formName+= temp[i];
+       }
 
          //https request to cognito using CognitoformsDev apikey
         https.get(HOST_NAME+apiKey+DIR+formName, (res) => {
 
           console.log('statusCode:', res.statusCode);
-          console.log('headers:', res.headers);
+        //  console.log('headers:', res.headers); silenced because it shows in unit tests.
 
 
           var returnData = '';
@@ -92,7 +98,7 @@ const handlers = {
 
   },
 
-  
+
     'nextQuestionIntent' : function(){
 
       var speechOutput;
@@ -114,7 +120,7 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say tell cognito option, followed by a number.';
+            speechOutput+= ' you can say tell cognito answer, followed by your response.';
             this.response.speak(speechOutput);
             this.emit(':responseReady');
       }
@@ -123,19 +129,13 @@ const handlers = {
 
   'answerIntent' : function(){
 
-    var slotVal= this.event.request.intent.slots.number.value;
-    var ans;
+    var formAns= this.event.request.intent.slots.response.value;
 
-    var speechOutput;
-    var formAns;
+    var incorrectInput= "I'm sorry, your answer is outside the given options,"
+     +" if you want to hear the question and choices again, say reprompt.";
 
-    if (isNaN(slotVal)){ //catch non-number input
-        speechOutput ="I'm sorry, but could you say tell cognito option, followed by a number instead?";
-        this.response.speak(speechOutput);
-        this.emit(':responseReady');
-    }
-    else
-       ans= Number(slotVal);
+     var match=false;
+     var speechOutput='';
 
 
     if( questionCounter < 0){ // no form loaded illegal access
@@ -150,44 +150,47 @@ const handlers = {
     else {
 
          var question= form.Fields[questionCounter]; // moved to prevent out of order access errors
-         var ansLabel;
-        // Ensures answer given is within the bounds of the available choices
-         if(ans <= form.Fields[questionCounter].Choices.length && ans > 0) {
+         //var ansLabel;
 
+         switch(question.FieldType){ // switch statement that formats answers by fieldtype, and fieldsubtype
 
-           //storing a "key":"value" pair in answers[], this is what we have to send to cognito after we format it.
-           formAns = question.Choices[ans-1].Label;
-           ansLabel= formAns;
+              case "YesNo":
+                  if(formAns =="yes"){
+                     formAns="true";
+                  }else if(formAns == "no"){
+                    formAns="false";
+                  }
 
-           speechOutput= 'Storing answer, option '+ ans +', '+ansLabel;
+                 // this.response.speak("user said, "+formAns);
+                 // this.emit(':responseReady');
 
-           // change the format of the answer for submission.
-           if(question.FieldType == "YesNo"){
+                  if(formAns != "true" && formAns != "false"){
+                    this.response.speak(incorrectInput);
+                    this.emit(':responseReady');
+                  }
+                  break;
 
-                  if(formAns =="Yes"){
-                      formAns='true';
-                    }else if(formAns =="No"){
-                      formAns='false';
+              case "Choice":
+                    if(question.FieldSubType == "Checkboxes"){
+                      var temp = formAns;
+                      formAns= '["'+ temp +'"]';
                     }
-            }
-            else if(question.FieldSubType == "Checkboxes"){
-                var temp = formAns;
-                formAns= '["'+ temp +'"]';
-            }
-
-            answers.push( new ansObject(question.InternalName, ansLabel, formAns));
 
 
-            questionCounter++;
 
-            this.response.speak(speechOutput);
-            this.emit(':responseReady');
+                   break;
+             default:
+                     speechOutput="I'm sorry, but something went awry";
+                     break;
          }
-          else {
-            this.response.speak("I'm sorry, your answer is outside the given options,"
-             +" if you want to hear the question and choices again, say reprompt.");
-            this.emit(':responseReady');
-          }
+         speechOutput= 'Storing answer, '+ formAns;
+         answers.push( new ansObject(question.InternalName, formAns));
+
+         questionCounter++;
+
+         this.response.speak(speechOutput);
+         this.emit(':responseReady');
+
      }
        //TODO jump to next question
        //TODO jump to recovery
@@ -240,12 +243,12 @@ const handlers = {
         var req = https.request(options, function(res) {
 
           console.log('Status: ' + res.statusCode);
-          console.log('Headers: ' + JSON.stringify(res.headers));
+        //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
 
           var returnData = '';
 
           res.on('data', function (body) {
-            console.log('Body: ' + body);
+            console.log('Body: ' + body); //not sure if should silence yet.
             returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
           });
 
@@ -286,7 +289,7 @@ const handlers = {
             for (var i = 0; i < answers.length; i++) {
 
                 speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : '
-                + answers[i].ansLabel + ', as your answer. ';
+                + answers[i].value + ', as your answer. ';
 
             }
             var prompt = ' Are these answers correct?';
@@ -318,28 +321,16 @@ const handlers = {
   'AMAZON.StopIntent': function () {
           this.response.speak(STOP_MESSAGE);
           this.emit(':responseReady');
-    },
-
-
-    'AMAZON.YesIntent': function () {
-        this.response.speak('Perfect!');
-        this.emit(':responseReady');
-    },
-
-
-    'AMAZON.NoIntent': function () {
-        this.response.speak('Oops, let us fix that. say tell cognito get form,'+
-        'followed by the form name to restart your form.');
-
-        this.emit(':responseReady');
     }
+
+
 // end of built in intents
   };
 
 
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);
-    alexa.APP_ID = APP_ID;
+    alexa.appId = APP_ID;
     alexa.registerHandlers(handlers);
     alexa.execute();
 };
