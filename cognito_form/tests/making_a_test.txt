@@ -8,12 +8,15 @@ Step2: copy the context.js, event.js, and test.js files from one of the existing
 
 Step3: inside the test.js file, replace the change.log() with the previous test name, with the one you intend to make.
 
-Step4: Open a browser to the Amazon developer portal containing the Alexa simulator. type the input you wish to test into the simulator and press enter. JSON input data will be created in the "skill I/O" window, copy the contents of the "JSON Input"
-window and run the simulation. The simulator will create a Json input & Json output.
+Step4: Open a browser to the Amazon developer portal containing the Alexa simulator. type the input you wish to test into the simulator and press enter.
+       Json input data will be created in the "skill I/O" window, copy the contents of the "JSON Input".
 
-Step5: Select and copy the Json input from step4, and replace the contents of event.js, with that input.
 
-Step6: Inside the cognito_form/package.json, add a "," to the last test you see in the "scripts" object. Now add "test<insert Number here>": "node ./tests/<your folder name here>/test.js". The package.Json should now look similar to this:
+Step5: Replace the contents of event.js, with the Json input you copied from step 4.
+
+Step6: Inside the cognito_form/package.json, add a "," to the last test you see in the "scripts" object.
+       Now add "test<insert Number here>": "node ./tests/<your folder name here>/test.js".
+       The package.Json should now look similar to this:
 
 
 {
