@@ -44,4 +44,4 @@ Step6: Inside the cognito_form/package.json, add a "," to the last test you see 
 
      You should now be able to execute your test, by using the instructions in the README.
 
-*note make sure the paths in the tests files are correct for your project, if you've altered the project from the way its presented when you original.
+*note make sure the paths in the tests files are correct for your project.
