@@ -1,0 +1,21 @@
+{
+  "name": "CognitoFormsDev-master",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-sdk": "^1.0.25",
+    "aws-sdk": "^2.395.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test1": "node ./tests/launch/test.js",
+    "test2": "node ./tests/get_new_form/test.js",
+    "test3": "node ./tests/get_next_question/test.js",
+	"test4": "node ./tests/test_repromptIntent/test.js",
+    "behave1": "npm-run-all test[1-4]"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
