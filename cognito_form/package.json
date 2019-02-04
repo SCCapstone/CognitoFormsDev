@@ -15,6 +15,7 @@
     "test4": "node ./tests/test_repromptIntent/test.js",
     "test5": "node ./tests/repeat_question/test.js",
     "behave1": "npm-run-all test[1-3]",
+    "test6": "node ./tests/test_answerIntent/test.js",
     "repaeatAnswer": "npm-run-all test[1-3,5]"
   },
   "keywords": [],
