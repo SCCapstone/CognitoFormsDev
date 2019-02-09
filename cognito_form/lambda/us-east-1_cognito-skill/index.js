@@ -8,6 +8,7 @@
 'use strict';
 const Alexa = require('alexa-sdk');
 const https= require('https');
+const Cog= require('./Cog');
 
 //=========================================================================================================================================
 //Global vars
@@ -28,9 +29,11 @@ const DIR='/forms/';
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var formName;
 var form;
-
+var rateQuestions;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
+var rateQCounter=0;
 var answers=[];
+var multiAns=[];
 
 
 //=========================================================================================================================================
@@ -103,7 +106,7 @@ const handlers = {
 
       var speechOutput;
 
-      if(questionCounter < 0 || questionCounter >= form.Fields.length){ //>= 0 && questionCounter >= form.fields.length){
+      if(questionCounter < 0 || questionCounter >= form.Fields.length){
         speechOutput = 'All questions have been answered, you can say tell cognito repeat my answers, or submit form';
         this.response.speak(speechOutput);
 
@@ -111,8 +114,55 @@ const handlers = {
       }
       else{
 
-            var question = form.Fields[questionCounter]; //gets curr quest based on questionCounter
-            speechOutput = 'I have a question for you, '+question.Name+', the options are: '; //starts by inputing default beginning
+            var question = form.Fields[questionCounter]; //gets current question based on questionCounter
+
+            if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
+              question.FieldType =="Boolean" ){
+
+              speechOutput = 'I have a question for you, '+question.Name+', the options are: '; //starts by inputing default beginning
+
+              for(var i = 0; i < question.Choices.length; i++){
+
+                 speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+              }
+
+              this.response.speak(speechOutput);
+              this.emit(':responseReady');
+
+            }
+            else if(question.FieldType =="RatingScale"){
+
+               rateQuestions=question.ChildType.Fields;
+
+               if(rateQCounter < rateQuestions.length ){
+                   var rQuestion=rateQuestions[rateQCounter].InternalName;
+
+
+                   speechOutput = 'I have a rating scale about, '+question.Name+' for you, rate: '+rQuestion+
+                                   ', the options are, ';
+
+                   for(var i = 0; i < question.Choices.length; i++){
+                     speechOutput+= ', option '+(i+1)+', '+question.Choices[i].Label+', ';
+
+                   }
+
+                   this.response.speak(speechOutput);
+                   this.emit(':responseReady');
+               }
+            }
+            else if(question.FieldType =="Address"){
+
+
+                speechOutput="Please input an address, say tell cognito address, followed by"+
+                                 "the street address, city, state, and postal code";
+
+
+                 this.response.speak(speechOutput);
+                 this.emit(':responseReady');
+
+            }
+            else {
+               speechOutput = 'I have a question for you, '+question.Name+',';
 
 
             for(var i = 0; i < question.Choices.length; i++){
@@ -120,22 +170,36 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say tell cognito answer, followed by your response.';
+            speechOutput+= ' you can say tell cognito answer, date, or time, followed by your response.';
             this.response.speak(speechOutput);
             this.emit(':responseReady');
+
+        }
       }
     },
 
 
   'answerIntent' : function(){
 
-    var formAns= this.event.request.intent.slots.response.value;
+    var formAns;
+    var slotData= this.event.request.intent.slots;
+
+    if(slotData.response.value != null)
+       formAns= slotData.response.value;
+    else if(slotData.date.value != null)
+       formAns= slotData.date.value;
+    else
+       formAns=slotData.time.value;
+
+
+    //  this.response.speak(formAns);
+    //  this.emit(':responseReady');
+
 
     var incorrectInput= "I'm sorry, your answer is outside the given options,"
      +" if you want to hear the question and choices again, say reprompt.";
 
-     var match=false;
-     var speechOutput='';
+    var speechOutput='';
 
 
     if( questionCounter < 0){ // no form loaded illegal access
@@ -155,38 +219,89 @@ const handlers = {
          switch(question.FieldType){ // switch statement that formats answers by fieldtype, and fieldsubtype
 
               case "YesNo":
-                  if(formAns =="yes"){
-                     formAns="true";
-                  }else if(formAns == "no"){
-                    formAns="false";
-                  }
 
-                 // this.response.speak("user said, "+formAns);
-                 // this.emit(':responseReady');
+                  formAns=Cog.yesNo(formAns,incorrectInput);
 
                   if(formAns != "true" && formAns != "false"){
                     this.response.speak(incorrectInput);
                     this.emit(':responseReady');
                   }
+                  else{
+                    answers.push( new ansObject(question.InternalName, formAns));
+
+                    questionCounter++;
+                    speechOutput= 'Storing answer, '+ formAns;
+                  }
                   break;
 
               case "Choice":
-                    if(question.FieldSubType == "Checkboxes"){
-                      var temp = formAns;
-                      formAns= '["'+ temp +'"]';
-                    }
 
+                 if(question.FieldSubType == "Checkboxes")
+                   formAns=Cog.checkBoxes(formAns);
 
+                   answers.push( new ansObject(question.InternalName, formAns));
+
+                   questionCounter++;
+                   speechOutput= 'Storing answer, '+ formAns;
 
                    break;
-             default:
-                     speechOutput="I'm sorry, but something went awry";
-                     break;
-         }
-         speechOutput= 'Storing answer, '+ formAns;
-         answers.push( new ansObject(question.InternalName, formAns));
 
-         questionCounter++;
+             case "Date":
+
+                  if(question.FieldSubType == "Time")
+                    formAns= Cog.time(formAns);
+
+                  answers.push( new ansObject(question.InternalName, formAns));
+
+                   questionCounter++;
+                   speechOutput= 'Storing answer, '+ formAns;
+
+                  break;
+
+            case "RatingScale":
+                  if(multiAns.length <= rateQuestions.length){
+
+                     var rQuestion=rateQuestions[rateQCounter].InternalName;
+
+                     multiAns.push(new ansObject(rQuestion,formAns));
+                     rateQCounter++;
+
+                     speechOutput="storing, "+formAns;
+
+                  }
+
+                  if(rateQCounter >= rateQuestions.length){
+
+                        speechOutput="processing, rate scale answers";
+                        formAns='{ ';
+
+                        for(var i=0; i < multiAns.length; i++){
+                            formAns+= '"'+multiAns[i].key+'"'+ ':'+'"'+multiAns[i].value+'",';
+                        }
+
+                        formAns= formAns.replace(/,+$/, "")+'}';
+
+                        answers.push( new ansObject(question.InternalName, formAns));
+                        questionCounter++;
+                        multiAns=[];
+                  }
+
+
+                  break;
+            case "Address":
+                  // Just a placeholder
+                  speechOutput= formAns;
+                  this.response.speak(speechOutput);
+                  this.emit(':responseReady');
+
+            default:
+                    speechOutput="I'm sorry, but something went awry";
+                   break;
+         }
+        //  speechOutput= 'Storing answer, '+ formAns;
+        //  answers.push( new ansObject(question.InternalName, formAns));
+
+        //  questionCounter++;
 
          this.response.speak(speechOutput);
          this.emit(':responseReady');
@@ -222,6 +337,9 @@ const handlers = {
 
             if(question.FieldSubType == "Checkboxes"){
               postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else if(question.FieldType == "RatingScale"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
             }
             else
                postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
