@@ -25,7 +25,8 @@ class Cog{
        return formAns+= ":00";
 
    }
-  
+
+
 
 }
 module.exports= Cog;
