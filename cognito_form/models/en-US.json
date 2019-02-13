@@ -62,9 +62,39 @@
                         {
                             "name": "response",
                             "type": "AMAZON.SearchQuery"
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE"
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME"
+                        },
+                        {
+                            "name": "street",
+                            "type": "AMAZON.PostalAddress"
+                        },
+                        {
+                            "name": "city",
+                            "type": "AMAZON.US_CITY"
+                        },
+                        {
+                            "name": "state",
+                            "type": "AMAZON.US_STATE"
+                        },
+                        {
+                            "name": "zip",
+                            "type": "AMAZON.SearchQuery"
                         }
                     ],
                     "samples": [
+                        "zip {zip}",
+                        "state {state}",
+                        "city {city}",
+                        "street {street}",
+                        "time {time}",
+                        "date {date}",
                         "answer {response}"
                     ]
                 },
@@ -105,6 +135,14 @@
                     "samples": [
                         "submit form"
                     ]
+                },
+                {
+                    "name": "skipQuestionIntent",
+                    "slots": [],
+                    "samples": [
+                        "skip question",
+                        "skip"
+                    ]
                 }
             ],
             "types": []
@@ -118,6 +156,48 @@
                     "slots": [
                         {
                             "name": "response",
+                            "type": "AMAZON.SearchQuery",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "date",
+                            "type": "AMAZON.DATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "time",
+                            "type": "AMAZON.TIME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "street",
+                            "type": "AMAZON.PostalAddress",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "city",
+                            "type": "AMAZON.US_CITY",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "state",
+                            "type": "AMAZON.US_STATE",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "zip",
                             "type": "AMAZON.SearchQuery",
                             "confirmationRequired": false,
                             "elicitationRequired": false,
