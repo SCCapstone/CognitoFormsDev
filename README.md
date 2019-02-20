@@ -29,9 +29,8 @@ A prompt asking to choose a template will appear, select “Start from scratch�
 Navigate to the folder containing the Cognito form project. Select the en.US.json file located: CognitoFormsDev->cognito_form->models->en.US.json.
 
 
-Open a new tab in your browser and navigate to the Amazon Web Services and login. Select “lambda” under the services menu. Select “create function’, followed by “blue prints”; in the search bar lookup “Alex-skill-kit-sdk-factskill” and select the option. At the button of the page select “configure”
-Give a name for your lambda function, and under the existing role drop down choose “lambda_basic_execution”, scroll to the bottom of the page and click “create function”
-We must now add a trigger for the function, select “Alexa skill skit” from the add trigger option. Make note of the lambda endpoint Id, located at the top right of the page, that is preceded by “ARN-”.
+Open a new tab in your browser and navigate to the Amazon Web Services and login. Select “lambda” under the services menu. Select “create function’, followed by “blue prints”; in the search bar lookup “Alex-skill-kit-sdk-factskill” and select the option. 
+Give a name for your lambda function, and under the "Role" drop down choose "create a custom role". A new page should appear showing IAM Role “lambda_basic_execution”, scroll to the bottom of the page and click allow. You should return to your pevious page, where you named the function. Make sure that all of fields have been entered correctly, and then scroll down and click the button labeled “create function”. We must now add a trigger for the function, select “Alexa skill skit” from the add trigger option. Make note of the lambda endpoint Id, located at the top right of the page, that is preceded by “ARN-”.
 
 
 Return to your first tab containing the Amazon developer portal. Select “endpoint” under the build tab and select the “AWS Lambda ARN” option. In the default Region box, place the lambda endpoint Id. Copy the skill Id featured above the default Region box, before returning to the tab with your lambda function configuration.
