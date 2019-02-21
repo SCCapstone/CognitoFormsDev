@@ -34,19 +34,23 @@ var forms;
 var formName;
 var form;
 var rateQuestions;
+var question;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var multiQcounter=0;
 var addressQcounter= -1;
 var answers=[];
 var multiAns=[];
 var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
-
+var nameArr;
+var nameArrCounter=0;
+var firstCall = true;
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
-function ansObject(question, ans){
+function ansObject(question, ans, type){
     this.key = question;
     this.value= ans;
+    this.type= type;
 
 }
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
@@ -151,7 +155,7 @@ const handlers = {
       }
       else{
 
-            var question = form.Fields[questionCounter]; //gets current question based on questionCounter
+            question = form.Fields[questionCounter]; //gets current question based on questionCounter
 
             if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
               question.FieldType =="Boolean" ){
@@ -218,6 +222,42 @@ const handlers = {
                  this.emit(':responseReady');
 
             }
+            else if(question.FieldType== "Name"){
+
+
+                   if(firstCall){
+
+                       var temp= question.Format;
+
+                       for(var i=0; i < question.Format.length; i++){
+                           if(temp.charAt(i)=='[')
+                               temp= temp.replace('[','');
+
+                           if(temp.charAt(i)==']')
+                               temp= temp.replace(']','');
+                       }
+
+                       nameArr= temp.split(' ');
+                       firstCall= false;
+
+                   }
+                   if(nameArr[nameArrCounter] == "Prefix")
+
+                      speechOutput="Ihave a question for you, what is the title?"+
+                      " you can say tell cognito answer, followed by your response."
+
+                   else if(nameArr[nameArrCounter]=="Suffix")
+
+                      speechOutput= "I have a question for you, what is the suffix";
+                   // ToDo
+                   else
+                      speechOutput= "I have a question for you, what is the "+nameArr[nameArrCounter]+
+                      " name";
+
+                   this.response.speak(speechOutput);
+                   this.emit(':responseReady');
+
+            }
             else {
                speechOutput = 'I have a question for you, '+question.Name+',';
 
@@ -231,8 +271,8 @@ const handlers = {
             this.response.speak(speechOutput);
             this.emit(':responseReady');
 
-        }
-      }
+        }// end of terminating else
+      }// end of all question conditions
     },
 
 
@@ -291,7 +331,7 @@ const handlers = {
                     this.emit(':responseReady');
                   }
                   else{
-                    answers.push( new ansObject(question.InternalName, formAns));
+                    answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
 
                     questionCounter++;
                     speechOutput= 'Storing answer, '+ formAns;
@@ -303,7 +343,7 @@ const handlers = {
                  if(question.FieldSubType == "Checkboxes")
                    formAns=Cog.checkBoxes(formAns);
 
-                   answers.push( new ansObject(question.InternalName, formAns));
+                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
 
                    questionCounter++;
                    speechOutput= 'Storing answer, '+ formAns;
@@ -315,7 +355,7 @@ const handlers = {
                   if(question.FieldSubType == "Time")
                     formAns= Cog.time(formAns);
 
-                  answers.push( new ansObject(question.InternalName, formAns));
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
 
                    questionCounter++;
                    speechOutput= 'Storing answer, '+ formAns;
@@ -327,7 +367,7 @@ const handlers = {
 
                      var rQuestion=rateQuestions[multiQcounter].InternalName;
 
-                     multiAns.push(new ansObject(rQuestion,formAns));
+                     multiAns.push(new ansObject(rQuestion,formAns, question.FieldType));
                      multiQcounter++;
 
                      speechOutput="storing, "+formAns;
@@ -345,7 +385,14 @@ const handlers = {
 
                         formAns= formAns.replace(/,+$/, "")+'}';
 
-                        answers.push( new ansObject(question.InternalName, formAns));
+                        // speechOutput+= ' '+question.Name+' '+formAns;
+
+                        // this.response.speak(speechOutput);
+                        // this.emit(':responseReady');
+
+
+
+                        answers.push( new ansObject(question.InternalName, formAns,question.FieldType));
                         questionCounter++;
                         multiQcounter=0;
                         multiAns=[];
@@ -362,7 +409,7 @@ const handlers = {
                      this.emit('skipQuestionIntent');
                  }
                  else{
-                     multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns));
+                     multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType));
                      speechOutput= "storing "+ formAns;
                       addressQcounter++;
 
@@ -375,7 +422,7 @@ const handlers = {
                           }
 
                           formAns= formAns.replace(/,+$/, "")+'}';
-                          answers.push( new ansObject(question.InternalName, formAns));
+                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
 
                           questionCounter++;
                           addressQcounter= -1;
@@ -385,6 +432,12 @@ const handlers = {
                       }
                  }
                   break;
+            case "Name":
+
+                    speechOutput="ok, name question got it, were still working on that at the moment.";
+
+
+                   break;
             default:
                     speechOutput="I'm sorry, but something went awry";
                    break;
@@ -392,7 +445,11 @@ const handlers = {
 
 
          if(questionCounter % 2 == 0 && questionCounter > 0 ){
-             speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+
+             if(form.Fields.length-questionCounter == 1)
+                speechOutput+=' , only one question remains';
+             else
+                speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
          }
 
          this.response.speak(speechOutput);
@@ -429,19 +486,23 @@ const handlers = {
         //format the answers data into appropriate JSON syntax
         for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
         {
-            question = form.Fields[i];
+            //question = form.Fields[i];
 
-            if(question.FieldSubType == "Checkboxes"){
+            if(answers[i].type == "Checkboxes"){
                 postData += '"'+answers[i].key+'":'+answers[i].value+',';
             }
-            else if(question.FieldType == "RatingScale"|| question.FieldType == "Address"){
+            else if(answers[i].type == "RatingScale" || answers[i].type == "Address"){
                 postData += '"'+answers[i].key+'":'+answers[i].value+',';
             }
             else
                 postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+
+            
         }
 
         postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
+
+
 
         var options = {
           hostname: HOST,
@@ -480,7 +541,7 @@ const handlers = {
       this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
     }
     else{
-      speechOutput='Please answer all questions before you submit your form. '+questionCounter+', '+form.Fields.length ;
+      speechOutput='Please answer all questions before you submit your form. ';
       this.response.speak(speechOutput);
       this.emit(':responseReady');
     }
