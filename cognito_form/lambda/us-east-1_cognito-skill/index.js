@@ -29,6 +29,18 @@ const DIR='/forms/';
 
 const US_ADDRESS_LENGTH=4;
 
+
+//"smallImageUrl": "https://user-images.githubusercontent.com/23157098/53307733-72c8e200-3869-11e9-8b36-2051fc858cd9.png",
+                   //"largeImageUrl": "https://user-images.githubusercontent.com/23157098/53307749-8c6a2980-3869-11e9-9c4b-82f57a4c14e0.png"
+
+//"smallImageUrl": "https://user-images.githubusercontent.com/23157098/53308323-0ef4e800-386e-11e9-8f9a-4de9f38fe97a.png"
+
+var imageObj ={
+                   "smallImageUrl": "https://user-images.githubusercontent.com/23157098/53307733-72c8e200-3869-11e9-8b36-2051fc858cd9.png",
+                   "largeImageUrl": "https://user-images.githubusercontent.com/23157098/53307749-8c6a2980-3869-11e9-9c4b-82f57a4c14e0.png"
+
+                 };
+
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var forms;
 var formName;
@@ -47,16 +59,22 @@ var firstCall = true;
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
-function ansObject(question, ans, type){
+function ansObject(question, ans, type, subType){
     this.key = question;
     this.value= ans;
     this.type= type;
+    this.subType= subType;
 
 }
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
+
             var speechOutput= "Welcome to the cognito form app, here's a list of the available forms ";
+            var repromptSpeech="You can say cognito get form followed by a form name.";
+
+            var cardTitle="Welcome to Cognito forms";
+            var cardContent= '';
 
              //https request to cognito using CognitoformsDev apikey
             https.get(HOST_NAME+apiKey+DIR, (res) => {
@@ -74,13 +92,20 @@ const handlers = {
                   if(returnData != ''){               // the forms exist.
                      forms = JSON.parse(returnData);
 
-                     for(var i=0; i < forms.length; i++)
+                     for(var i=0; i < forms.length; i++){
                         speechOutput+= ', '+forms[i].InternalName;
+                        cardContent+= forms[i].InternalName+', ';
 
+                     }
                       speechOutput+= HELP_MESSAGE;
+                      cardContent+= HELP_MESSAGE;
 
-                      this.response.speak(speechOutput);
-                      this.emit(':responseReady');
+                    //   this.response.speak(speechOutput);
+                    //   this.emit(':responseReady');
+
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
                   }
                   else{                              // the forms do not exist.
                       speechOutput="I'm sorry, no forms are currently available";
@@ -98,6 +123,9 @@ const handlers = {
 
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
+
+       var prompt="you can say next, for the next question";
+       var cardTitle= formName;
 
        if(formName.indexOf(' ') != -1){ //remove spaces from formName with spoken input.
           var temp= formName.split(' ');
@@ -124,11 +152,12 @@ const handlers = {
                  form = JSON.parse(returnData);
 
                  questionCounter = 0;
-                 speechOutput='Readying form, '+formName+ ', you can say tell cognito next for the next question.';
+                 speechOutput='Readying form, '+formName+ ','+prompt ;
 
+                this.emit(':askWithCard', speechOutput, prompt, cardTitle, prompt, imageObj);
 
-                  this.response.speak(speechOutput);
-                  this.emit(':responseReady');
+                //   this.response.speak(speechOutput);
+                //   this.emit(':responseReady');
               }
               else{                              // the form requested does not exist.
                   speechOutput="I'm sorry, that form is unavailable";
@@ -148,7 +177,7 @@ const handlers = {
       var speechOutput;
 
       if(questionCounter < 0 || questionCounter >= form.Fields.length){
-        speechOutput = 'All questions have been answered, you can say tell cognito repeat my answers, or submit form';
+        speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
         this.response.speak(speechOutput);
 
         this.emit(':responseReady');
@@ -160,15 +189,21 @@ const handlers = {
             if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
               question.FieldType =="Boolean" ){
 
-              speechOutput = 'I have a question for you, '+question.Name+', the options are: '; //starts by inputing default beginning
+              speechOutput = ''+question.Name+', the options are: '; //starts by inputing default beginning
 
               for(var i = 0; i < question.Choices.length; i++){
 
                  speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
               }
 
-              this.response.speak(speechOutput);
-              this.emit(':responseReady');
+              var repromptSpeech= speechOutput;
+              var cardTitle=''+question.Name;
+
+              var cardContent= repromptSpeech;
+
+                 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+            //   this.response.speak(speechOutput);
+            //   this.emit(':responseReady');
 
             }
             else if(question.FieldType =="RatingScale"){
@@ -209,7 +244,7 @@ const handlers = {
                    speechOutput="I'm sorry, the next questions asks about international addresses. "+
                    " International addresses are not supported for this skill yet.";
 
-                   speechOutput+=' You can say cognito skip, to skip this quesion.'
+                   speechOutput+=' You can say cognito skip, to skip this quesion.';
                }
 
                else{
@@ -244,7 +279,7 @@ const handlers = {
                    if(nameArr[nameArrCounter] == "Prefix")
 
                       speechOutput="Ihave a question for you, what is the title?"+
-                      " you can say tell cognito answer, followed by your response."
+                      " you can say tell cognito answer, followed by your response.";
 
                    else if(nameArr[nameArrCounter]=="Suffix")
 
@@ -331,7 +366,7 @@ const handlers = {
                     this.emit(':responseReady');
                   }
                   else{
-                    answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
+                    answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                     questionCounter++;
                     speechOutput= 'Storing answer, '+ formAns;
@@ -340,13 +375,61 @@ const handlers = {
 
               case "Choice":
 
-                 if(question.FieldSubType == "Checkboxes")
-                   formAns=Cog.checkBoxes(formAns);
 
-                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
+                  if(question.FieldSubType != "Checkboxes"){
+                          var validAns=false;
 
-                   questionCounter++;
-                   speechOutput= 'Storing answer, '+ formAns;
+                          for(var i=0; i < question.Choices.length; i++){
+
+                              if(formAns == question.Choices[i].Label.toLowerCase()){
+
+
+                                  validAns = true;
+                                 // speechOutput= formAns+' matches '+question.Choices[i].Label;
+                                  i= question.Choices.length;
+                              }
+                          }
+
+                          if(validAns == false){
+
+                             this.response.speak(incorrectInput);
+                             this.emit(':responseReady');
+
+                             break;
+                          }
+
+                  }
+                  if(question.FieldSubType == "Checkboxes"){
+
+                     var formAnsArr= Cog.checkBoxesArr(formAns);
+                     var validAnsCount=0;
+
+
+
+
+                          for(var j=0; j < formAnsArr.length; j++){
+
+                              for(var i=0; i < question.Choices.length; i++){
+
+                                  if(formAnsArr[j] == question.Choices[i].Label.toLowerCase())
+                                     validAnsCount++;
+                              }
+                          }
+                     if(validAnsCount < formAnsArr.length || formAnsArr.length > question.Choices.length){ //invalid answers given
+
+                             this.response.speak(incorrectInput+"valid count is "+validAnsCount+" formAnsArr is "+
+                                  formAnsArr.length+"heres the array: "+formAnsArr);
+                             this.emit(':responseReady');
+                          }
+
+
+                       formAns=Cog.checkBoxes(formAns);
+                  }
+
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+
+                  questionCounter++;
+                  speechOutput= 'Storing answer, '+ formAns;
 
                    break;
 
@@ -355,7 +438,7 @@ const handlers = {
                   if(question.FieldSubType == "Time")
                     formAns= Cog.time(formAns);
 
-                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                    questionCounter++;
                    speechOutput= 'Storing answer, '+ formAns;
@@ -367,7 +450,7 @@ const handlers = {
 
                      var rQuestion=rateQuestions[multiQcounter].InternalName;
 
-                     multiAns.push(new ansObject(rQuestion,formAns, question.FieldType));
+                     multiAns.push(new ansObject(rQuestion,formAns, question.FieldType, question.FieldSubType));
                      multiQcounter++;
 
                      speechOutput="storing, "+formAns;
@@ -392,7 +475,7 @@ const handlers = {
 
 
 
-                        answers.push( new ansObject(question.InternalName, formAns,question.FieldType));
+                        answers.push( new ansObject(question.InternalName, formAns,question.FieldType, question.FieldSubType));
                         questionCounter++;
                         multiQcounter=0;
                         multiAns=[];
@@ -409,7 +492,7 @@ const handlers = {
                      this.emit('skipQuestionIntent');
                  }
                  else{
-                     multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType));
+                     multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
                      speechOutput= "storing "+ formAns;
                       addressQcounter++;
 
@@ -422,19 +505,46 @@ const handlers = {
                           }
 
                           formAns= formAns.replace(/,+$/, "")+'}';
-                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType));
+                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                           questionCounter++;
                           addressQcounter= -1;
-                          multiAns=[];
 
+                          multiAns=[];
                           speechOutput+=' ,processing address'; //, pushing '+question.InternalName+', '+formAns;
                       }
                  }
                   break;
             case "Name":
 
-                    speechOutput="ok, name question got it, were still working on that at the moment.";
+                    if(nameArrCounter < nameArr.length){
+                        multiAns.push(new ansObject(nameArr[nameArrCounter], formAns, question.FieldType, question.FieldSubType));
+                        nameArrCounter++;
+
+                        speechOutput="storing "+formAns;
+                    }
+
+                    if(nameArrCounter >= nameArr.length){
+
+                        formAns='{ ';
+
+                          for(var i=0; i < multiAns.length; i++){
+                            formAns+= '"'+multiAns[i].key+'"'+ ':'+'"'+multiAns[i].value+'",';
+                          }
+
+                          formAns= formAns.replace(/,+$/, "")+'}';
+                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+
+                          questionCounter++;
+                          speechOutput+=" ,processing name fields";
+
+                          nameArrCounter=0;
+                          firstCall=true;
+
+                          multiAns=[];
+
+                    }
+
 
 
                    break;
@@ -476,7 +586,6 @@ const handlers = {
 
     if(questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
         var speechOutput = '';
-        var question;
 
         var HOST = 'services.cognitoforms.com';
         var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
@@ -486,23 +595,28 @@ const handlers = {
         //format the answers data into appropriate JSON syntax
         for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
         {
-            //question = form.Fields[i];
 
-            if(answers[i].type == "Checkboxes"){
+
+            if(answers[i].type == "Choice" && answers[i].subType=="Checkboxes"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
+
+
+            }
+            else if(answers[i].type == "RatingScale" || answers[i].type == "Address"|| answers[i].type == "Name"){
                 postData += '"'+answers[i].key+'":'+answers[i].value+',';
             }
-            else if(answers[i].type == "RatingScale" || answers[i].type == "Address"){
-                postData += '"'+answers[i].key+'":'+answers[i].value+',';
-            }
-            else
+            else{
                 postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
 
-            
+
+            }
+
         }
 
         postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
-
+        // this.response.speak(postData);
+        // this.emit(':responseReady');
 
         var options = {
           hostname: HOST,
@@ -603,6 +717,8 @@ const handlers = {
          addressQcounter= -1;
          answers=[];
          multiAns=[];
+         nameArrCounter=0;
+         firstCall = true;
          this.response.speak(STOP_MESSAGE);
          this.emit(':responseReady');
     }
