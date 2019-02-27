@@ -19,7 +19,7 @@ const Cog= require('./Cog');
 const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE =', You can say cognito get new form followed by a form name, or, you can say exit... What can I help you with?';
+const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
 const STOP_MESSAGE = 'Leaving cognito form goodbye!';
@@ -29,15 +29,9 @@ const DIR='/forms/';
 
 const US_ADDRESS_LENGTH=4;
 
-
-//"smallImageUrl": "https://user-images.githubusercontent.com/23157098/53307733-72c8e200-3869-11e9-8b36-2051fc858cd9.png",
-                   //"largeImageUrl": "https://user-images.githubusercontent.com/23157098/53307749-8c6a2980-3869-11e9-9c4b-82f57a4c14e0.png"
-
-//"smallImageUrl": "https://user-images.githubusercontent.com/23157098/53308323-0ef4e800-386e-11e9-8f9a-4de9f38fe97a.png"
-
 var imageObj ={
-                   "smallImageUrl": "https://user-images.githubusercontent.com/23157098/53307733-72c8e200-3869-11e9-8b36-2051fc858cd9.png",
-                   "largeImageUrl": "https://user-images.githubusercontent.com/23157098/53307749-8c6a2980-3869-11e9-9c4b-82f57a4c14e0.png"
+                   "smallImageUrl": "https://s3.amazonaws.com/cognitoappimage/CognitoEmblemLarge720x480.png",
+                   "largeImageUrl": "https://s3.amazonaws.com/cognitoappimage/CognitoEmblemLarge1200x800.png"
 
                  };
 
@@ -73,7 +67,7 @@ const handlers = {
             var speechOutput= "Welcome to the cognito form app, here's a list of the available forms ";
             var repromptSpeech="You can say cognito get form followed by a form name.";
 
-            var cardTitle="Welcome to Cognito forms";
+            var cardTitle="Welcome to Cognito Forms";
             var cardContent= '';
 
              //https request to cognito using CognitoformsDev apikey
@@ -100,17 +94,13 @@ const handlers = {
                       speechOutput+= HELP_MESSAGE;
                       cardContent+= HELP_MESSAGE;
 
-                    //   this.response.speak(speechOutput);
-                    //   this.emit(':responseReady');
-
                       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
                   }
                   else{                              // the forms do not exist.
                       speechOutput="I'm sorry, no forms are currently available";
-                      this.response.speak(speechOutput);
-                      this.emit(':responseReady');
+                      this.emit(':ask',speechOutput, repromptSpeech);
                   }
              });
 
@@ -125,7 +115,11 @@ const handlers = {
        var speechOutput;
 
        var prompt="you can say next, for the next question";
-       var cardTitle= formName;
+       var cardTitle;
+
+       var capitalizeLetter = formName.slice(0,1).toUpperCase();
+       cardTitle =formName.replace(formName.slice(0,1), capitalizeLetter);
+
 
        if(formName.indexOf(' ') != -1){ //remove spaces from formName with spoken input.
           var temp= formName.split(' ');
@@ -156,13 +150,10 @@ const handlers = {
 
                 this.emit(':askWithCard', speechOutput, prompt, cardTitle, prompt, imageObj);
 
-                //   this.response.speak(speechOutput);
-                //   this.emit(':responseReady');
               }
               else{                              // the form requested does not exist.
                   speechOutput="I'm sorry, that form is unavailable";
-                  this.response.speak(speechOutput);
-                  this.emit(':responseReady');
+                  this.emit(':ask', speechOutput, prompt);
               }
          });
 
@@ -214,11 +205,11 @@ const handlers = {
                    var rQuestion=rateQuestions[multiQcounter].InternalName;
 
 
-                   speechOutput = 'I have a rating scale about, '+question.Name+' for you, rate: '+rQuestion+
-                                   ', the options are, ';
+                   speechOutput = question.Name+', '+rQuestion+
+                                   ', the options are: ';
 
                    for(var i = 0; i < question.Choices.length; i++){
-                     speechOutput+= ', option '+(i+1)+', '+question.Choices[i].Label+', ';
+                     speechOutput+= question.Choices[i].Label+', ';
 
                    }
 
@@ -339,31 +330,59 @@ const handlers = {
     var incorrectInput= "I'm sorry, your answer is outside the given options,"
      +" if you want to hear the question and choices again, say reprompt.";
 
-    var speechOutput='';
+    var speechOutput;
+    var repromptSpeech="say reprompt, to hear the question again";
+
+    var cardTitle;
+    var cardContent;
 
 
     if( questionCounter < 0){ // no form loaded illegal access
-      this.response.speak('You have not loaded a form yet.');
-      this.emit(':responseReady');
+
+      speechOutput='You have not loaded a form yet';
+      repromptSpeech=HELP_MESSAGE;
+
+      cardTitle=speechOutput;
+      cardContent= HELP_MESSAGE;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
     }
     else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
+      speechOutput='All questions have been answered';
+      repromptSpeech='you can say repeat my answers or submit form';
 
-      this.response.speak('All questions have been answered, you can say repeat my answers, or submit form');
-      this.emit(':responseReady');
+      cardTitle= speechOutput;
+      cardContent= repromptSpeech;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
     }
     else {
 
+         var validAns;
          var question= form.Fields[questionCounter]; // moved to prevent out of order access errors
 
          switch(question.FieldType){ // switch statement that formats answers by fieldtype, and fieldsubtype
+
 
               case "YesNo":
 
                   formAns=Cog.yesNo(formAns,incorrectInput);
 
                   if(formAns != "true" && formAns != "false"){
-                    this.response.speak(incorrectInput);
-                    this.emit(':responseReady');
+                    // this.response.speak(incorrectInput);
+                    // this.emit(':responseReady');
+
+                    speechOutput=incorrectInput;
+                    repromptSpeech= "say reprompt, to hear the question again";
+
+                    cardTitle="Incorrect Input";
+                    cardContent=repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
                   }
                   else{
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
@@ -377,7 +396,7 @@ const handlers = {
 
 
                   if(question.FieldSubType != "Checkboxes"){
-                          var validAns=false;
+                          validAns=false;
 
                           for(var i=0; i < question.Choices.length; i++){
 
@@ -392,9 +411,15 @@ const handlers = {
 
                           if(validAns == false){
 
-                             this.response.speak(incorrectInput);
-                             this.emit(':responseReady');
+                            speechOutput= incorrectInput;
+                            repromptSpeech= "say reprompt, to hear the question again";
 
+                            cardTitle=" Incorrect input";
+                            cardContent= repromptSpeech;
+                             // this.response.speak(incorrectInput);
+                             // this.emit(':responseReady');
+
+                             this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
                              break;
                           }
 
@@ -406,21 +431,29 @@ const handlers = {
 
 
 
+                     for(var j=0; j < formAnsArr.length; j++){
 
-                          for(var j=0; j < formAnsArr.length; j++){
+                          for(var i=0; i < question.Choices.length; i++){
 
-                              for(var i=0; i < question.Choices.length; i++){
-
-                                  if(formAnsArr[j] == question.Choices[i].Label.toLowerCase())
-                                     validAnsCount++;
-                              }
+                                if(formAnsArr[j] == question.Choices[i].Label.toLowerCase())
+                                   validAnsCount++;
                           }
+                     }
+
                      if(validAnsCount < formAnsArr.length || formAnsArr.length > question.Choices.length){ //invalid answers given
 
-                             this.response.speak(incorrectInput+"valid count is "+validAnsCount+" formAnsArr is "+
-                                  formAnsArr.length+"heres the array: "+formAnsArr);
-                             this.emit(':responseReady');
-                          }
+                             // this.response.speak(incorrectInput+"valid count is "+validAnsCount+" formAnsArr is "+
+                             //      formAnsArr.length+"heres the array: "+formAnsArr);
+                             // this.emit(':responseReady');
+                               speechOutput="One or more of your responses, does not match the given options, "+
+                                            repromptSpeech;
+
+                               cardTitle=" Incorrect input";
+                               cardContent= repromptSpeech;
+
+                               this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                               break;
+                    }
 
 
                        formAns=Cog.checkBoxes(formAns);
@@ -446,7 +479,16 @@ const handlers = {
                   break;
 
             case "RatingScale":
-                  if(multiAns.length <= rateQuestions.length){
+                 validAns =false;
+
+                 for(var i=0; i< question.choices.length; i++){
+
+                     if(formAns == question.choices[i].Label.toLowerCase())
+                        validAns=true;
+                 }
+
+
+                  if(multiAns.length <= rateQuestions.length && validAns){
 
                      var rQuestion=rateQuestions[multiQcounter].InternalName;
 
@@ -455,6 +497,16 @@ const handlers = {
 
                      speechOutput="storing, "+formAns;
 
+                  }
+                  else{
+
+                    speechOutput="One or more of your responses, do not match the given options";
+
+                    cardTitle=" Incorrect input";
+                    cardContent= repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                    break;
                   }
 
                   if(multiQcounter >= rateQuestions.length){
@@ -562,8 +614,15 @@ const handlers = {
                 speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
          }
 
-         this.response.speak(speechOutput);
-         this.emit(':responseReady');
+
+         repromptSpeech= "say next, for the next quesiont";
+
+         cardTitle=""+question.InternalName;
+         cardContent= ""+formAns;
+
+         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+         // this.response.speak(speechOutput);
+         // this.emit(':responseReady');
 
      }
        //TODO jump to next question
@@ -671,8 +730,9 @@ const handlers = {
              speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
              "then I will be able to repeat your given answers.";
 
-             this.response.speak(speechOutput);
-             this.emit(':responseReady');
+            this.response.speak(speechOutput);
+            this.emit(':responseReady');
+
          }
         else {
             for (var i = 0; i < answers.length; i++) {
@@ -684,9 +744,11 @@ const handlers = {
             var prompt = ' Are these answers correct?';
             speechOutput+= prompt;
 
-       }
+      }
         this.response.speak(speechOutput);
         this.emit(':responseReady');
+
+
 
     },
 
