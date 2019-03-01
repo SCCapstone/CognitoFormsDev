@@ -114,7 +114,8 @@ const handlers = {
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
 
-       var prompt="you can say next, for the next question";
+       var prompt= "For the next question you can say 'next'. Remember to say next after I confirm your response to each question and to phrase your responce as: Answer Response.";
+       
        var cardTitle;
 
        var capitalizeLetter = formName.slice(0,1).toUpperCase();
@@ -169,9 +170,7 @@ const handlers = {
 
       if(questionCounter < 0 || questionCounter >= form.Fields.length){
         speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
-        this.response.speak(speechOutput);
-
-        this.emit(':responseReady');
+        this.emit(':ask', speechOutput, repromptSpeech);
       }
       else{
 
@@ -269,7 +268,7 @@ const handlers = {
                    }
                    if(nameArr[nameArrCounter] == "Prefix")
 
-                      speechOutput="Ihave a question for you, what is the title?"+
+                      speechOutput="I have a question for you, what is the title?"+
                       " you can say tell cognito answer, followed by your response.";
 
                    else if(nameArr[nameArrCounter]=="Suffix")
@@ -293,7 +292,7 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say tell cognito answer, date, or time, followed by your response.';
+            speechOutput+= ' you can say your answer as, date, or time, followed by your response.';
             this.response.speak(speechOutput);
             this.emit(':responseReady');
 
@@ -615,7 +614,7 @@ const handlers = {
          }
 
 
-         repromptSpeech= "say next, for the next quesiont";
+         repromptSpeech= "say next, for the next question";
 
          cardTitle=""+question.InternalName;
          cardContent= ""+formAns;
@@ -725,30 +724,29 @@ const handlers = {
     'repeatAnswerIntent': function () {
 
         var speechOutput='';
+        var repromptSpeech=' Are these answers correct?';
+        
+        var cardTitle="Your Answers:";
+        var cardContent='';
 
          if (questionCounter < 0 || answers.length <= 0) {
              speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
              "then I will be able to repeat your given answers.";
-
-            this.response.speak(speechOutput);
-            this.emit(':responseReady');
-
+             this.emit(':ask', speechOutput, repromptSpeech);
+            
          }
         else {
             for (var i = 0; i < answers.length; i++) {
 
-                speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave : '
+                speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave '
                 + answers[i].value + ', as your answer. ';
-
+                cardContent+= form.Fields[i].Name +' '+ answers[i].value+', ';
             }
             var prompt = ' Are these answers correct?';
             speechOutput+= prompt;
-
+            cardContent+= prompt;
       }
-        this.response.speak(speechOutput);
-        this.emit(':responseReady');
-
-
+         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
 
     },
 
@@ -757,9 +755,9 @@ const handlers = {
   'AMAZON.HelpIntent': function () {
           const speechOutput = HELP_MESSAGE;
           const reprompt = HELP_REPROMPT;
-
-          this.response.speak(speechOutput).listen(reprompt);
-          this.emit(':responseReady');
+          this.emit(':ask', speechOutput, reprompt);
+          //this.response.speak(speechOutput).listen(reprompt);
+          //this.emit(':responseReady');
   },
 
 
