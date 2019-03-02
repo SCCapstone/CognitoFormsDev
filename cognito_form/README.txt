@@ -43,7 +43,7 @@ repromptIntent- reprompts the user with the current question and options.
 utterance- tell cognito reprompt
 
 
-repeatAnswersIntent- Alexa will repeat the answers to the question that have been answered so far. 
+repeatAnswersIntent- Alexa will repeat the answers to the question that have been answered so far.
 If no questions have been Alexa will tell the user they have not provided any answers yet.
 
 utterance- tell cognito repeat [my form answers|my answers|answers]
@@ -54,3 +54,31 @@ submitIntent- prompts Alexa to submit the completed form to cognitoforms.com
 
 utterance- tell cognito submit form
 
+--------------------------------------------
+#### FOR GOING THROUGH FORMS ####
+
+FORM - RTD:
+start cognito
+get form rtd
+next
+tell cognito date <month day>
+next
+tell cognito time <time pm/am>
+next
+tell cognito answer neutral
+next
+submit form(?)
+
+----------------------------------
+
+FORM - MULTICHOICE
+start cognito
+get form multichoice
+next
+answer <yes/no>
+next
+answer <sport>
+next
+answer <movie types>
+next
+submit form(?)
