@@ -19,7 +19,7 @@ const Cog= require('./Cog');
 const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say tell cognito exit... What can I help you with?';
+const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say end session... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
 const STOP_MESSAGE = 'Leaving cognito form, goodbye!';
@@ -114,7 +114,7 @@ const handlers = {
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
 
-       var prompt= "For the next question you can say 'next'. Remember to say next after I confirm your response to each question and to phrase your responce as: Answer Response.";
+       var prompt= "For the next question you can say 'next'.";
 
        var cardTitle;
 
@@ -186,6 +186,7 @@ const handlers = {
                  speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
               }
 
+              speechOutput+="say answer, followed by your response."
               var repromptSpeech= speechOutput;
               var cardTitle=''+question.Name;
 
@@ -292,9 +293,16 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say your answer as, date, or time, followed by your response.';
-            this.response.speak(speechOutput);
-            this.emit(':responseReady');
+            speechOutput+= ' you can say answer, mark date, or time, followed by your response.';
+
+            repromptSpeech= speechOutput;
+            cardTitle=''+question.Name;
+
+            cardContent= repromptSpeech;
+
+            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
 
         }// end of terminating else
       }// end of all question conditions
@@ -751,25 +759,8 @@ const handlers = {
     },
 
 
-//built in intents just ignore them
-  'AMAZON.HelpIntent': function () {
-          const speechOutput = HELP_MESSAGE;
-          const reprompt = HELP_REPROMPT;
-          this.emit(':ask', speechOutput, reprompt);
-          //this.response.speak(speechOutput).listen(reprompt);
-          //this.emit(':responseReady');
-  },
-
-
-  'AMAZON.CancelIntent': function () {
-          this.response.speak(STOP_MESSAGE);
-          this.emit(':responseReady');
-  },
-
-
-  'AMAZON.StopIntent': function () {
-
-         formName='';
+  'exitIntent': function(){
+       formName='';
          form='';
          rateQuestions='';
          questionCounter = -1;
@@ -781,12 +772,31 @@ const handlers = {
          firstCall = true;
 
          var speechOutput= STOP_MESSAGE;
-         var repromptSpeech='as';
 
          var cardTitle='Exiting Cognito Form';
          var cardContent=STOP_MESSAGE;
 
          this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+
+
+  },
+
+//built in intents just ignore them
+  'AMAZON.HelpIntent': function () {
+          const speechOutput = HELP_MESSAGE;
+          const reprompt = HELP_REPROMPT;
+          this.emit(':ask', speechOutput, reprompt);
+          //this.response.speak(speechOutput).listen(reprompt);
+          //this.emit(':responseReady');
+  },
+
+
+  'AMAZON.CancelIntent': function () {
+
+  },
+
+  'AMAZON.StopIntent': function () {
+
 
 
     }
