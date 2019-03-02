@@ -293,7 +293,8 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say answer, mark date, or time, followed by your response.';
+            speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,''
+             + 'or time to set a time.';
 
             repromptSpeech= speechOutput;
             cardTitle=''+question.Name;
