@@ -709,9 +709,12 @@ const handlers = {
         req.write(postData);
         req.end();
 
-      speechOutput="your form has been submitted.";
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
+        speechOutput="your form has been submitted.";
+        var cardTitle="Final Form Submission";
+        var cardContent= postData;
+        //this.response.speak(speechOutput);
+        //this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     }
     else{
       speechOutput='Please answer all questions before you submit your form. ';
