@@ -19,10 +19,10 @@ const Cog= require('./Cog');
 const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say exit... What can I help you with?';
+const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say tell cognito exit... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
-const STOP_MESSAGE = 'Leaving cognito form goodbye!';
+const STOP_MESSAGE = 'Leaving cognito form, goodbye!';
 
 const HOST_NAME = 'https://services.cognitoforms.com/forms/api/';
 const DIR='/forms/';
@@ -115,7 +115,7 @@ const handlers = {
        var speechOutput;
 
        var prompt= "For the next question you can say 'next'. Remember to say next after I confirm your response to each question and to phrase your responce as: Answer Response.";
-       
+
        var cardTitle;
 
        var capitalizeLetter = formName.slice(0,1).toUpperCase();
@@ -725,7 +725,7 @@ const handlers = {
 
         var speechOutput='';
         var repromptSpeech=' Are these answers correct?';
-        
+
         var cardTitle="Your Answers:";
         var cardContent='';
 
@@ -733,7 +733,7 @@ const handlers = {
              speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
              "then I will be able to repeat your given answers.";
              this.emit(':ask', speechOutput, repromptSpeech);
-            
+
          }
         else {
             for (var i = 0; i < answers.length; i++) {
@@ -769,9 +769,9 @@ const handlers = {
 
   'AMAZON.StopIntent': function () {
 
-         formName;
-         form;
-         rateQuestions;
+         formName='';
+         form='';
+         rateQuestions='';
          questionCounter = -1;
          multiQcounter=0;
          addressQcounter= -1;
@@ -779,10 +779,17 @@ const handlers = {
          multiAns=[];
          nameArrCounter=0;
          firstCall = true;
-         this.response.speak(STOP_MESSAGE);
-         this.emit(':responseReady');
-    }
 
+         var speechOutput= STOP_MESSAGE;
+         var repromptSpeech='as';
+
+         var cardTitle='Exiting Cognito Form';
+         var cardContent=STOP_MESSAGE;
+
+         this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+
+
+    }
 
 // end of built in intents
   };
