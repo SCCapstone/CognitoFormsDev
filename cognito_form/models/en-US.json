@@ -36,12 +36,6 @@
                         }
                     ],
                     "samples": [
-                        "to show form {form_name}",
-                        "to add form {form_name}",
-                        "to get form {form_name}",
-                        "show me form {form_name}",
-                        "give me form {form_name}",
-                        "get new form {form_name}",
                         "get form {form_name}"
                     ]
                 },

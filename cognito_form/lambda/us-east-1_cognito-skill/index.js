@@ -22,7 +22,7 @@ const SKILL_NAME = 'cognito form';
 const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say end session... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
-const STOP_MESSAGE = 'Leaving cognito form, goodbye!';
+const STOP_MESSAGE = 'Thank you for using the Cognito Form Alexa app, goodbye!';
 
 const HOST_NAME = 'https://services.cognitoforms.com/forms/api/';
 const DIR='/forms/';
@@ -167,6 +167,10 @@ const handlers = {
     'nextQuestionIntent' : function(){
 
       var speechOutput;
+      var repromptSpeech;
+
+      var cardTitle;
+      var cardContent;
 
       if(questionCounter < 0 || questionCounter >= form.Fields.length){
         speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
@@ -186,11 +190,11 @@ const handlers = {
                  speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
               }
 
-              speechOutput+="say answer, followed by your response."
-              var repromptSpeech= speechOutput;
-              var cardTitle=''+question.Name;
+              speechOutput+="say answer, followed by your response.";
+              repromptSpeech= speechOutput;
 
-              var cardContent= repromptSpeech;
+              cardTitle=''+question.Name;
+              cardContent= repromptSpeech;
 
                  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
             //   this.response.speak(speechOutput);
@@ -212,10 +216,11 @@ const handlers = {
                      speechOutput+= question.Choices[i].Label+', ';
 
                    }
-                   var repromptSpeech = speechOutput;
-                   var cardTitle = '' + question.Name;
+                   speechOutput+= 'you can say answer, followed by your response';
+                   repromptSpeech = speechOutput;
+                   cardTitle = '' + question.Name;
 
-                   var cardContent = repromptSpeech;
+                   cardContent = repromptSpeech;
 
                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
                }
@@ -227,29 +232,29 @@ const handlers = {
                   if( addressQcounter < US_ADDRESS_LENGTH){
 
                     if(addressQcounter == 0)
-                      speechOutput= 'please tell me the street address, you can say tell cognito street, followed '
+                      speechOutput= 'please tell me the street address, you can say street, followed '
                                     + 'by a number and street name';
                     else
                       speechOutput= 'please tell me the '+usAddressQ[addressQcounter]+
-                                     ', you can say tell cognito, city, state, or zip, followed by your response.';
+                                     ', you can say, city, state, or zip, followed by your response.';
                   }
                }
                else if(question.FieldSubType=="InternationalAddress"){
                    speechOutput="I'm sorry, the next questions asks about international addresses. "+
                    " International addresses are not supported for this skill yet.";
 
-                   speechOutput+=' You can say cognito skip, to skip this quesion.';
+                   speechOutput+=' You can say skip, to skip this quesion.';
                }
 
                else{
                  speechOutput="The next question asks, for an address, do I"+
-                              " have permission to use it? You can say tell cognito answer yes, or no.";
+                              " have permission to use it? You can say answer yes, or no.";
 
                }
-                var repromptSpeech = speechOutput;
-                var cardTitle = '' + question.Name;
+                repromptSpeech = speechOutput;
+                cardTitle = '' + question.Name;
 
-                var cardContent = repromptSpeech;
+                cardContent = repromptSpeech;
 
                 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
@@ -275,21 +280,25 @@ const handlers = {
                    }
                    if(nameArr[nameArrCounter] == "Prefix")
 
-                      speechOutput="I have a question for you, what is the title?"+
-                      " you can say tell cognito answer, followed by your response.";
+                      speechOutput="What is the title?"+
+                      " you can say answer, followed by your response.";
 
                    else if(nameArr[nameArrCounter]=="Suffix")
 
-                      speechOutput= "I have a question for you, what is the suffix";
-                   // ToDo
+                      speechOutput= "What is the suffix";
+
+                   else if(nameArr[nameArrCounter]=="MiddleInitial")
+
+                      speechOutput= "What is the Middle initial";
+
                    else
-                      speechOutput= "I have a question for you, what is the "+nameArr[nameArrCounter]+
-                      " name";
+                      speechOutput= "What is the "+nameArr[nameArrCounter]+
+                      " name, you can say answer followed by your response";
 
-                var repromptSpeech = speechOutput;
-                var cardTitle = '' + question.Name;
+                  repromptSpeech = speechOutput;
+                  cardTitle = '' + question.Name;
 
-                var cardContent = repromptSpeech;
+                  cardContent = repromptSpeech;
 
                 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
@@ -303,7 +312,7 @@ const handlers = {
 
             }
 
-            speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,''
+            speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,'
              + 'or time to set a time.';
 
             repromptSpeech= speechOutput;
@@ -499,12 +508,14 @@ const handlers = {
             case "RatingScale":
                  validAns =false;
 
-                 for(var i=0; i< question.choices.length; i++){
+                 for(var i=0; i< question.Choices.length; i++){
 
-                     if(formAns == question.choices[i].Label.toLowerCase())
+                     if(formAns == question.Choices[i].Label.toLowerCase())
                         validAns=true;
                  }
 
+                //  this.response.speak(validAns);
+                //   this.emit(':responseReady');
 
                   if(multiAns.length <= rateQuestions.length && validAns){
 
@@ -515,10 +526,16 @@ const handlers = {
 
                      speechOutput="storing, "+formAns;
 
+                    //   this.response.speak(incorrectInput);
+                    //   this.emit(':responseReady');
+
+
                   }
                   else{
 
-                    speechOutput="One or more of your responses, do not match the given options";
+                    repromptSpeech="Say reprompt to hear the question again.";
+                    speechOutput="One or more of your responses, do not match the given options. "+repromptSpeech;
+
 
                     cardTitle=" Incorrect input";
                     cardContent= repromptSpeech;
@@ -626,10 +643,26 @@ const handlers = {
 
          if(questionCounter % 2 == 0 && questionCounter > 0 ){
 
-             if(form.Fields.length-questionCounter == 1)
-                speechOutput+=' , only one question remains';
-             else
-                speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+             if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
+
+
+                 if(form.Fields.length-questionCounter == 1){
+
+                     if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
+                           speechOutput+=' , only one question remains';
+
+                 }
+                 else{
+                     speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+                 }
+
+             }
+             else{
+                 if(form.Fields.length-questionCounter == 1)
+                    speechOutput+=' , only one question remains';
+                 else
+                    speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+             }
          }
 
 
@@ -728,20 +761,19 @@ const handlers = {
         req.end();
 
         speechOutput="your form has been submitted.";
-        var cardTitle="Final Form Submission";
-        var cardContent= postData;
-        //this.response.speak(speechOutput);
-        //this.emit(':responseReady');   // moved because this.emit()  has the same effect as a return statement
-        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+        var cardTitle="Form Submitted";
+        var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
+        var repromptSpeech = speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
     }
     else{
       speechOutput='Please answer all questions before you submit your form. ';
-      this.response.speak(speechOutput);
-      this.emit(':responseReady');
+      var reprompt= speechOutput;
+      this.emit(':ask', speechOutput, reprompt);
     }
 
   },
-
 
     'repeatAnswerIntent': function () {
 
@@ -764,7 +796,7 @@ const handlers = {
                 + answers[i].value + ', as your answer. ';
                 cardContent+= form.Fields[i].Name +' '+ answers[i].value+', ';
             }
-            var prompt = ' Are these answers correct?';
+            var prompt = ' say submit form to complete your submission.';
             speechOutput+= prompt;
             cardContent+= prompt;
       }
@@ -804,19 +836,16 @@ const handlers = {
           //this.emit(':responseReady');
   },
 
-
   'AMAZON.CancelIntent': function () {
 
   },
 
   'AMAZON.StopIntent': function () {
 
-
-
-    }
+  }
 
 // end of built in intents
-  };
+};
 
 
 exports.handler = function (event, context, callback) {
