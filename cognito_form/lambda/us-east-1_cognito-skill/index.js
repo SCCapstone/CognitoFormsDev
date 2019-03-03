@@ -212,9 +212,12 @@ const handlers = {
                      speechOutput+= question.Choices[i].Label+', ';
 
                    }
+                   var repromptSpeech = speechOutput;
+                   var cardTitle = '' + question.Name;
 
-                   this.response.speak(speechOutput);
-                   this.emit(':responseReady');
+                   var cardContent = repromptSpeech;
+
+                   this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
                }
             }
             else if(question.FieldType =="Address"){
@@ -243,9 +246,12 @@ const handlers = {
                               " have permission to use it? You can say tell cognito answer yes, or no.";
 
                }
+                var repromptSpeech = speechOutput;
+                var cardTitle = '' + question.Name;
 
-                 this.response.speak(speechOutput);
-                 this.emit(':responseReady');
+                var cardContent = repromptSpeech;
+
+                this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
             }
             else if(question.FieldType== "Name"){
@@ -280,8 +286,12 @@ const handlers = {
                       speechOutput= "I have a question for you, what is the "+nameArr[nameArrCounter]+
                       " name";
 
-                   this.response.speak(speechOutput);
-                   this.emit(':responseReady');
+                var repromptSpeech = speechOutput;
+                var cardTitle = '' + question.Name;
+
+                var cardContent = repromptSpeech;
+
+                this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
             }
             else {
