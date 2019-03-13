@@ -12,17 +12,13 @@ class Cog{
        return formAns;
     }
 
-   static checkBoxes(formAns){
-      var temp;
-      var temp2;
+   static checkBoxes(formAnsArr){
 
-       temp= formAns.replace(/and/g,"");
-       temp2= temp.split(' ');
 
-      formAns='[';
+      var formAns='[';
 
-      for(var i=0; i < temp2.length; i++){
-          formAns+= '"'+temp2[i]+'",';
+      for(var i=0; i < formAnsArr.length; i++){
+          formAns+= '"'+formAnsArr[i]+'",';
       }
 
       formAns= formAns.replace(/,+$/, "")+']';
@@ -32,10 +28,18 @@ class Cog{
    }
    static checkBoxesArr(formAns){
        var temp;
-       var temp2;
+       var str="";
+       var temp2
 
-       temp= formAns.replace(/and/g,'');
-       temp2= temp.split(' ');
+       temp= formAns.split(' ');
+       for(var i=0; i < temp.length; i++)
+           if( temp[i] != 'and')
+              str+=temp[i]+',';
+
+      str= str.substring(0, str.length-1);
+      //str.replace(/,+$/, "");
+
+      temp2= str.split(',');
 
        return temp2;
    }

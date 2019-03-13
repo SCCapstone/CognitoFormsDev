@@ -36,9 +36,9 @@ var imageObj ={
                  };
 
 var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
-var forms;
-var formName;
-var form;
+var forms=null;
+var formName=null;
+var form=null;
 var rateQuestions;
 var question;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
@@ -172,13 +172,27 @@ const handlers = {
       var cardTitle;
       var cardContent;
 
-      if(questionCounter < 0 || questionCounter >= form.Fields.length){
-        speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
+
+      if(form == null){
+        speechOutput="You have not loaded a form yet, say get form followed by a form name.";
+        repromptSpeech= speechOutput;
+
         this.emit(':ask', speechOutput, repromptSpeech);
       }
+      else if(questionCounter < 0 || questionCounter >= form.Fields.length){
+        speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
+        repromptSpeech= speechOutput;
+
+        this.emit(':ask', speechOutput, repromptSpeech);
+      }
+
       else{
 
             question = form.Fields[questionCounter]; //gets current question based on questionCounter
+
+            //speechOutput= question.Name.FieldType;
+
+            ///this.emit(':ask', speechOutput, repromptSpeech);
 
             if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
               question.FieldType =="Boolean" ){
@@ -209,8 +223,7 @@ const handlers = {
                    var rQuestion=rateQuestions[multiQcounter].InternalName;
 
 
-                   speechOutput = question.Name+', '+rQuestion+
-                                   ', the options are: ';
+                   speechOutput = 'How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
 
                    for(var i = 0; i < question.Choices.length; i++){
                      speechOutput+= question.Choices[i].Label+', ';
@@ -261,7 +274,6 @@ const handlers = {
             }
             else if(question.FieldType== "Name"){
 
-
                    if(firstCall){
 
                        var temp= question.Format;
@@ -303,28 +315,222 @@ const handlers = {
                 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
             }
-            else {
-               speechOutput = 'I have a question for you, '+question.Name+',';
+            else if(question.FieldType == "Signature"){
+
+                    speechOutput="I'm sorry, "+question.FieldType+' is not supported for this app.'
+                                  +' Say skip, to skip the question.';
+
+                    repromptSpeech = speechOutput;
+                    cardTitle = '' + question.Name;
+
+                    cardContent = repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
-            for(var i = 0; i < question.Choices.length; i++){
-              speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+                  }
+                  else if(question.FieldType == "File"){
 
-            }
+                          speechOutput="I'm sorry, "+question.FieldType+' is not supported for this app.'
+                                        +' Say skip, to skip the question.';
 
-            speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,'
-             + 'or time to set a time.';
+                          repromptSpeech = speechOutput;
+                          cardTitle = '' + question.Name;
 
-            repromptSpeech= speechOutput;
-            cardTitle=''+question.Name;
+                          cardContent = repromptSpeech;
 
-            cardContent= repromptSpeech;
-
-            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
+                  }
+                  else if(question.FieldType == "Text"){
 
-        }// end of terminating else
+                        var questionSentence =question.Name.split(' ');
+
+                        if(questionSentence.length == 1){
+                          speechOutput="What is your "+question.Name+'? Say answer followed by your response.';
+
+                          repromptSpeech = speechOutput;
+                          cardTitle = '' + question.Name;
+
+                          cardContent = repromptSpeech;
+
+                          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                        }
+                        else{
+                          speechOutput= question.Name+ ' Say answer followed by your response.';
+
+                          repromptSpeech = speechOutput;
+                          cardTitle = '' + question.Name;
+
+                          cardContent = repromptSpeech;
+
+                          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                        }
+
+                  }
+                  else if(question.FieldType == "Email"){
+
+                    var questionSentence =question.Name.split(' ');
+
+                    if(questionSentence.length == 1){
+                      speechOutput="What is your "+question.Name+'? Say answer followed by your response.';
+
+                      repromptSpeech = speechOutput;
+                      cardTitle = '' + question.Name;
+
+                      cardContent = repromptSpeech;
+
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                    }
+                    else{
+                      speechOutput= question.Name+'Say answer followed by your response.';
+
+                      repromptSpeech = speechOutput;
+                      cardTitle = '' + question.Name;
+
+                      cardContent = repromptSpeech;
+
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                    }
+                  }
+                 else if(question.FieldType== "Phone"){
+
+                     var questionSentence =question.Name.split(' ');
+
+                     if(questionSentence.length == 1){
+                       speechOutput="What is your "+question.Name+'? Say answer, followed by your phone number.';
+
+                       repromptSpeech = speechOutput;
+                       cardTitle = '' + question.Name;
+
+                       cardContent = repromptSpeech;
+
+                       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                     }
+                     else{
+                       speechOutput= question.Name+'? Say answer, followed by your phone number.';
+
+                       repromptSpeech = speechOutput;
+                       cardTitle = '' + question.Name;
+
+                       cardContent = repromptSpeech;
+
+                       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                     }
+
+
+                 }
+                 else if(question.FieldType == "Number"){
+
+                   var questionSentence =question.Name.split(' ');
+
+                   if(questionSentence.length == 1){
+                     speechOutput="What is your "+question.Name+'? Say answer, followed by your number.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+                   else{
+                     speechOutput= question.Name+'? Say answer, followed by your number.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+
+
+                 }
+                 else if (question.FieldType == "Website"){
+                   var questionSentence =question.Name.split(' ');
+
+                   if(questionSentence.length == 1){
+                     speechOutput="What is your "+question.Name+'? Say answer, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+                   else{
+                     speechOutput= question.Name+'? Say answer, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+
+                 }
+                 else if(question.FieldType =="Currency"){
+
+                   var questionSentence =question.Name.split(' ');
+
+                   if(questionSentence.length == 1){
+                     speechOutput="What is your "+question.Name+'? Say answer, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+                   else{
+                     speechOutput= question.Name+'? Say answer, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+                 }
+                 else {
+                       speechOutput = 'I have a question for you, '+question.Name+',';
+
+
+                  for(var i = 0; i < question.Choices.length; i++){
+                    speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+
+                  }
+
+                  speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,'
+                   + 'or time to set a time.';
+
+                  repromptSpeech= speechOutput;
+                  cardTitle=''+question.Name;
+
+                  cardContent= repromptSpeech;
+
+                  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
+              }// end of terminating else
       }// end of all question conditions
     },
 
@@ -364,9 +570,9 @@ const handlers = {
     var cardContent;
 
 
-    if( questionCounter < 0){ // no form loaded illegal access
+    if( form == null){ // no form loaded illegal access
 
-      speechOutput='You have not loaded a form yet';
+      speechOutput='You have not loaded a form yet, say get form followed by a form name.';
       repromptSpeech=HELP_MESSAGE;
 
       cardTitle=speechOutput;
@@ -374,9 +580,9 @@ const handlers = {
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
-
     }
     else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
+
       speechOutput='All questions have been answered';
       repromptSpeech='you can say repeat my answers or submit form';
 
@@ -420,7 +626,6 @@ const handlers = {
                   break;
 
               case "Choice":
-
 
                   if(question.FieldSubType != "Checkboxes"){
                           validAns=false;
@@ -483,7 +688,7 @@ const handlers = {
                     }
 
 
-                       formAns=Cog.checkBoxes(formAns);
+                       formAns=Cog.checkBoxes(formAnsArr);
                   }
 
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
@@ -561,13 +766,11 @@ const handlers = {
                         // this.emit(':responseReady');
 
 
-
                         answers.push( new ansObject(question.InternalName, formAns,question.FieldType, question.FieldSubType));
                         questionCounter++;
                         multiQcounter=0;
                         multiAns=[];
                   }
-
 
                   break;
             case "Address":
@@ -633,6 +836,423 @@ const handlers = {
                     }
 
 
+                   break;
+            case "Text":
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                  speechOutput= 'storing '+formAns;
+                  questionCounter++;
+
+                   break;
+            case "Email":
+                  var newFormAns= formAns.split(' ');
+                  formAns='';
+
+                  if(newFormAns.length > 2){ //voice input response
+                      for(var i=0; i < newFormAns.length; i++){
+                          formAns+=newFormAns[i];
+                      }
+
+                      if(formAns.includes('at')){
+                          formAns= formAns.replace('at','@');
+
+                      }
+                      if(formAns.includes('dot')){
+                         formAns= formAns.replace('dot','.');
+                      }
+                  }
+
+                  else{// typed input response
+                       formAns=newFormAns[0]+'@'+newFormAns[1];
+                  }
+
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                  speechOutput= 'storing '+formAns;
+
+                  questionCounter++;
+
+                   break;
+
+            case "Phone":
+                  // ignore dashes in the input
+                var temp='';
+
+                for(var i=0; i < formAns.length; i++){
+
+                    if(formAns.charAt(i) != '-')
+                       temp+=formAns.charAt(i);
+                  }
+                 formAns= temp;
+
+
+                  //make sure format is 10 numbers
+                  if(isNaN(formAns)||formAns.length < 10){
+
+                    repromptSpeech="Say reprompt to hear the question again.";
+                    speechOutput="Your response must consist of numbers, and be at least ten digits long. "+repromptSpeech;
+
+
+                    cardTitle=" Incorrect input";
+                    cardContent= repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                    break;
+                  }
+
+                  var areaCode = formAns.slice(0,3);
+                  var centralOfficeNum = formAns.slice(3,6);
+                  var lastFour = formAns.slice(6,10);
+                  var extension;
+
+                  if(formAns.length == 10){
+                     formAns='('+areaCode+') '+centralOfficeNum+'-'+lastFour;
+                  }
+                  else{  // format the extension
+                      if(formAns.length > 10){
+                        var ext=[];
+                        extension= formAns.slice(10)
+
+                        for(var i=0; i < extension.length; i++){
+                          if(isNaN(extension.charAt(i)) == false){
+                              ext.push(extension.charAt(i));
+                          }
+                        }
+
+                      extension='x';
+                      for(var i=0; i < ext.length; i++){
+                          extension+= ext[i];
+                      }
+                      formAns='('+areaCode+') '+centralOfficeNum+'-'+lastFour+extension;
+                    }
+                  }
+
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                  speechOutput= 'storing '+formAns;
+
+                  questionCounter++;
+
+                   break;
+
+            case "Number":
+
+                  var strFormAns="";
+                  var numArr;
+
+                  if(formAns.includes('%'))
+                     formAns= formAns.replace('%','')
+
+
+                  numArr = formAns.split(' ');
+
+                  for(var i=0; i < numArr.length; i++){
+                       if(isNaN(numArr[i])== false)
+                          strFormAns+= numArr[i];
+                  }
+
+                  formAns= strFormAns;
+
+
+
+                formAns= Number(formAns);
+
+                if(isNaN(formAns) == true){
+
+                    repromptSpeech="Say reprompt to hear the question again.";
+                    speechOutput="Your response must be a number. "+repromptSpeech;
+
+
+                    cardTitle=" Incorrect input";
+                    cardContent= repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                    break;
+                 }
+
+
+
+                  if(question.FieldSubType =="Integer"){
+
+                    if(question.MinValue != null && question.MaxValue != null){
+                         if(formAns < Number(question.MinValue) || formAns > Number(question.MaxValue)){
+
+                            repromptSpeech="Say reprompt to hear the question again.";
+                            speechOutput="Your response is outside the range of, "+question.MinValue+
+                            " to "+question.MaxValue+', '+repromptSpeech;
+
+
+                            cardTitle=" Incorrect input";
+                            cardContent= repromptSpeech;
+
+                            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                            //break;
+                         }
+                         else{
+
+                           answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                           questionCounter++;
+
+                           speechOutput= 'Storing answer, '+ formAns;
+
+                         }
+
+                     }
+                     else{
+
+                       answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                       questionCounter++;
+
+                       speechOutput= 'Storing answer, '+ formAns;
+
+                     }
+                  }
+                  else if(question.FieldSubType =="Decimal"){
+
+                    if(question.MinValue != null && question.MaxValue != null){
+
+                       if(formAns < Number(question.MinValue) || formAns > Number(question.MaxValue)){
+
+                          repromptSpeech="Say reprompt to hear the question again.";
+                          speechOutput="Your response is outside the range of, "+question.MinValue+
+                          " to "+question.MaxValue+' '+repromptSpeech;
+
+
+                          cardTitle=" Incorrect input";
+                          cardContent= repromptSpeech;
+
+                          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                       }
+                       else{
+
+                         answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                         questionCounter++;
+
+                         speechOutput= 'Storing answer, '+ formAns;
+
+                       }
+                    }
+                    else{
+
+                      answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                      questionCounter++;
+
+                      speechOutput= 'Storing answer, '+ formAns;
+
+                    }
+                  }
+                  else if(question.FieldSubType =="Percent"){
+
+                   var min='';
+                   var max='';
+
+                   //get the percents of quesion.MinValue and question.MaxValue without the '%' sign.
+
+                   for(var i=0; i < question.MinValue.length; i++){
+                       if(question.MinValue.charAt(i) != '%')
+                          min+=question.MinValue.charAt(i);
+                   }
+
+                   for(var i=0; i < question.MaxValue.length; i++){
+                       if(question.MaxValue.charAt(i) != '%')
+                          max+=question.MaxValue.charAt(i);
+                   }
+
+
+                    if(question.MinValue != null && question.MaxValue != null){
+
+                       if(formAns < Number(min) || formAns > Number(max)){
+
+                          repromptSpeech="Say reprompt to hear the question again.";
+                          speechOutput="Your response is outside the range of, "+question.MinValue+
+                          " to "+question.MaxValue+', '+repromptSpeech;
+
+
+                          cardTitle=" Incorrect input";
+                          cardContent= repromptSpeech;
+
+                          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                       }
+                       else{
+
+                         if(question.FieldSubType =="Percent"){
+                           formAns= formAns/100;
+                         }
+
+                         answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+
+                         questionCounter++;
+
+                         if(question.FieldSubType =="Percent"){
+                           formAns= (formAns*100)+'%';
+                         }
+                         speechOutput= 'Storing answer, '+ formAns;
+
+                       }
+                    }
+                    else{
+
+                      if(question.FieldSubType =="Percent"){
+                        formAns= formAns/100;
+                      }
+
+                      answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+
+                      questionCounter++;
+
+                      if(question.FieldSubType =="Percent"){
+                        formAns= (formAns*100)+'%';
+                      }
+                      speechOutput= 'Storing answer, '+ formAns;
+
+                    }
+                  }
+                  else{}
+
+                  break;
+            case "Website":
+
+                 var newFormAns= formAns.split(' ');
+                 formAns="https://";
+
+
+                  for(var i=0; i < newFormAns.length; i++){
+                      formAns+=newFormAns[i];
+                  }
+
+                  if(formAns.includes('dot')){
+                     formAns= formAns.replace('dot','.');
+                  }
+
+
+                  answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+                  speechOutput= 'storing '+formAns;
+
+                  questionCounter++;
+
+                  break;
+
+            case "Currency":
+
+                var cents;
+                var strFormAns;
+                var numFormAns;
+
+                var min= question.MinValue.replace('$','');
+                var max= question.MaxValue.replace('$','');
+
+
+                if(formAns.includes('$'))
+                    formAns=formAns.replace('$','');
+
+                // speechOutput="past dollar sign";
+
+                // this.response.speak(speechOutput);
+                // this.emit(':responseReady');
+
+                numFormAns = Number(formAns);
+
+                if(isNaN(numFormAns)){
+
+                    cents= formAns.split(' ');
+                    strFormAns="";
+
+                    for(var i=0; i < cents.length; i++){
+
+                        if(isNaN(cents[i])==false)
+                           strFormAns+= cents[i];
+                    }
+
+                    if(Number(strFormAns) < 10)
+                       if(Number(strFormAns) < 0 )
+                          strFormAns="-0.0"+(Number(strFormAns)*-1);
+                       else
+                          strFormAns="0.0"+strFormAns;
+                    else if(Number(strFormAns)>= 10 && Number(strFormAns) < 100)
+                       strFormAns="0."+strFormAns;
+                     else
+                       strFormAns=""+(Number(strFormAns)/ 100);
+
+
+                     numFormAns= Number(strFormAns);
+                }
+
+                // speechOutput="numFormAns is "+numFormAns;
+
+                // this.response.speak(speechOutput);
+                // this.emit(':responseReady');
+
+                // speechOutput="strFormAns is "+strFormAns;
+
+                // this.response.speak(speechOutput);
+                // this.emit(':responseReady');
+
+
+                if(numFormAns < 0){
+
+                    repromptSpeech="Say reprompt to hear the question again.";
+                    speechOutput="Your response can not be a negative number. "+repromptSpeech+' you gave: '+formAns;
+
+
+                    cardTitle=" Incorrect input";
+                    cardContent= repromptSpeech;
+
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                    break;
+                }
+
+                //   speechOutput= 'formAns less than min '+(formAns < Number(question.MinValue))? true: false;
+                //   this.response.speak(speechOutput);
+                //   this.emit(':responseReady');
+
+                speechOutput="";
+
+                 if(question.MinValue != null && question.MaxValue != null){
+                       //speechOutput+=" inside null test";
+
+                   if(numFormAns < Number(min) || numFormAns > Number(max)){
+
+                      repromptSpeech="Say reprompt to hear the question again.";
+                      speechOutput="Your response is outside the range of, "+question.MinValue+
+                      " to "+question.MaxValue+' '+repromptSpeech;
+
+
+                      cardTitle=" Incorrect input";
+                      cardContent= speechOutput;
+
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                       speechOutput+=" inside error card";
+                   }
+                   else{
+                         //speechOutput+=" inside Else";
+
+                         answers.push( new ansObject(question.InternalName, numFormAns, question.FieldType, question.FieldSubType));
+                         questionCounter++;
+
+                         if(numFormAns < 1){
+                            speechOutput= "storing "+'$'+numFormAns;
+                         }
+                         else{
+                             speechOutput="storing "+'$'+numFormAns;
+                         }
+
+
+                   }
+                }
+                else{
+                       //speechOutput+=" outside Else";
+
+                         answers.push( new ansObject(question.InternalName, numFormAns, question.FieldType, question.FieldSubType));
+                         questionCounter++;
+
+                         if(numFormAns < 1){
+                            speechOutput= "storing "+'$'+numFormAns;
+                         }
+                         else{
+                             speechOutput="storing "+'$'+numFormAns;
+                         }
+
+                }
 
                    break;
             default:
@@ -694,7 +1314,7 @@ const handlers = {
   'submitIntent' : function(){
 
 
-    if(questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+    if( form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
         var speechOutput = '';
 
         var HOST = 'services.cognitoforms.com';
@@ -705,20 +1325,39 @@ const handlers = {
         //format the answers data into appropriate JSON syntax
         for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
         {
-
-
+             //todo apply new fieldTypes
             if(answers[i].type == "Choice" && answers[i].subType=="Checkboxes"){
                 postData += '"'+answers[i].key+'":'+answers[i].value+',';
-
-
             }
-            else if(answers[i].type == "RatingScale" || answers[i].type == "Address"|| answers[i].type == "Name"){
+            else if(answers[i].type == "RatingScale"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else if(answers[i].type =="Address"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else if(answers[i].type == "Name"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else if(answers[i].type == "Text" ){
+                postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+            }
+            else if(answers[i].type == "Email" ){
+                postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+            }
+            else if(answers[i].type == "Phone" ){
+                postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+            }
+            else if(answers[i].type =="Number"){
+                postData += '"'+answers[i].key+'":'+answers[i].value+',';
+            }
+            else if(answers[i].type == "Website" ){
+                postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+            }
+            else if(answers[i].type =="Currency"){
                 postData += '"'+answers[i].key+'":'+answers[i].value+',';
             }
             else{
                 postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-
-
             }
 
         }
@@ -767,6 +1406,15 @@ const handlers = {
 
         this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
     }
+    else if(form ==null){
+      speechOutput='You have not loaded a form yet, say get form followed by a form name.';
+      repromptSpeech=HELP_MESSAGE;
+
+      cardTitle=speechOutput;
+      cardContent= HELP_MESSAGE;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+    }
     else{
       speechOutput='Please answer all questions before you submit your form. ';
       var reprompt= speechOutput;
@@ -778,10 +1426,10 @@ const handlers = {
     'repeatAnswerIntent': function () {
 
         var speechOutput='';
-        var repromptSpeech=' Are these answers correct?';
+        var repromptSpeech;
 
         var cardTitle="Your Answers:";
-        var cardContent='';
+        var cardContent;
 
          if (questionCounter < 0 || answers.length <= 0) {
              speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
@@ -792,13 +1440,17 @@ const handlers = {
         else {
             for (var i = 0; i < answers.length; i++) {
 
-                speechOutput+= 'For question: ' + (i+1) + ' , ' +  form.Fields[i].Name + '. You gave '
+                speechOutput+= 'For question: ' +  answers[i].key + '. You gave: '
                 + answers[i].value + ', as your answer. ';
-                cardContent+= form.Fields[i].Name +' '+ answers[i].value+', ';
+
+
             }
+
             var prompt = ' say submit form to complete your submission.';
             speechOutput+= prompt;
-            cardContent+= prompt;
+            repromptSpeech =prompt;
+
+            cardContent= speechOutput+prompt;
       }
          this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
 
@@ -806,9 +1458,9 @@ const handlers = {
 
 
   'exitIntent': function(){
-       formName='';
-         form='';
-         rateQuestions='';
+         formName=null;
+         form=null;
+         rateQuestions=null;
          questionCounter = -1;
          multiQcounter=0;
          addressQcounter= -1;
@@ -846,6 +1498,9 @@ const handlers = {
 
 // end of built in intents
 };
+
+
+
 
 
 exports.handler = function (event, context, callback) {
