@@ -1,4 +1,4 @@
-/* eslint-disable  func-names */
+//questionCounter++;/* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
 /**
  * This sample demonstrates the cognito form skill built using
@@ -19,7 +19,7 @@ const Cog= require('./Cog');
 const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE =', You can say get form followed by a form name, or, you can say end session... What can I help you with?';
+const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
 const STOP_MESSAGE = 'Thank you for using the Cognito Form Alexa app, goodbye!';
@@ -50,6 +50,35 @@ var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
 var nameArr;
 var nameArrCounter=0;
 var firstCall = true;
+var speechToPass="";
+var ansToPass;
+var formSubmission = false;
+var features=[ 'Card on File',
+         'Countries Languages & Currencies',
+         'Email Notifications',
+         'Entry Management',
+         'Form Confirmations',
+         'HIPAA Compliance',
+         'Integrations',
+         'Lookup Field',
+         'Quantity Limits',
+         'Rating Scales',
+         'Responsive Forms',
+         'Security',
+         'Spam Prevention',
+         'Style Customization',
+         'Template Sharing',
+         'Unlimited Forms & Fields',
+         'Website Embedding',
+         'Calculations',
+         'Entry Sharing',
+         'Conditional logic',
+         'File uploads',
+         'Data Encryption',
+         'Multipage forms',
+         'Electronic signatures',
+         'Payment'
+    ];
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
@@ -60,6 +89,13 @@ function ansObject(question, ans, type, subType){
     this.subType= subType;
 
 }
+class helperFunctions{
+
+      static getRandomInt(max) {
+           return Math.floor(Math.random() * Math.floor(max));
+      }
+}
+
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
@@ -114,7 +150,7 @@ const handlers = {
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
 
-       var prompt= "For the next question you can say 'next'.";
+       var prompt= ". Say start, to begin the form.";
 
        var cardTitle;
 
@@ -147,7 +183,7 @@ const handlers = {
                  form = JSON.parse(returnData);
 
                  questionCounter = 0;
-                 speechOutput='Readying form, '+formName+ ','+prompt ;
+                 speechOutput='Readying form, '+formName+ ''+prompt ;
 
                 this.emit(':askWithCard', speechOutput, prompt, cardTitle, prompt, imageObj);
 
@@ -197,23 +233,42 @@ const handlers = {
             if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
               question.FieldType =="Boolean" ){
 
-              speechOutput = ''+question.Name+', the options are: '; //starts by inputing default beginning
+                var questionSentence =question.Name.split(' ');
 
-              for(var i = 0; i < question.Choices.length; i++){
+                if(questionSentence.length == 1){
+                  speechOutput = 'What is the '+question.Name+'? The options are: '; //starts by inputing default beginning
 
-                 speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
-              }
+                  for(var i = 0; i < question.Choices.length; i++){
 
-              speechOutput+="say answer, followed by your response.";
-              repromptSpeech= speechOutput;
+                     speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+                  }
 
-              cardTitle=''+question.Name;
-              cardContent= repromptSpeech;
+                  speechOutput+="say answer, followed by your response.";
+                  repromptSpeech= speechOutput;
 
-                 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-            //   this.response.speak(speechOutput);
-            //   this.emit(':responseReady');
+                  cardTitle=''+question.Name;
+                  cardContent= repromptSpeech;
 
+                  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                }
+                else{
+                  speechOutput = ''+question.Name+'? The options are: '; //starts by inputing default beginning
+
+                  for(var i = 0; i < question.Choices.length; i++){
+
+                     speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+                  }
+
+                  speechOutput+="say answer, followed by your response.";
+                  repromptSpeech= speechOutput;
+
+                  cardTitle=''+question.Name;
+                  cardContent= repromptSpeech;
+
+                  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                //   this.response.speak(speechOutput);
+                //   this.emit(':responseReady');
+             }
             }
             else if(question.FieldType =="RatingScale"){
 
@@ -240,6 +295,7 @@ const handlers = {
             }
             else if(question.FieldType =="Address"){
 
+
                if(question.FieldSubType=="USAddress" && addressQcounter >= 0){
 
                   if( addressQcounter < US_ADDRESS_LENGTH){
@@ -260,7 +316,7 @@ const handlers = {
                }
 
                else{
-                 speechOutput="The next question asks, for an address, do I"+
+                 speechOutput="The next question asks, for an address. Do I"+
                               " have permission to use it? You can say answer yes, or no.";
 
                }
@@ -273,7 +329,8 @@ const handlers = {
 
             }
             else if(question.FieldType== "Name"){
-
+                   speechOutput="";
+                   //speechOutput+= speechToPass;
                    if(firstCall){
 
                        var temp= question.Format;
@@ -292,19 +349,19 @@ const handlers = {
                    }
                    if(nameArr[nameArrCounter] == "Prefix")
 
-                      speechOutput="What is the title?"+
+                      speechOutput+="What is the title?"+
                       " you can say answer, followed by your response.";
 
                    else if(nameArr[nameArrCounter]=="Suffix")
 
-                      speechOutput= "What is the suffix";
+                      speechOutput+= "What is the suffix";
 
                    else if(nameArr[nameArrCounter]=="MiddleInitial")
 
-                      speechOutput= "What is the Middle initial";
+                      speechOutput+= "What is the Middle initial";
 
                    else
-                      speechOutput= "What is the "+nameArr[nameArrCounter]+
+                      speechOutput+= "What is the "+nameArr[nameArrCounter]+
                       " name, you can say answer followed by your response";
 
                   repromptSpeech = speechOutput;
@@ -510,24 +567,71 @@ const handlers = {
 
                    }
                  }
+                 //or say mark date to set a date,'
+                 //+ 'or time to set a time.';
+                 else if(question.FieldType == 'Date' && question.FieldSubType =='Date'){
+
+                   var questionSentence =question.Name.split(' ');
+
+                   if(questionSentence.length == 1){
+                     speechOutput="What is the "+question.Name+' Say mark date, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+                   else{
+                     speechOutput= question.Name+' Say mark date, followed by your response.';
+
+                     repromptSpeech = speechOutput;
+                     cardTitle = '' + question.Name;
+
+                     cardContent = repromptSpeech;
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                   }
+
+                 }
+                 else if(question.FieldType == 'Date' && question.FieldSubType =='Time'){
+                     var questionSentence =question.Name.split(' ');
+
+                     if(questionSentence.length == 1){
+                       speechOutput="What is the "+question.Name+' Say time, followed by your response.';
+
+                       repromptSpeech = speechOutput;
+                       cardTitle = '' + question.Name;
+
+                       cardContent = repromptSpeech;
+
+                       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+                     }
+                     else{
+                       speechOutput= question.Name+' Say time, followed by your response.';
+
+                       repromptSpeech = speechOutput;
+                       cardTitle = '' + question.Name;
+
+                       cardContent = repromptSpeech;
+
+                       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                   }
+                 }
                  else {
-                       speechOutput = 'I have a question for you, '+question.Name+',';
+                    speechOutput ="I'm sorry, questions using fieldtype "+question.FieldType+" are not supported for this skill."//'I' have a question for you, '+question.Name+',';
+                    speechOutput+= ' you can say skip, to move to the next question';
 
+                    repromptSpeech= speechOutput;
+                    cardTitle=''+question.Name;
 
-                  for(var i = 0; i < question.Choices.length; i++){
-                    speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
+                    cardContent= repromptSpeech;
 
-                  }
-
-                  speechOutput+= ' you can say answer followed by your response, or say mark date to set a date,'
-                   + 'or time to set a time.';
-
-                  repromptSpeech= speechOutput;
-                  cardTitle=''+question.Name;
-
-                  cardContent= repromptSpeech;
-
-                  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+                    this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
               }// end of terminating else
@@ -620,7 +724,7 @@ const handlers = {
                   else{
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                    questionCounter++;
+                    //questionCounter++;
                     speechOutput= 'Storing answer, '+ formAns;
                   }
                   break;
@@ -693,7 +797,7 @@ const handlers = {
 
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                  questionCounter++;
+                  //questionCounter++;
                   speechOutput= 'Storing answer, '+ formAns;
 
                    break;
@@ -705,7 +809,7 @@ const handlers = {
 
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                   questionCounter++;
+                   //questionCounter++;
                    speechOutput= 'Storing answer, '+ formAns;
 
                   break;
@@ -767,9 +871,9 @@ const handlers = {
 
 
                         answers.push( new ansObject(question.InternalName, formAns,question.FieldType, question.FieldSubType));
-                        questionCounter++;
-                        multiQcounter=0;
-                        multiAns=[];
+                        //questionCounter++;
+                        // multiQcounter=0;
+                        // multiAns=[];
                   }
 
                   break;
@@ -797,10 +901,10 @@ const handlers = {
                           formAns= formAns.replace(/,+$/, "")+'}';
                           answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                          questionCounter++;
-                          addressQcounter= -1;
-
-                          multiAns=[];
+                          //questionCounter++;
+                          // addressQcounter= -1;
+                          //
+                          // multiAns=[];
                           speechOutput+=' ,processing address'; //, pushing '+question.InternalName+', '+formAns;
                       }
                  }
@@ -825,13 +929,13 @@ const handlers = {
                           formAns= formAns.replace(/,+$/, "")+'}';
                           answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                          questionCounter++;
+                          //questionCounter++;
                           speechOutput+=" ,processing name fields";
 
-                          nameArrCounter=0;
+                          //nameArrCounter=0;
                           firstCall=true;
 
-                          multiAns=[];
+                          //multiAns=[];
 
                     }
 
@@ -840,7 +944,7 @@ const handlers = {
             case "Text":
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
                   speechOutput= 'storing '+formAns;
-                  questionCounter++;
+                  //questionCounter++;
 
                    break;
             case "Email":
@@ -868,7 +972,7 @@ const handlers = {
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
                   speechOutput= 'storing '+formAns;
 
-                  questionCounter++;
+                  //questionCounter++;
 
                    break;
 
@@ -928,7 +1032,7 @@ const handlers = {
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
                   speechOutput= 'storing '+formAns;
 
-                  questionCounter++;
+                  //questionCounter++;
 
                    break;
 
@@ -988,7 +1092,7 @@ const handlers = {
                          else{
 
                            answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
-                           questionCounter++;
+                           //questionCounter++;
 
                            speechOutput= 'Storing answer, '+ formAns;
 
@@ -998,7 +1102,7 @@ const handlers = {
                      else{
 
                        answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
-                       questionCounter++;
+                       //questionCounter++;
 
                        speechOutput= 'Storing answer, '+ formAns;
 
@@ -1024,7 +1128,7 @@ const handlers = {
                        else{
 
                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
-                         questionCounter++;
+                         //questionCounter++;
 
                          speechOutput= 'Storing answer, '+ formAns;
 
@@ -1033,7 +1137,7 @@ const handlers = {
                     else{
 
                       answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
-                      questionCounter++;
+                      //questionCounter++;
 
                       speechOutput= 'Storing answer, '+ formAns;
 
@@ -1080,7 +1184,7 @@ const handlers = {
 
                          answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                         questionCounter++;
+                         //questionCounter++;
 
                          if(question.FieldSubType =="Percent"){
                            formAns= (formAns*100)+'%';
@@ -1097,7 +1201,7 @@ const handlers = {
 
                       answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
-                      questionCounter++;
+                      //questionCounter++;
 
                       if(question.FieldSubType =="Percent"){
                         formAns= (formAns*100)+'%';
@@ -1127,7 +1231,7 @@ const handlers = {
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
                   speechOutput= 'storing '+formAns;
 
-                  questionCounter++;
+                  //questionCounter++;
 
                   break;
 
@@ -1227,7 +1331,7 @@ const handlers = {
                          //speechOutput+=" inside Else";
 
                          answers.push( new ansObject(question.InternalName, numFormAns, question.FieldType, question.FieldSubType));
-                         questionCounter++;
+                         //questionCounter++;
 
                          if(numFormAns < 1){
                             speechOutput= "storing "+'$'+numFormAns;
@@ -1243,7 +1347,7 @@ const handlers = {
                        //speechOutput+=" outside Else";
 
                          answers.push( new ansObject(question.InternalName, numFormAns, question.FieldType, question.FieldSubType));
-                         questionCounter++;
+                         //questionCounter++;
 
                          if(numFormAns < 1){
                             speechOutput= "storing "+'$'+numFormAns;
@@ -1260,47 +1364,15 @@ const handlers = {
                    break;
          }//end of switch
 
+         speechToPass= speechOutput;
+         ansToPass= formAns;
 
-         if(questionCounter % 2 == 0 && questionCounter > 0 ){
-
-             if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
-
-
-                 if(form.Fields.length-questionCounter == 1){
-
-                     if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
-                           speechOutput+=' , only one question remains';
-
-                 }
-                 else{
-                     speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
-                 }
-
-             }
-             else{
-                 if(form.Fields.length-questionCounter == 1)
-                    speechOutput+=' , only one question remains';
-                 else
-                    speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
-             }
-         }
-
-
-         repromptSpeech= "say next, for the next question";
-
-         cardTitle=""+question.InternalName;
-         cardContent= ""+formAns;
-
-         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-         // this.response.speak(speechOutput);
-         // this.emit(':responseReady');
+         this.emit('answerConfirmIntent');
 
      }
-       //TODO jump to next question
-       //TODO jump to recovery
-       //TODO jump to repeat or submit
 
   },
+
 
   'repromptIntent' : function(){
      this.emit('nextQuestionIntent');
@@ -1310,9 +1382,15 @@ const handlers = {
     questionCounter++;
     this.emit('nextQuestionIntent');
   },
-  //Todo make submitIntent create a form entry to cognitoforms
-  'submitIntent' : function(){
 
+
+  'submitIntent' : function(){
+     formSubmission = true;
+
+     var repromptSpeech;
+
+     var cardTitle;
+     var cardContent;
 
     if( form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
         var speechOutput = '';
@@ -1399,12 +1477,12 @@ const handlers = {
         req.write(postData);
         req.end();
 
-        speechOutput="your form has been submitted.";
-        var cardTitle="Form Submitted";
-        var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
-        var repromptSpeech = speechOutput;
+        // speechOutput="your form has been submitted.";
+        // var cardTitle="Form Submitted";
+        // var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
+        // var repromptSpeech = speechOutput;
 
-        this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+        this.emit('advertiseIntent'); //':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
     }
     else if(form ==null){
       speechOutput='You have not loaded a form yet, say get form followed by a form name.';
@@ -1422,6 +1500,7 @@ const handlers = {
     }
 
   },
+
 
     'repeatAnswerIntent': function () {
 
@@ -1457,51 +1536,256 @@ const handlers = {
     },
 
 
-  'exitIntent': function(){
-         formName=null;
-         form=null;
-         rateQuestions=null;
-         questionCounter = -1;
-         multiQcounter=0;
-         addressQcounter= -1;
-         answers=[];
-         multiAns=[];
-         nameArrCounter=0;
-         firstCall = true;
+    'answerConfirmIntent':function (){
+      var formAns= ansToPass;
+      var speechOutput= speechToPass;
 
-         var speechOutput= STOP_MESSAGE;
+      var repromptSpeech;
+      var cardTitle;
 
-         var cardTitle='Exiting Cognito Form';
-         var cardContent=STOP_MESSAGE;
+      var cardContent;
 
-         this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+      if(questionCounter % 2 == 0 && questionCounter > 0 ){
+
+          if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
 
 
-  },
+              if(form.Fields.length-questionCounter == 1){
 
-//built in intents just ignore them
-  'AMAZON.HelpIntent': function () {
-          const speechOutput = HELP_MESSAGE;
-          const reprompt = HELP_REPROMPT;
-          this.emit(':ask', speechOutput, reprompt);
-          //this.response.speak(speechOutput).listen(reprompt);
-          //this.emit(':responseReady');
-  },
+                  if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
+                        speechOutput+=' , only one question remains';
 
-  'AMAZON.CancelIntent': function () {
+              }
+              else{
+                  speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+              }
 
-  },
+          }
+          else{
+              if(form.Fields.length-questionCounter == 1)
+                 speechOutput+=' , only one question remains';
+              else
+                 speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+          }
+      }
 
-  'AMAZON.StopIntent': function () {
 
-  }
+      repromptSpeech= "say next, for the next question";
+
+      cardTitle=""+question.InternalName;
+      cardContent= ""+formAns;
+
+      speechOutput+=". Are these answers correct?";
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+    },
+
+      'exitIntent': function(){
+             formName=null;
+             form=null;
+             rateQuestions=null;
+             questionCounter = -1;
+             multiQcounter=0;
+             addressQcounter= -1;
+             answers=[];
+             multiAns=[];
+             nameArrCounter=0;
+             firstCall = true;
+
+             var speechOutput= STOP_MESSAGE;
+
+             var cardTitle='Exiting Cognito Form';
+             var cardContent=STOP_MESSAGE;
+
+             this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+
+
+      },
+
+      'advertiseIntent': function(){
+
+             var feature1= helperFunctions.getRandomInt(features.length);
+             var feature2= helperFunctions.getRandomInt(features.length);
+             var feature3= helperFunctions.getRandomInt(features.length);
+
+             while(feature2 == feature1)
+                feature2=helperFunctions.getRandomInt(features.length);
+
+             while(feature3 == feature2 || feature3 == feature1)
+                  feature3= helperFunctions.getRandomInt(features.length);
+
+             var prompt=" Visit cognitoforms.com to utilize more advanced features, such as: "+
+                          feature1+','+feature2+','+feature3+" and many more.";
+
+             var prompt2=" To hear more about a feature say, tell me more about, followed by the feature name, or you can say end session.";
+
+             var speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
+                              prompt+prompt2;
+
+             var cardTitle="Form Submitted";
+             var cardContent= speechOutput;
+
+             var repromptSpeech = speechOutput;
+             formSubmission =false;
+
+             this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
+
+      },
+
+      'tellMeMoreIntent': function(){
+         var slotData= this.event.request.intent.slots.feature.value;
+         var match= false;
+
+         for(var i=0; i < features.length; i++){
+              if(slotData == features[i].toLowerCase()){
+                  match=true;
+              }
+         }
+
+         if(match == false){
+          var speechOutput="I'm sorry, that is not a feature that I know about.";
+
+          var cardTitle="Features";
+          var cardContent= speechOutput
+
+          var repromptSpeech = speechOutput;
+
+          this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+         }
+         else{// // TODO:  go get the jason file with the descriptions and read the correct one
+
+         }
+
+
+      },
+
+//built in intents
+      'AMAZON.YesIntent': function(){
+        if(form != null && formSubmission == false){
+
+            if(question.FieldType == 'RatingScale'){
+
+                if(multiQcounter >= rateQuestions.length){
+                  questionCounter++;
+                  multiQcounter=0;
+                  multiAns=[];
+                  this.emit('nextQuestionIntent');
+                }
+                else{
+                  this.emit('nextQuestionIntent');
+                }
+            }
+            else if(question.FieldType== 'Address'){
+
+                  if(addressQcounter >= US_ADDRESS_LENGTH){
+                    questionCounter++;
+                    addressQcounter= -1;
+                    multiAns=[];
+                    this.emit('nextQuestionIntent');
+
+                  }
+                  else {
+                    this.emit('nextQuestionIntent');
+                  }
+            }
+            else if(question.FieldType =='Name'){
+
+                  if(nameArrCounter >= nameArr.length){
+                     questionCounter++;
+                     nameArrCounter=0;
+                     multiAns=[];
+                  //   speechToPass+="Triggering if under name";
+                     this.emit('nextQuestionIntent');
+                  }
+                  else{
+                    //speechToPass+="Triggering else under name";
+                     this.emit('nextQuestionIntent');
+                  }
+            }
+            else{
+                //speechToPass+="Triggering outer else condition for non-meta questions. "
+                questionCounter++;
+                this.emit('nextQuestionIntent');
+            }
+        }
+        else{
+           //speechToPass+="Triggering Outer most else form null or in submit phase";
+           this.emit('nextQuestionIntent');
+        }
+      },
+
+
+      'AMAZON.NoIntent': function(){
+
+        if(form != null && formSubmission == false){
+             if(question.FieldType == 'RatingScale'){
+                if(multiQcounter >= rateQuestions.length)
+                  answers.pop();
+                if(multiAns.length > 0 )
+                   multiAns.pop();
+                if(multiQcounter > 0)
+                   multiQcounter--;
+
+                this.emit('repromptIntent');
+             }
+             else if(question.FieldType== 'Address'){
+               if(addressQcounter >= US_ADDRESS_LENGTH)
+                  answers.pop();
+               if(multiAns.length > 0)
+                  multiAns.pop();
+               if(addressQcounter > 0)
+                  addressQcounter--;
+
+                  // this.response.speak('Enter no under Address');
+                  // this.emit(':responseReady');
+
+               this.emit('repromptIntent');
+             }
+             else if(question.FieldType =='Name'){
+               if(nameArrCounter >= nameArr.length)
+                  answers.pop();
+               if(multiAns.length > 0 )
+                  multiAns.pop();
+               if(nameArrCounter > 0)
+                  nameArrCounter--;
+
+               this.emit('repromptIntent');
+             }
+             else{
+                 if(answers.length > 0)
+                    answers.pop();
+                    // this.response.speak('Enter no under inner else default case where form loaded and no submit qFieldtype: '+queston.FieldType);
+                    // this.emit(':responseReady');
+                 this.emit('repromptIntent');
+             }
+        }
+        else{
+          this.response.speak('Enter no under outer most else');
+          this.emit(':responseReady');
+            //this.emit('repromptIntent');
+        }
+
+      },
+     
+      'AMAZON.HelpIntent': function () {
+              const speechOutput = HELP_MESSAGE;
+              const reprompt = HELP_REPROMPT;
+              this.emit(':ask', speechOutput, reprompt);
+
+      },
+
+      'AMAZON.CancelIntent': function () {
+
+      },
+
+      'AMAZON.StopIntent': function () {
+
+      }
 
 // end of built in intents
+
 };
-
-
-
-
 
 exports.handler = function (event, context, callback) {
     const alexa = Alexa.handler(event, context, callback);

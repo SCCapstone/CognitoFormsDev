@@ -43,6 +43,8 @@
                     "name": "nextQuestionIntent",
                     "slots": [],
                     "samples": [
+                        "continue",
+                        "start",
                         "anymore questions",
                         "next",
                         "next question"
@@ -108,6 +110,7 @@
                 {
                     "name": "AMAZON.NoIntent",
                     "samples": [
+                        "nope",
                         "no",
                         "no thanks"
                     ]
@@ -141,7 +144,33 @@
                     "name": "exitIntent",
                     "slots": [],
                     "samples": [
+                        "exit form",
+                        "exit",
+                        "delete submission",
+                        "delete form",
                         "end session"
+                    ]
+                },
+                {
+                    "name": "answerConfirmIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "advertiseIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "tellMeMoreIntent",
+                    "slots": [
+                        {
+                            "name": "feature",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "tell me more about {feature}"
                     ]
                 }
             ],
