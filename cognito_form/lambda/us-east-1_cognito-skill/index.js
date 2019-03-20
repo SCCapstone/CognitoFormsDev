@@ -633,7 +633,6 @@ const handlers = {
 
                     this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
-
               }// end of terminating else
       }// end of all question conditions
     },
@@ -1767,7 +1766,7 @@ const handlers = {
         }
 
       },
-     
+
       'AMAZON.HelpIntent': function () {
               const speechOutput = HELP_MESSAGE;
               const reprompt = HELP_REPROMPT;
