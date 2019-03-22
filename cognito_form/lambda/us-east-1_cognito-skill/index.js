@@ -723,7 +723,7 @@ const handlers = {
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                     //questionCounter++;
-                    speechOutput= 'Storing answer, '+ formAns;
+                    speechOutput= 'Storing answer, '+ (formAns == true)? 'yes': 'no';
                   }
                   break;
 
