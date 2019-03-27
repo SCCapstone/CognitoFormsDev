@@ -14,7 +14,6 @@ class Cog{
 
    static checkBoxes(formAnsArr){
 
-
       var formAns='[';
 
       for(var i=0; i < formAnsArr.length; i++){
