@@ -1647,15 +1647,17 @@ const handlers = {
 
         req.write(postData);
         req.end();
+        formSubmission = false;
+        speechOutput="your form has been submitted.";
+        var cardTitle="Form Submitted";
+        var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
+        var repromptSpeech = speechOutput;
 
-        // speechOutput="your form has been submitted.";
-        // var cardTitle="Form Submitted";
-        // var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
-        // var repromptSpeech = speechOutput;
-
-        this.emit('advertiseIntent'); //':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+         this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+         //this.emit('advertiseIntent');
     }
     else if(form ==null){
+      formSubmission = false;
       speechOutput='You have not loaded a form yet, say get form followed by a form name.';
       repromptSpeech=HELP_MESSAGE;
 
@@ -1665,6 +1667,7 @@ const handlers = {
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     }
     else{
+      formSubmission = false;
       speechOutput='Please answer all questions before you submit your form. ';
       var reprompt= speechOutput;
       this.emit(':ask', speechOutput, reprompt);
@@ -1690,9 +1693,19 @@ const handlers = {
         else {
             for (var i = 0; i < answers.length; i++) {
 
-                speechOutput+= 'For question: ' +  answers[i].key + '. You gave: '
-                + answers[i].value + ', as your answer. ';
+                speechOutput+= 'For question: '  +  answers[i].key + '. You gave: ';
 
+                if(answers[i].type == "YesNo"){
+                    if(answers[i].value == 'true')
+                        speechOutput+= 'yes, as your answer. ';
+                    else {
+                        speechOutput+='no, as your answer. ';
+                    }
+
+                }
+                else{
+                      speechOutput+= answers[i].value + ', as your answer. ';
+               }
 
             }
 
@@ -1701,8 +1714,10 @@ const handlers = {
             repromptSpeech =prompt;
 
             cardContent= speechOutput+prompt;
+
+            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
       }
-         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
+
 
     },
 
@@ -1716,27 +1731,27 @@ const handlers = {
 
       var cardContent;
 
-      if(questionCounter % 2 == 0 && questionCounter > 0 ){
+      if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
 
           if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
 
 
-              if(form.Fields.length-questionCounter == 1){
+              if(form.Fields.length-(questionCounter+1) == 1){
 
                   if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
                         speechOutput+=' , only one question remains';
 
               }
               else{
-                  speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+                  speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
               }
 
           }
           else{
-              if(form.Fields.length-questionCounter == 1)
+              if(form.Fields.length-(questionCounter+1) == 1)
                  speechOutput+=' , only one question remains';
               else
-                 speechOutput+=' ,'+(form.Fields.length-questionCounter)+' questions remain';
+                 speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
           }
       }
 
@@ -1990,15 +2005,16 @@ const handlers = {
              multiAns=[];
              nameArrCounter=0;
              firstCall = true;
+             formSubmission = false;
 
              var speechOutput= STOP_MESSAGE;
 
              var cardTitle='Exiting Cognito Form';
              var cardContent=STOP_MESSAGE;
 
-             this.response.shouldEndSession = true;
-             this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
-             //this.emit('AMAZON.StopIntent');
+            // this.response.shouldEndSession = true;
+            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+
       },
 
 
@@ -2007,8 +2023,8 @@ const handlers = {
       },
 
       'AMAZON.StopIntent': function () {
-        this.response.shouldEndSession = true;
-        this.emit(':tell',"goodbye from stopIntent");
+      //  this.response.shouldEndSession = true;
+        this.emit('exitIntent');
       },
 
       'SessionEndedRequest':function(){
@@ -2020,9 +2036,7 @@ const handlers = {
 };
 
 exports.handler = function (event, context, callback) {
-    context.callbackWaitsForEmptyEventLoop = false;
-
-
+    //context.callbackWaitsForEmptyEventLoop = false;
     const alexa = Alexa.handler(event, context, callback);
     alexa.appId = APP_ID;
     alexa.registerHandlers(handlers);
