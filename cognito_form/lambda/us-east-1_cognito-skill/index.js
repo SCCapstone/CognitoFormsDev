@@ -16,7 +16,7 @@ const Cog= require('./Cog');
 //=========================================================================================================================================
 
 
-const APP_ID = undefined;
+const APP_ID = 'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
 const SKILL_NAME = 'cognito form';
 
 const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
@@ -79,9 +79,172 @@ var features=[ 'Card on File',
          'Electronic signatures',
          'Payment'
     ];
+
+
+var cogFeaturesBackup= {
+    "list":[
+
+     {
+        "feature": "card on file",
+
+        "description": "Your customers only need to enter their credit card information once. You can then authorize charges by storing the card in Stripe’s or Square’s secure and PCI-compliant environment for later use. Use Card on File to simplify recurring payments, subscriptions, installments, or any time when you don’t know what the final charges will be. It’s that easy."
+
+
+     },
+
+    {
+          "feature": "countries languages and currencies",
+
+          "description":"Create forms that can reach your users around the world. Your forms will be able to display dates, numbers, currencies and text in ways that are familiar, creating a greater sense of trust with your customers."
+    },
+
+    {
+          "feature": "email notifications",
+
+          "description":"Create custom email notifications to share with your customers and staff after new entries are submitted. Personalize these emails by editing the subject, writing the message, and including options like entry details, payment information, uploaded files, and document copies of entries. Email notifications are available on every plan level, from free and above. Additionally, Cognito Forms offers several advanced options for organizations on our Pro, Team, and Enterprise plans."
+    },
+
+    {
+          "feature": "entry management",
+
+          "description":"In Cognito Forms, you can sort through and filter down your entries, create customized data sets, and perform multiple tasks at once. If your form has a ton of entries, trying to make individual status updates or deleting them all one by one can be quite a tedious task. Instead, take advantage of the ability to perform operations on multiple entries at once. Export all the data you need directly into Excel for easy management and third-party imports. Nothing is lost in translation, making it easy to track trends, create fancy charts, and run additional calculations."
+    },
+
+    {
+          "feature": "form confirmations",
+
+          "description":"Once your customers have completed your form, it's important to assure them that their submission was successful, and to provide them with a record of their entry. With the ability to include documents, embed form data, and add URL redirects, you can create custom confirmation messages that provide your users helpful information with a personal touch. Allow your users to immediately view their submission details on your confirmation page after they press submit. They can also download and print out a PDF file or Word document containing their entry information directly from the page. For forms with payment, Cognito Forms will automatically generate a receipt alongside the entry information."
+    },
+
+    {
+          "feature": "hipaa compliance",
+
+          "description":"Patients expect to be able to communicate with their providers electronically, but security concerns make this difficult. Federal electronic medical records rules mandate electronic communications, but provide no solutions that are cost-effective.Cognito Forms solves these problems by making it easy to build HIPAA-compliant forms for new patient registration, appointment scheduling, refill requests, patient satisfaction surveys and even online bill payment. All of these great capabilities are available, including unlimited forms and unlimited entries, to organizations on our Enterprise plan."
+    },
+
+    {
+          "feature":  "integrations",
+
+          "description":"Quickly integrate with third-party apps and put your forms to work. Using Microsoft Flow, Zapier, Sharepoint, webhooks, and word press plugins. "
+    },
+
+    {
+          "feature": "lookup field",
+
+          "description":"A Lookup Field enables one form to look up, data from another form. You can then use that data to populate dropdowns, perform calculations, or display text in the new form. You can use look up fields to create Job applications that automatically hide expired positions, surveys that intelligently route themselves to the right people, and sales forms that track prices and inventory"
+    },
+
+    {
+          "feature": "quantity limits",
+
+          "description":"You can use quantity limits for any scenario in which there's a limit to the number of times a specific value may be selected or entered on your forms."
+    },
+
+    {
+          "feature": "rating scales",
+
+          "description":"With rating scales aka Likert scales, customers can score you on a number of options, ranking your product or service on a scale that you can customize. It's also easy to use rating scales to gauge interest in a topic or idea. Would your customers be excited to see your product in new colors or are they satisfied with the current options? You’ll never know until you ask."
+    },
+
+    {
+          "feature": "responsive forms",
+
+          "description":"No matter where they are or what device they're using, your customers can use Cognito Forms without any headache. Desktop, tablet and smartphone, all living in happy forms harmony."
+    },
+
+    {
+          "feature": "security",
+
+          "description":"Cognito Forms uses SSL encryption and is always accessed over HTTPS 100% of the time for all users. SSL, Secure Sockets Layer, is the standard for ensuring data is encrypted when being sent to a web server from a browser."
+    },
+
+    {
+          "feature": "spam prevention",
+
+          "description":"Our forms use what's known as a “smart” captcha. We have rules in place that automatically detect spam bots based on how the form is used. As long as your customers are humans, the captcha won't appear and frustrate your users, and you'll block any nasty spam entries."
+    },
+
+    {
+          "feature":  "style customization",
+
+          "description":"With a plethora of font types and colors to choose from, you can make your form look exactly the way you pictured in your head. Set unique attributes for different form elements including Headings, Labels, Text, Links, and Buttons, change the style of your fields, and set unique backgrounds colors and images."
+    },
+
+    {
+          "feature": "template sharing",
+
+          "description":"With template sharing, you can publish your form and send out a link to people you know so they can create a new form based off of your template. All the form's fields and logic will be copied so these organizations can start collecting entries without all the hard work."
+    },
+
+    {
+          "feature": "unlimited forms and fields",
+
+          "description":"The goal of Cognito Forms, first and foremost, is to give you a better way to connect and get data from your customers. We don't want to put all the best features behind a paywall or force you into a monthly plan that doesn’t fit what you need—we want you to be able to collect all the data you need, no matter what. That means that one simple thing will always be true—with every Cognito Forms account, you can make as many forms as you want, with as many fields as you want."
+    },
+
+    {
+          "feature": "website embedding",
+
+          "description":"We make it super simple to embed your form right into any webpage. No complications, no heavy lifting; just a quick copy and paste of a short code into your HTML. Choose from several embedding options: Seamless the standard option, Iframe compatible with just about any website or service, and AMP completely valid AMP markup for mobile pages."
+    },
+
+    {
+          "feature": "calculations",
+
+          "description":"Solve your form's math problems on the fly with Cognito Forms' powerful but easy-to-use calculations. Calculations can be used to compute field values based on user input, set default values for form fields, control visibility of fields,sections, and implement rich validation."
+    },
+
+    {
+          "feature": "entry sharing",
+
+          "description":"With entry link sharing enabled on your form, you can send your users entry links that allow them to either make changes, or to just review their information. These links can be available for an infinite amount of time, or you can set an automatic expiration date. You can also choose whether you want to share a direct link to the entry, or send a notification/confirmation email to the user with the link included."
+    },
+
+    {
+          "feature": "conditional logic",
+
+          "description":"Conditional logic makes viewing your form an easier, more intuitive task for your users. Whether you want to show or hide certain fields and pages, allow your users to pay when they want, send emails to people at specific times, or conditionally require a field, there are endless possibilities to make your form look better and flow more efficiently."
+    },
+
+    {
+          "feature":  "file uploads",
+
+          "description":"With file upload fields, your customers can upload their resumes, cover letters, photos, spreadsheets, and more with their form entries. If your customers have one file or ten, it won't matter—we'll still take care of them. Files start uploading right away instead of waiting until they click “Submit”, and we provide a handy little upload progress bar if they're adding a large file."
+    },
+
+    {
+          "feature": "data encryption",
+
+          "description":"From file attachments to phone numbers, there is no limit to the type or number of fields that you can protect. When you protect a field, that field’s data will no longer appear in notification or confirmation emails. Also, when integrating encrypted entry data, it will only be sent to a JSON endpoint over a secure connection. Essentially, your sensitive data can’t insecurely leave your account."
+    },
+
+    {
+          "feature": "multipage forms",
+
+          "description":"Organize your long forms and complex surveys with page breaks, progress bars and conditional pages. By separating the form into multiple pages and sections, it's not only better organized in terms of information, but also keeps your users more engaged through every step of the process."
+    },
+
+    {
+          "feature": "electronic signatures",
+
+          "description":"Electronic signatures are responsive and easy to enter on any device – laptop, tablet, or smartphone. You can sign and submit a form on the go in just a matter of minutes, without the hassle of dealing with a paper copy. Collecting electronic signatures on your forms is as simple as adding the signature field in your form builder. Like any other field, signatures will appear in entries and PDFs once submitted."
+    },
+
+    {
+          "feature": "payment",
+
+          "description":"Build order forms, event registrations and more in just minutes.Manage every step of the process without ever leaving Cognito Forms. Get details on your transactions, make changes to your orders or even issue refunds in just a few clicks."
+    }
+
+    ]
+
+
+};
+
 //=========================================================================================================================================
 //Handler and function sections
 //=========================================================================================================================================
+
 function ansObject(question, ans, type, subType){
     this.key = question;
     this.value= ans;
@@ -89,11 +252,19 @@ function ansObject(question, ans, type, subType){
     this.subType= subType;
 
 }
+
+
+
+
+
 class helperFunctions{
 
       static getRandomInt(max) {
            return Math.floor(Math.random() * Math.floor(max));
       }
+
+
+
 }
 
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
@@ -723,7 +894,9 @@ const handlers = {
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                     //questionCounter++;
-                    speechOutput= 'Storing answer, '+ (formAns == true)? 'yes': 'no';
+                    var formAnsVerbal= (formAns == "true")? 'yes': 'no';
+
+                    speechOutput= 'Storing answer, '+formAnsVerbal;
                   }
                   break;
 
@@ -1578,39 +1751,18 @@ const handlers = {
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     },
 
-      'exitIntent': function(){
-             formName=null;
-             form=null;
-             rateQuestions=null;
-             questionCounter = -1;
-             multiQcounter=0;
-             addressQcounter= -1;
-             answers=[];
-             multiAns=[];
-             nameArrCounter=0;
-             firstCall = true;
 
-             var speechOutput= STOP_MESSAGE;
+    'advertiseIntent': function(){
 
-             var cardTitle='Exiting Cognito Form';
-             var cardContent=STOP_MESSAGE;
-
-             this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
-
-
-      },
-
-      'advertiseIntent': function(){
-
-             var feature1= helperFunctions.getRandomInt(features.length);
-             var feature2= helperFunctions.getRandomInt(features.length);
-             var feature3= helperFunctions.getRandomInt(features.length);
+             var feature1= features[helperFunctions.getRandomInt(features.length)];
+             var feature2= features[helperFunctions.getRandomInt(features.length)];
+             var feature3= features[helperFunctions.getRandomInt(features.length)];
 
              while(feature2 == feature1)
-                feature2=helperFunctions.getRandomInt(features.length);
+                feature2=features[helperFunctions.getRandomInt(features.length)];
 
              while(feature3 == feature2 || feature3 == feature1)
-                  feature3= helperFunctions.getRandomInt(features.length);
+                  feature3= features[helperFunctions.getRandomInt(features.length)];
 
              var prompt=" Visit cognitoforms.com to utilize more advanced features, such as: "+
                           feature1+','+feature2+','+feature3+" and many more.";
@@ -1632,29 +1784,82 @@ const handlers = {
       },
 
       'tellMeMoreIntent': function(){
+         var featureList;
          var slotData= this.event.request.intent.slots.feature.value;
          var match= false;
 
+         var speechOutput;
+         var cardTitle;
+         var cardContent;
+
+        var repromptSpeech;
+
+
+
          for(var i=0; i < features.length; i++){
+
               if(slotData == features[i].toLowerCase()){
                   match=true;
+                  i= features.length;
               }
-         }
+        }
 
          if(match == false){
-          var speechOutput="I'm sorry, that is not a feature that I know about.";
+           speechOutput="I'm sorry, that is not a feature that I know about.";
 
-          var cardTitle="Features";
-          var cardContent= speechOutput
+           cardTitle="Features";
+           cardContent= speechOutput
 
-          var repromptSpeech = speechOutput;
+           repromptSpeech = speechOutput;
 
           this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
          }
-         else{// // TODO:  go get the jason file with the descriptions and read the correct one
+         else{
+                   // TODO:  go get the jason file with the descriptions and read the correct one
+
+                  var hostName="https://tjcocklin.github.io/";
+                  var file="Cognito_features.json";
+
+                  https.get(hostName+file, (res) => {
+                  console.log('statusCode:', res.statusCode);
+                  console.log('headers:', res.headers);
+
+
+                  var returnData='';
+
+
+                  res.on('data', (d) => {
+                      returnData+=d;
+
+
+                  });
+
+                  res.on('end', () => {
+                     featureList = JSON.parse(returnData);
+
+                     for(var i=0; i < featureList.list.length; i++){
+
+                        if(featureList.list[i].feature == slotData){
+
+                           speechOutput= featureList.list[i].description;
+                           i= featureList.list.length;
+                        }
+
+                     }
+
+                     var capitalizeLetter = slotData.slice(0,1).toUpperCase();
+                     cardTitle =slotData.replace(slotData.slice(0,1), capitalizeLetter);
+
+                     cardContent= speechOutput;
+
+                     repromptSpeech = "If you want to hear about more features, you can say tell me more followed by a feature, or end session";
+
+                     this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
+                  });
+                });
 
          }
-
 
       },
 
@@ -1759,9 +1964,9 @@ const handlers = {
              }
         }
         else{
-          this.response.speak('Enter no under outer most else');
-          this.emit(':responseReady');
-            //this.emit('repromptIntent');
+          // this.response.speak('Enter no under outer most else');
+          // this.emit(':responseReady');
+            this.emit('repromptIntent');
         }
 
       },
@@ -1773,12 +1978,41 @@ const handlers = {
 
       },
 
-      'AMAZON.CancelIntent': function () {
 
+      'exitIntent': function(){
+             formName=null;
+             form=null;
+             rateQuestions=null;
+             questionCounter = -1;
+             multiQcounter=0;
+             addressQcounter= -1;
+             answers=[];
+             multiAns=[];
+             nameArrCounter=0;
+             firstCall = true;
+
+             var speechOutput= STOP_MESSAGE;
+
+             var cardTitle='Exiting Cognito Form';
+             var cardContent=STOP_MESSAGE;
+
+             this.response.shouldEndSession = true;
+             this.emit(':tellWithCard', speechOutput, cardTitle, cardContent,imageObj);
+             //this.emit('AMAZON.StopIntent');
+      },
+
+
+      'AMAZON.CancelIntent': function () {
+          this.emit('AMAZON.StopIntent');
       },
 
       'AMAZON.StopIntent': function () {
+        this.response.shouldEndSession = true;
+        this.emit(':tell',"goodbye from stopIntent");
+      },
 
+      'SessionEndedRequest':function(){
+          this.emit(':responseReady');
       }
 
 // end of built in intents
@@ -1786,6 +2020,9 @@ const handlers = {
 };
 
 exports.handler = function (event, context, callback) {
+    context.callbackWaitsForEmptyEventLoop = false;
+
+
     const alexa = Alexa.handler(event, context, callback);
     alexa.appId = APP_ID;
     alexa.registerHandlers(handlers);
