@@ -170,6 +170,17 @@
                     "samples": [
                         "tell me more about {feature}"
                     ]
+                },
+                {
+                    "name": "listFormIntent",
+                    "slots": [],
+                    "samples": [
+                        "what forms are available",
+                        "show surveys",
+                        "list surveys",
+                        "show forms",
+                        "list forms"
+                    ]
                 }
             ],
             "types": []

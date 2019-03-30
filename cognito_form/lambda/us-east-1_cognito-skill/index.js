@@ -39,12 +39,14 @@ var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var forms=null;
 var formName=null;
 var form=null;
+var formList=null;
 var rateQuestions;
 var question;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var multiQcounter=0;
 var addressQcounter= -1;
 var answers=[];
+var answerComplete=true;
 var multiAns=[];
 var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
 var nameArr;
@@ -257,6 +259,7 @@ function ansObject(question, ans, type, subType){
 
 
 
+
 class helperFunctions{
 
       static getRandomInt(max) {
@@ -276,7 +279,7 @@ const handlers = {
 
             var cardTitle="Welcome to Cognito Forms";
             var cardContent= '';
-
+            formList="";
              //https request to cognito using CognitoformsDev apikey
             https.get(HOST_NAME+apiKey+DIR, (res) => {
 
@@ -296,6 +299,7 @@ const handlers = {
                      for(var i=0; i < forms.length; i++){
                         speechOutput+= ', '+forms[i].InternalName;
                         cardContent+= forms[i].InternalName+', ';
+                        formList+= forms[i].InternalName+', ';
 
                      }
                       speechOutput+= HELP_MESSAGE;
@@ -809,7 +813,7 @@ const handlers = {
 
 
   'answerIntent' : function(){
-
+    answerComplete= false;
     var formAns;
     var slotData= this.event.request.intent.slots;
 
@@ -894,9 +898,9 @@ const handlers = {
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                     //questionCounter++;
-                    var formAnsVerbal= (formAns == "true")? 'yes': 'no';
+                     formAns= (formAns == "true")? 'yes': 'no';
 
-                    speechOutput= 'Storing answer, '+formAnsVerbal;
+                    speechOutput= 'Storing answer, '+formAns;
                   }
                   break;
 
@@ -1765,7 +1769,7 @@ const handlers = {
       repromptSpeech= "say next, for the next question";
 
       cardTitle=""+question.InternalName;
-      cardContent= ""+formAns;
+      cardContent= "storing answer: "+formAns;
 
       speechOutput+=". Are these answers correct?";
 
@@ -1886,6 +1890,7 @@ const handlers = {
 
 //built in intents
       'AMAZON.YesIntent': function(){
+        answerComplete= true;
         if(form != null && formSubmission == false){
 
             if(question.FieldType == 'RatingScale'){
@@ -1941,7 +1946,7 @@ const handlers = {
 
 
       'AMAZON.NoIntent': function(){
-
+        answerComplete= true;
         if(form != null && formSubmission == false){
              if(question.FieldType == 'RatingScale'){
                 if(multiQcounter >= rateQuestions.length)
@@ -2001,6 +2006,7 @@ const handlers = {
 
 
       'exitIntent': function(){
+             formList= null;
              formName=null;
              form=null;
              rateQuestions=null;
@@ -2008,6 +2014,7 @@ const handlers = {
              multiQcounter=0;
              addressQcounter= -1;
              answers=[];
+             answerComplete=true;
              multiAns=[];
              nameArrCounter=0;
              firstCall = true;
@@ -2023,6 +2030,35 @@ const handlers = {
 
       },
 
+      'listFormIntent': function(){
+        var repromptSpeech;
+        var speechOutput;
+
+        var cardTitle;
+        var cardContent;
+
+
+        if(answerComplete == true){
+            repromptSpeech= " say reprompt, to hear the question again";
+            speechOutput="Here's a list of available forms, "+formList+repromptSpeech;
+
+            cardTitle="Currently available forms.";
+            cardContent=speechOutput;
+
+            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+          }
+          else{
+            speechOutput="You haven't confirmed you last answer for, "+answers[answers.length-1].key+
+                          ", you gave "+answers[answers.length-1].value+" as your answer. Are these answers correct?";
+
+            repromptSpeech= speechOutput;
+
+            cardTitle="Complete your last answer first please.";
+            cardContent=speechOutput;
+
+            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+          }
+      },
 
       'AMAZON.CancelIntent': function () {
           this.emit('AMAZON.StopIntent');
