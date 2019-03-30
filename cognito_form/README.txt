@@ -1,6 +1,6 @@
 Description:
 
-This project requests a form from Congito Forms, filling out the form through Alexa, and then submitting
+This project requests a form from Cognito Forms, allows the user to fill out the form through Alexa, and then submit
 a form.
 
 The work behind the scenes is called by event handlers through Alexa Skills services hosted on Amazon web servers.
@@ -32,7 +32,7 @@ utterance- [anymore questions|next|next question]
 
 answerIntent- listens for the answer to a form question.
 
-utterance- [answer| mark date| time| street| city| state| zip]<response>
+utterance- [answer| date| time| street| city| state| zip]<response>
 
 
 repromptIntent- reprompts the user with the current question and options.
@@ -55,31 +55,12 @@ skipQuestionIntent- Allows the user to skip questions in the form.
 
 utterance- skip
 
---------------------------------------------
-#### Quick start example ####
+advertiseIntent- Provides the user with randomly selected features about cognitoforms.com
 
-FORM - RTD:
-start cognito
-get form rtd
-next
-tell cognito date <month day>
-next
-tell cognito time <time pm/am>
-next
-tell cognito answer neutral
-next
-...
+tellMeMoreIntent- Provides information about a feature offered on cognitoforms.com
 
-----------------------------------
+utterance- tell me more about <feature>
 
-FORM - MULTICHOICE
-start cognito
-get form multichoice
-next
-answer <yes/no>
-next
-answer <sport>
-next
-answer <movie types>
-next
-...
+exitIntent- Ends the alexa skill Session.
+
+utterance- end session
