@@ -143,11 +143,15 @@
                 {
                     "name": "exitIntent",
                     "slots": [],
-                    "samples": [
-                        "delete submission",
-                        "delete form",
-                        "end session"
-                    ]
+                  "samples": [
+                    "end",
+                    "leave",
+                    "exit form",
+                    "exit",
+                    "delete submission",
+                    "delete form",
+                    "end session"
+                  ]
                 },
                 {
                     "name": "answerConfirmIntent",
