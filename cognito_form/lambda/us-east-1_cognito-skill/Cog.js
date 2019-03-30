@@ -49,7 +49,23 @@ class Cog{
        return formAns+= ":00";
 
    }
+   static time12h(formAns){
+        var temp= formAns.split(':');
+        var hour= (Number(temp[0]) > 12)? Number(temp[0]) - 12 : Number(temp[0]);
+        var amPM;
 
+        if( Number(temp[0]) < 12)
+          amPM= ' am';
+        else
+          amPM=' pm';
+
+        if(hour == 0)
+            hour= 12;
+
+        return hour+':'+temp[1]+amPM;
+
+
+   }
 
 
 }

@@ -737,14 +737,14 @@ const handlers = {
 
                    }
                  }
-                 //or say mark date to set a date,'
+                 //or say date to set a date,'
                  //+ 'or time to set a time.';
                  else if(question.FieldType == 'Date' && question.FieldSubType =='Date'){
 
                    var questionSentence =question.Name.split(' ');
 
                    if(questionSentence.length == 1){
-                     speechOutput="What is the "+question.Name+' Say mark date, followed by your response.';
+                     speechOutput="What is the "+question.Name+' Say date, followed by your response.';
 
                      repromptSpeech = speechOutput;
                      cardTitle = '' + question.Name;
@@ -755,7 +755,7 @@ const handlers = {
 
                    }
                    else{
-                     speechOutput= question.Name+' Say mark date, followed by your response.';
+                     speechOutput= question.Name+' Say date, followed by your response.';
 
                      repromptSpeech = speechOutput;
                      cardTitle = '' + question.Name;
@@ -975,13 +975,19 @@ const handlers = {
 
              case "Date":
 
-                  if(question.FieldSubType == "Time")
-                    formAns= Cog.time(formAns);
+                  if(question.FieldSubType == "Time"){
 
+                    formAns= Cog.time(formAns);
+                    var hour12Time= Cog.time12h(formAns);
+                  }
                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                    //questionCounter++;
-                   speechOutput= 'Storing answer, '+ formAns;
+
+                   if(question.FieldSubType == "Date")
+                     speechOutput='Storing answer, '+ formAns;
+                   else
+                     speechOutput= 'Storing answer, '+ hour12Time;
 
                   break;
 
@@ -1648,13 +1654,13 @@ const handlers = {
         req.write(postData);
         req.end();
         formSubmission = false;
-        speechOutput="your form has been submitted.";
-        var cardTitle="Form Submitted";
-        var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
-        var repromptSpeech = speechOutput;
-
-         this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
-         //this.emit('advertiseIntent');
+        // speechOutput="your form has been submitted.";
+        // var cardTitle="Form Submitted";
+        // var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
+        // var repromptSpeech = speechOutput;
+        //
+        //  this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+         this.emit('advertiseIntent');
     }
     else if(form ==null){
       formSubmission = false;

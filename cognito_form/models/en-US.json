@@ -88,7 +88,7 @@
                         "city {city}",
                         "street {street}",
                         "time {time}",
-                        "mark date {date}",
+                        "date {date}",
                         "answer {response}"
                     ]
                 },
@@ -144,8 +144,6 @@
                     "name": "exitIntent",
                     "slots": [],
                     "samples": [
-                        "exit form",
-                        "exit",
                         "delete submission",
                         "delete form",
                         "end session"
