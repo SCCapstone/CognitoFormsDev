@@ -16,7 +16,7 @@ const Cog= require('./Cog');
 //=========================================================================================================================================
 
 
-const APP_ID = 'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
+const APP_ID = 'amzn1.ask.skill.a65d95ec-93d7-402a-b2bd-a956e84c1648';
 const SKILL_NAME = 'cognito form';
 
 const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
