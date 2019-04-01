@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Begin Jekyll SEO tag v2.5.0 -->
+    <title>Cognito Form Alexa app | CognitoFormsDev</title>
+    <meta name="generator" content="Jekyll v3.7.4" />
+    <meta property="og:title" content="Cognito Form Alexa app" />
+    <meta property="og:locale" content="en_US" />
+    <link rel="canonical" href="https://sccapstone.github.io/CognitoFormsDev/" />
+    <meta property="og:url" content="https://sccapstone.github.io/CognitoFormsDev/" />
+    <meta property="og:site_name" content="CognitoFormsDev" />
+    <script type="application/ld+json">
+        {"@type":"WebSite","url":"https://sccapstone.github.io/CognitoFormsDev/","name":"CognitoFormsDev","headline":"Cognito Form Alexa app","@context":"http://schema.org"}
+    </script>
+    <!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/CognitoFormsDev/assets/css/style.css?v=898fd1a299ea798a66de5699956be345bd5d82fa">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/CognitoFormsDev/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/CognitoFormsDev/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+</head>
+<body>
+    <div id="header">
+        <nav>
+            <li class="fork"><a href="https://github.com/SCCapstone/CognitoFormsDev">View On GitHub</a></li>
+
+        </nav>
+    </div><!-- end header -->
+
+    <div class="wrapper">
+
+        <section>
+            <div id="title">
+                <h1>CognitoFormsDev</h1>
+                <p></p>
+                <hr>
+                <span class="credits left">Project maintained by <a href="https://github.com/SCCapstone">SCCapstone</a></span>
+                <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+            </div>
+
+            <h1 id="cognito-form-alexa-app">Cognito Form Alexa app</h1>
+
+            <h2 id="project-title">Project Title</h2>
+
+            <p>This project allows a user to request a form from Congitoforms.com, fill out that form and submit it, all through an Alexa app.</p>
+
+            <h2 id="getting-started">Getting Started</h2>
+            <p>To begin, clone or download the project from https://github.com/SCCapstone/CognitoFormsDev to your desktop.</p>
+
+            <h3 id="prerequisites">Prerequisites</h3>
+
+            <p>Code editor</p>
+
+            <p>Amazon developer account</p>
+
+            <p>Amazon Web Services account</p>
+
+            <p>Node.js</p>
+
+            <h3 id="installingconfiguration">Installing/Configuration</h3>
+
+            <p>1) First open a folder on your desktop where you will store the project. In order to create a git repository in that folder and retrieve the project, use the command:</p>
+
+            <p>git clone https://github.com/SCCapstone/CognitoFormsDev.git</p>
+
+            <p>2) Next, login into your Amazon Developer Account, and access the developer console</p>
+            <ul>
+                <li>Choose “Create a skill”</li>
+                <li>Type in a name for the skill; the skill name can be whatever you choose</li>
+                <li>Set the default language as appropriate</li>
+                <li>Choose “Custom model” for your skill.</li>
+                <li>Click “Create skill”</li>
+            </ul>
+
+            <p>3) A prompt asking to choose a template will appear</p>
+            <ul>
+                <li>Select “Start from scratch”</li>
+                <li>Click “Choose”</li>
+            </ul>
+
+            <p>4) You are now under the build section of the Alexa skill</p>
+            <ul>
+                <li>Select “Json editor”</li>
+                <li>Select “Drag and drop .json file”</li>
+                <li>Navigate to the folder containing the Cognito form project</li>
+                <li>Select the en.US.json file located: CognitoFormsDev -&gt; cognito_form -&gt; models -&gt; en.US.json</li>
+            </ul>
+
+            <p>5) Open a new tab in your browser and navigate to the Amazon Web Services and login</p>
+            <ul>
+                <li>Select “Lambda” under the services menu</li>
+                <li>Select “Create function’</li>
+                <li>Select “blue prints”; in the search bar lookup “Alex-skill-kit-sdk-factskill” and select that option</li>
+                <li>Give a name for your lambda function</li>
+                <li>Under the “Role” drop down choose “Create a custom role”</li>
+            </ul>
+
+            <p>6) A new page should appear showing IAM Role “lambda_basic_execution”</p>
+            <ul>
+                <li>Scroll to the bottom of the page and click “Allow”</li>
+            </ul>
+
+            <p>7) You should return to your pevious page, where you named the function. Make sure that all of fields have been entered correctly.</p>
+            <ul>
+                <li>Scroll down and click the button labeled “Create function”</li>
+            </ul>
+
+            <p>8) We must now add a trigger for the function</p>
+            <ul>
+                <li>Select “Alexa Skill Kit” from the add trigger option</li>
+                <li>Make note of the lambda endpoint Id, located at the top right of the page, that is preceded by “ARN-”</li>
+            </ul>
+
+            <p>9) Return to your first tab containing the Amazon developer portal</p>
+            <ul>
+                <li>Select “Endpoint” under the build tab</li>
+                <li>Select the “AWS Lambda ARN” option</li>
+                <li>In the default Region box, place the lambda endpoint Id that you noted back in step 8</li>
+                <li>Copy the Skill Id featured above the default Region box</li>
+                <li>Return back to the tab with your lambda function configuration</li>
+            </ul>
+
+            <p>10) Scroll to the bottom of the page</p>
+            <ul>
+                <li>Fill in the Skill-ID box with the Skill Id you acquired from step 9</li>
+                <li>Click “Add” when done</li>
+                <li>Click on the name of your lambda function to reveal a function editor where the code for the lambda function is stored</li>
+                <li>From the downloaded project, copy all lines of code from the  “index.js” file located: CognitoFormsDev -&gt; cognito_form -&gt; lambda -&gt; us-east-1_cognito-skill -&gt; index.js</li>
+                <li>Paste that code to the editor containing the lambda code</li>
+                <li>Hit the “Save” button in the top right corner of the page</li>
+            </ul>
+
+            <p>11) Return to the tab with endpoint (The Alexa Developer Console)</p>
+            <ul>
+                <li>Save the endpoints</li>
+                <li>Save the model</li>
+                <li>Build the model</li>
+            </ul>
+
+            <p>You are now ready to test the skill.</p>
+
+            <h2 id="running-the-tests">Running the tests</h2>
+
+            <p>
+                Test json files can be saved and run locally, using the instructions here: cognito_form/tests/README.txt.
+                In addition, tests can be run from the test tab of the Amazon developer console.
+            </p>
+
+            <h2 id="built-with">Built With</h2>
+
+            <p>•	Node.js The web framework used</p>
+
+            <p>•	AWS Lambda Dependency Management</p>
+
+            <h2 id="version">Version</h2>
+
+            <p>1.0.0</p>
+
+            <h2 id="authors">Authors</h2>
+
+            <p>•	Jeffrey Cocklin - Initial work – tjcocklin</p>
+
+            <p>•	See also:  Ayla El-Mereebi, Jaret Kiser, Jake Meisten, Nicholas Belegrino, Kassidy Block</p>
+
+            <h2 id="license">License</h2>
+
+            <p>This project is licensed under the MIT License - see the LICENSE.md file for details</p>
+
+
+        </section>
+
+    </div>
+
+
+</body>
+</html>
