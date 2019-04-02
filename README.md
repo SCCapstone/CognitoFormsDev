@@ -25,7 +25,7 @@ Node.js
 git clone https://github.com/SCCapstone/CognitoFormsDev.git
 
 2) Next, login into your Amazon Developer Account, and access the developer console
-- Choose 'Create a skill'
+- Choose *Create a skill*
 - Type in a name for the skill; the skill name can be whatever you choose
 - Set the default language as appropriate
 - Choose 'Custom model' for your skill.
