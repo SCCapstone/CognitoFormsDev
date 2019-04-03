@@ -310,7 +310,7 @@ const handlers = {
 
                   }
                   else{                              // the forms do not exist.
-                      speechOutput="I'm sorry, no forms are currently available";
+                      speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
                       this.emit(':ask',speechOutput, repromptSpeech);
                   }
              });
