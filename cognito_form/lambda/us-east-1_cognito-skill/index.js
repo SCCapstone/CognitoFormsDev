@@ -253,7 +253,7 @@ function ansObject(question, ans, type, subType){
 
 }
 
-
+class
 
 
 
@@ -262,17 +262,14 @@ class helperFunctions{
       static getRandomInt(max) {
            return Math.floor(Math.random() * Math.floor(max));
       }
-
-
-
 }
 
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
 
-            var speechOutput= "Welcome to the cognito form app, here's a list of the available forms ";
-            var repromptSpeech="You can say cognito get form followed by a form name.";
+            var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
+            var repromptSpeech="You can say: cognito get form, followed by a form name.";
 
             var cardTitle="Welcome to Cognito Forms";
             var cardContent= '';
@@ -321,7 +318,7 @@ const handlers = {
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
 
-       var prompt= ". Say start, to begin the form.";
+       var prompt= ". Say: start, to begin the form.";
 
        var cardTitle;
 
@@ -380,7 +377,7 @@ const handlers = {
 
 
       if(form == null){
-        speechOutput="You have not loaded a form yet, say get form followed by a form name.";
+        speechOutput="You have not loaded a form yet, say: get form, followed by a form name.";
         repromptSpeech= speechOutput;
 
         this.emit(':ask', speechOutput, repromptSpeech);
