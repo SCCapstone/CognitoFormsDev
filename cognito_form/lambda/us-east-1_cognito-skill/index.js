@@ -262,11 +262,15 @@ class helperFunctions{
       static getRandomInt(max) {
            return Math.floor(Math.random() * Math.floor(max));
       }
-
-
-
+        
+    static helperGet() {
+        for(var i=0; i<10; i++) {
+            
+        
+        
+        }
+    }
 }
-
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
@@ -368,7 +372,47 @@ const handlers = {
     });
 
   },
+    'listFormsIntent' : function(){
+            var speechOutput= "Here's a list of the available forms: ";
+            var cardTitle="Available Forms: ";
+            var cardContent= '';
 
+             //https request to cognito using CognitoformsDev apikey
+            https.get(HOST_NAME+apiKey+DIR, (res) => {
+
+              console.log('statusCode:', res.statusCode);
+
+              var returnData = '';
+
+              res.on('data', (d) => {
+                   returnData+=d;
+              });
+
+              res.on('end', () => {
+                  if(returnData != ''){               // the forms exist.
+                     forms = JSON.parse(returnData);
+
+                     for(var i=0; i < forms.length; i++){
+                        speechOutput+= ', '+forms[i].InternalName;
+                        cardContent+= forms[i].InternalName+', ';
+
+                     }
+                      speechOutput+= HELP_MESSAGE;
+                      cardContent+= HELP_MESSAGE;
+
+                      this.emit(':askWithCard', speechOutput, cardTitle, cardContent, imageObj);
+
+
+                  }
+                  else{                              // the forms do not exist.
+                      speechOutput="I'm sorry, no forms are currently available";
+                      this.emit(':ask',speechOutput);
+                  }
+             });
+
+        });
+
+  },
 
     'nextQuestionIntent' : function(){
 
@@ -429,7 +473,6 @@ const handlers = {
                      speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
                   }
 
-
                   speechOutput+="say answer, followed by your response.";
                   repromptSpeech= speechOutput;
 
@@ -437,7 +480,6 @@ const handlers = {
                   cardContent= repromptSpeech;
 
                   this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
                 //   this.response.speak(speechOutput);
                 //   this.emit(':responseReady');
              }
