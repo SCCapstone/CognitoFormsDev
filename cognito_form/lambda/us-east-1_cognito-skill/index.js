@@ -429,6 +429,7 @@ const handlers = {
                      speechOutput+= 'option '+(i+1)+', '+question.Choices[i].Label+', ';
                   }
 
+
                   speechOutput+="say answer, followed by your response.";
                   repromptSpeech= speechOutput;
 
@@ -436,6 +437,7 @@ const handlers = {
                   cardContent= repromptSpeech;
 
                   this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
                 //   this.response.speak(speechOutput);
                 //   this.emit(':responseReady');
              }
