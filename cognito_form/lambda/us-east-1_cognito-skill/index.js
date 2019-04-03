@@ -797,7 +797,7 @@ const handlers = {
                    }
                  }
                  else {
-                    speechOutput ="I'm sorry, questions using fieldtype "+question.FieldType+" are not supported for this skill."//'I' have a question for you, '+question.Name+',';
+                    speechOutput ="I'm sorry, questions using fieldtype "+question.FieldType+" are not supported for this skill.";//'I' have a question for you, '+question.Name+',';
                     speechOutput+= ' you can say skip, to move to the next question';
 
                     repromptSpeech= speechOutput;
@@ -1194,7 +1194,7 @@ const handlers = {
                   else{  // format the extension
                       if(formAns.length > 10){
                         var ext=[];
-                        extension= formAns.slice(10)
+                        extension= formAns.slice(10);
 
                         for(var i=0; i < extension.length; i++){
                           if(isNaN(extension.charAt(i)) == false){
