@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cognito",
+            "invocationName": "cognito forms",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -36,9 +36,6 @@
                         }
                     ],
                     "samples": [
-                        "begin {form_name}",
-                        "form {form_name}",
-                        "start {form_name}",
                         "get form {form_name}"
                     ]
                 },
@@ -83,20 +80,15 @@
                         {
                             "name": "zip",
                             "type": "AMAZON.SearchQuery"
-                        },
-                        {
-                            "name": "firstname",
-                            "type": "AMAZON.US_FIRST_NAME"
                         }
                     ],
                     "samples": [
-                        "{firstname}",
                         "zip {zip}",
                         "state {state}",
                         "city {city}",
                         "street {street}",
                         "time {time}",
-                        "mark date {date}",
+                        "date {date}",
                         "answer {response}"
                     ]
                 },
@@ -152,10 +144,6 @@
                     "name": "exitIntent",
                     "slots": [],
                     "samples": [
-                        "end",
-                        "leave",
-                        "exit form",
-                        "exit",
                         "delete submission",
                         "delete form",
                         "end session"
@@ -180,7 +168,20 @@
                         }
                     ],
                     "samples": [
+                        "tell me about {feature}",
+                        "tell me more on {feature}",
                         "tell me more about {feature}"
+                    ]
+                },
+                {
+                    "name": "listFormIntent",
+                    "slots": [],
+                    "samples": [
+                        "what forms are available",
+                        "show surveys",
+                        "list surveys",
+                        "show forms",
+                        "list forms"
                     ]
                 }
             ],
@@ -241,13 +242,6 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
-                        },
-                        {
-                            "name": "firstname",
-                            "type": "AMAZON.US_FIRST_NAME",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 },
@@ -274,10 +268,10 @@
             {
                 "id": "Elicit.Slot.320058184487.1149066116793",
                 "variations": [
-                  {
-                    "type": "PlainText",
-                    "value": "tell me an option"
-                  }
+                    {
+                        "type": "PlainText",
+                        "value": "tell me an option"
+                    }
                 ]
             },
             {
