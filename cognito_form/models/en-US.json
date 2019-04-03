@@ -174,7 +174,7 @@
                     ]
                 },
                 {
-                    "name": "listFormIntent",
+                    "name": "listFormsIntent",
                     "slots": [],
                     "samples": [
                         "what forms are available",
