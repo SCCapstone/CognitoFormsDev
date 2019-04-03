@@ -364,7 +364,7 @@ const handlers = {
 
               }
               else{                              // the form requested does not exist.
-                  speechOutput="I'm sorry, that form is unavailable";
+                  speechOutput="I'm sorry, that form is unavailable. You can say get form, with a different form name, or say end session to end the session.";
                   this.emit(':ask', speechOutput, prompt);
               }
          });
@@ -1771,7 +1771,7 @@ const handlers = {
       cardTitle=""+question.InternalName;
       cardContent= "storing answer: "+formAns;
 
-      speechOutput+=". Are these answers correct?";
+      speechOutput+=". Are these answers correct? You can say yes, or no.";
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     },
@@ -1830,7 +1830,7 @@ const handlers = {
         }
 
          if(match == false){
-           speechOutput="I'm sorry, that is not a feature that I know about.";
+           speechOutput="I'm sorry, that is not a feature that I know about. You can say tell me more about, followed by a different feature name, or you can say end session.";
 
            cardTitle="Features";
            cardContent= speechOutput
@@ -1877,7 +1877,7 @@ const handlers = {
 
                      cardContent= speechOutput;
 
-                     repromptSpeech = "If you want to hear about more features, you can say tell me more followed by a feature, or end session";
+                     repromptSpeech = "If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
 
                      this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
