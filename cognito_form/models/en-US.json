@@ -181,7 +181,8 @@
                         "show surveys",
                         "list surveys",
                         "show forms",
-                        "list forms"
+                        "list forms",
+                        "list available forms"
                     ]
                 }
             ],
