@@ -1223,7 +1223,7 @@ const handlers = {
                   var numArr;
 
                   if(formAns.includes('%'))
-                     formAns= formAns.replace('%','')
+                     formAns= formAns.replace('%','');
 
 
                   numArr = formAns.split(' ');
@@ -2013,13 +2013,6 @@ const handlers = {
 
       },
 
-      'AMAZON.HelpIntent': function () {
-              const speechOutput = HELP_MESSAGE;
-              const reprompt = HELP_REPROMPT;
-              this.emit(':ask', speechOutput, reprompt);
-
-      },
-
 
       'exitIntent': function(){
              formList= null;
@@ -2076,6 +2069,41 @@ const handlers = {
           }
       },
 
+
+      'AMAZON.FallbackIntent':function(){
+        var speechOutput="I'm sorry, but I'm not sure what you meant. Try giving your response again, or say help.";
+        var repromptSpeech= speechOutput;
+
+        var cardTitle="Ambiguous input";
+        var cardContent=speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+      },
+
+
+      'AMAZON.HelpIntent':function(){
+        var prompt1=" Retrieve a form by saying get form, followed by a form name.";
+        var prompt2=" Have a question repeated by saying, reprompt.";
+
+        var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street, city, state, or zip. What you'll need to use is prompted in the question.";
+        var prompt4=" Repeat answers by saying repeat my answers.";
+
+        var prompt5=" verify answers by saying yes or no.";
+        var prompt6=" submit forms by saying, submit form.";
+
+        var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
+        var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
+        var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
+                          prompt8+" What would you like to do?";
+
+        var repromptSpeech= speechOutput;
+
+        var cardTitle="Help prompt";
+        var cardContent=speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+      },
+
       'AMAZON.CancelIntent': function () {
           this.emit('AMAZON.StopIntent');
       },
@@ -2085,7 +2113,7 @@ const handlers = {
         this.emit('exitIntent');
       },
 
-      
+
       'SessionEndedRequest':function(){
           this.emit(':responseReady');
       }
