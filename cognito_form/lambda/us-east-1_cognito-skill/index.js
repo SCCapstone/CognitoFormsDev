@@ -1658,20 +1658,16 @@ const handlers = {
         req.write(postData);
         req.end();
         formSubmission = false;
-        // speechOutput="your form has been submitted.";
-        // var cardTitle="Form Submitted";
-        // var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
-        // var repromptSpeech = speechOutput;
-        //
-        //  this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
          this.emit('advertiseIntent');
-    }else if(answers.length <= 0){
+
+    }else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
 
       formSubmission = false;
       speechOutput='You have not answered any questions, say end session to end this session.';
       repromptSpeech=speechOutput;
 
-      cardTitle=speechOutput;
+      cardTitle="Blank submission.";
       cardContent= speechOutput;
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
@@ -1680,18 +1676,25 @@ const handlers = {
     else if(form ==null){
       formSubmission = false;
       speechOutput='You have not loaded a form yet, say get form followed by a form name.';
+
       repromptSpeech=HELP_MESSAGE;
 
-      cardTitle=speechOutput;
+      cardTitle="No form loaded.";
       cardContent= HELP_MESSAGE;
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     }
     else{
       formSubmission = false;
-      speechOutput='Please answer all questions before you submit your form. ';
-      var reprompt= speechOutput;
-      this.emit(':ask', speechOutput, reprompt);
+      speechOutput='Please answer all questions before you submit your form, say reprompt for the next question.';
+
+      repromptSpeech=speechOutput;
+
+      cardTitle="Incompelete submission.";
+      cardContent=speechOutput;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
     }
 
   },
