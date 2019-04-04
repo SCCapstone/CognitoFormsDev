@@ -2085,6 +2085,7 @@ const handlers = {
         this.emit('exitIntent');
       },
 
+      
       'SessionEndedRequest':function(){
           this.emit(':responseReady');
       }
