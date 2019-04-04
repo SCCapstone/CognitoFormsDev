@@ -1573,7 +1573,7 @@ const handlers = {
      var cardTitle;
      var cardContent;
 
-    if( form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+    if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
         var speechOutput = '';
 
         var HOST = 'services.cognitoforms.com';
@@ -1665,6 +1665,17 @@ const handlers = {
         //
         //  this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
          this.emit('advertiseIntent');
+    }else if(answers.length <= 0){
+
+      formSubmission = false;
+      speechOutput='You have not answered any questions, say end session to end this session.';
+      repromptSpeech=speechOutput;
+
+      cardTitle=speechOutput;
+      cardContent= speechOutput;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
     }
     else if(form ==null){
       formSubmission = false;
@@ -1833,7 +1844,7 @@ const handlers = {
            speechOutput="I'm sorry, that is not a feature that I know about. You can say tell me more about, followed by a different feature name, or you can say end session.";
 
            cardTitle="Features";
-           cardContent= speechOutput
+           cardContent= speechOutput;
 
            repromptSpeech = speechOutput;
 
@@ -1875,9 +1886,11 @@ const handlers = {
                      var capitalizeLetter = slotData.slice(0,1).toUpperCase();
                      cardTitle =slotData.replace(slotData.slice(0,1), capitalizeLetter);
 
-                     cardContent= speechOutput;
+                     repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
 
-                     repromptSpeech = "If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
+                     cardContent= speechOutput+repromptSpeech;
+                     speechOutput+=repromptSpeech;
+
 
                      this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
