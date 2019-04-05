@@ -2039,36 +2039,7 @@ const handlers = {
 
       },
 
-      'listFormIntent': function(){
-        var repromptSpeech;
-        var speechOutput;
-
-        var cardTitle;
-        var cardContent;
-
-
-        if(answerComplete == true){
-            repromptSpeech= " say reprompt, to hear the question again";
-            speechOutput="Here's a list of available forms, "+formList+repromptSpeech;
-
-            cardTitle="Currently available forms.";
-            cardContent=speechOutput;
-
-            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-          }
-          else{
-            speechOutput="You haven't confirmed you last answer for, "+answers[answers.length-1].key+
-                          ", you gave "+answers[answers.length-1].value+" as your answer. Are these answers correct?";
-
-            repromptSpeech= speechOutput;
-
-            cardTitle="Complete your last answer first please.";
-            cardContent=speechOutput;
-
-            this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-          }
-      },
-
+      
 
       'AMAZON.FallbackIntent':function(){
         var speechOutput="I'm sorry, but I'm not sure what you meant. Try giving your response again, or say help.";
