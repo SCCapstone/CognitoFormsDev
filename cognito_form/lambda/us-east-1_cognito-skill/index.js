@@ -253,9 +253,45 @@ function ansObject(question, ans, type, subType){
 
 }
 
-class
+// Get an object value from a specific path
+var getObjFromPath = function (obj, path, def) {
 
+	// If the path is a string, convert it to an array
+	var stringToArr = function (path) {
 
+		// If the path isn't a string, return it
+		if (typeof path !== 'string') return path;
+
+		var output = [];
+		path.split('.').forEach(function (item) {
+			item.split(/\[([^}]+)\]/g).forEach(function (key) {
+				if (key.length > 0) {
+					output.push(key);
+				}
+
+			});
+
+		});
+
+		return output;
+
+	};
+
+	path = stringToArr(path); 	// Get the path as an array
+	var currentObj = obj; 	// Cache the current object
+
+	for (var i = 0; i < path.length; i++) {
+		// If the item isn't found, return the default (or null)
+		if (!currentObj[path[i]]) return def;
+
+		// Otherwise, update the current  value
+		currentObj = currentObj[path[i]];
+
+	}
+
+	return currentObj;
+
+};
 
 class helperFunctions{
 
