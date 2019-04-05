@@ -1,4 +1,4 @@
-//questionCounter++;/* eslint-disable  func-names */
+             //questionCounter++;/* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
 /**
  * This sample demonstrates the cognito form skill built using
@@ -16,7 +16,7 @@ const Cog= require('./Cog');
 //=========================================================================================================================================
 
 
-const APP_ID = 'amzn1.ask.skill.a65d95ec-93d7-402a-b2bd-a956e84c1648';
+const APP_ID = undefined;
 const SKILL_NAME = 'cognito form';
 
 const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
@@ -262,13 +262,8 @@ class helperFunctions{
     static getRandomInt(max) {
            return Math.floor(Math.random() * Math.floor(max));
       }  
-  var get = function (obj, path, def) {
-
-	/**
-	 * If the path is a string, convert it to an array
-	 * @param  {String|Array} path The path
-	 * @return {Array}             The path array
-	 */
+  static getString(obj,path,def) { {
+	//If the path is a string, convert it to an array
 	var stringToPath = function (path) {
         // If the path isn't a string, return it
         if (typeof path !== 'string') return path;
@@ -298,7 +293,8 @@ class helperFunctions{
         current = current[path[i]];
       }
       return current;
-    };
+    }
+}
 }
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
@@ -410,7 +406,7 @@ const handlers = {
             https.get(HOST_NAME+apiKey+DIR, (res) => {
 
               console.log('statusCode:', res.statusCode);
-
+              var repromptSpeech = 'What do you want to do';
               var returnData = '';
 
               res.on('data', (d) => {
@@ -429,7 +425,7 @@ const handlers = {
                       speechOutput+= HELP_MESSAGE;
                       cardContent+= HELP_MESSAGE;
 
-                      this.emit(':askWithCard', speechOutput, cardTitle, cardContent, imageObj);
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
                   }
