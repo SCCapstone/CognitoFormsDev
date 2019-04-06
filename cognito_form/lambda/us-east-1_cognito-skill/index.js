@@ -4,7 +4,7 @@
  * This sample demonstrates the cognito form skill built using
  * nodejs skill development kit.
  **/
-
+//
 'use strict';
 const Alexa = require('alexa-sdk');
 
