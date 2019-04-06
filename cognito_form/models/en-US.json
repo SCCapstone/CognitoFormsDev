@@ -174,14 +174,15 @@
                     ]
                 },
                 {
-                    "name": "listFormIntent",
+                    "name": "listFormsIntent",
                     "slots": [],
                     "samples": [
                         "what forms are available",
                         "show surveys",
                         "list surveys",
                         "show forms",
-                        "list forms"
+                        "list forms",
+                        "list available forms"
                     ]
                 }
             ],

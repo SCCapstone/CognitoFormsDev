@@ -1,4 +1,4 @@
-//questionCounter++;/* eslint-disable  func-names */
+             //questionCounter++;/* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
 /**
  * This sample demonstrates the cognito form skill built using
@@ -16,7 +16,9 @@ const Cog= require('./Cog');
 //=========================================================================================================================================
 
 
+
 const APP_ID = undefined;//'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
+
 const SKILL_NAME = 'cognito form';
 
 const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
@@ -260,9 +262,44 @@ function ansObject(question, ans, type, subType){
 
 class helperFunctions{
 
-      static getRandomInt(max) {
+    static getRandomInt(max) {
            return Math.floor(Math.random() * Math.floor(max));
+      }  
+  static getString(obj,path,def) { {
+	//If the path is a string, convert it to an array
+	var stringToPath = function (path) {
+        // If the path isn't a string, return it
+        if (typeof path !== 'string') return path;
+        // Create new array
+        var output = [];
+        // Split to an array with dot notation
+        path.split('.').forEach(function (item) {
+          // Split to an array with bracket notation
+          item.split(/\[([^}]+)\]/g).forEach(function (key) {
+            // Push to the new array
+            if (key.length > 0) {
+              output.push(key);
+            }
+          });
+        });
+        return output;
+      };
+      // Get the path as an array
+      path = stringToPath(path);
+      // Cache the current object
+      var current = obj;
+      // For each item in the path, dig into the object
+      for (var i = 0; i < path.length; i++) {
+        // If the item isn't found, return the default (or null)
+        if (!current[path[i]]) return def;
+        // Otherwise, update the current  value
+        current = current[path[i]];
       }
+
+      return current;
+    }
+}
+
 
 
       // Get an object value from a specific path
@@ -305,8 +342,8 @@ class helperFunctions{
 
       }
 
-}
 
+}
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
@@ -409,7 +446,47 @@ const handlers = {
     });
 
   },
+    'listFormsIntent' : function(){
+            var speechOutput= "Here's a list of the available forms: ";
+            var cardTitle="Available Forms: ";
+            var cardContent= '';
 
+             //https request to cognito using CognitoformsDev apikey
+            https.get(HOST_NAME+apiKey+DIR, (res) => {
+
+              console.log('statusCode:', res.statusCode);
+              var repromptSpeech = 'What do you want to do';
+              var returnData = '';
+
+              res.on('data', (d) => {
+                   returnData+=d;
+              });
+
+              res.on('end', () => {
+                  if(returnData != ''){               // the forms exist.
+                     forms = JSON.parse(returnData);
+
+                     for(var i=0; i < forms.length; i++){
+                        speechOutput+= ', '+forms[i].InternalName;
+                        cardContent+= forms[i].InternalName+', ';
+
+                     }
+                      speechOutput+= HELP_MESSAGE;
+                      cardContent+= HELP_MESSAGE;
+
+                      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
+                  }
+                  else{                              // the forms do not exist.
+                      speechOutput="I'm sorry, no forms are currently available";
+                      this.emit(':ask',speechOutput);
+                  }
+             });
+
+        });
+
+  },
 
     'nextQuestionIntent' : function(){
 
