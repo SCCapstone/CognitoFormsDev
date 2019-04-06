@@ -11,7 +11,7 @@ function callback(error, data) {
       console.log('\n GetNewForm test failed.');
   } else {
     //  console.log(data);
-      console.log('\n GetNewForm test pass!');
+      console.log('\n GetNewForm test passed!');
 
   }
 }

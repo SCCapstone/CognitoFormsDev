@@ -10,7 +10,7 @@ function callback(error, data) {
       console.log('Launch test failed.');
   } else {
     //  console.log(data);
-      console.log('\n Launch test pass!');
+      console.log('\n Launch test passed!');
 
   }
 }

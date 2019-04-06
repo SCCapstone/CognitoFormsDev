@@ -11,7 +11,7 @@ function callback(error, data) {
       console.log('\n Next question test failed.');
   } else {
   //    console.log(data);
-      console.log('\n Next question test pass!');
+      console.log('\n Next question test passed!');
 
   }
 }

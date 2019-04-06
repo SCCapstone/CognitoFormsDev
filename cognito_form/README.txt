@@ -57,9 +57,18 @@ utterance- skip
 
 advertiseIntent- Provides the user with randomly selected features about cognitoforms.com
 
+utterance- n/a
+
+
 tellMeMoreIntent- Provides information about a feature offered on cognitoforms.com
 
 utterance- tell me more about <feature>
+
+
+AMAZON.helpIntent- Provides the user information on how to use the skill.
+
+utterance- help
+
 
 exitIntent- Ends the alexa skill Session.
 

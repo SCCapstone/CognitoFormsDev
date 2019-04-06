@@ -8,7 +8,7 @@ var mockContext = new context();
 function callback(error, data) {
   if(error) {
   //    console.log('error: ' + error);
-      console.log('\n Cannot Repeat Answers Successfully');
+      console.log('\n Cannot repeat answers successfully');
   } else {
   //    console.log(data);
       console.log('\n Successfully repeated answers');

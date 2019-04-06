@@ -16,7 +16,9 @@ const Cog= require('./Cog');
 //=========================================================================================================================================
 
 
-const APP_ID = undefined;
+
+const APP_ID = undefined;//'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
+
 const SKILL_NAME = 'cognito form';
 
 const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
@@ -39,12 +41,14 @@ var apiKey = '6e238844-ce7a-489a-be61-fdef351fadd4';
 var forms=null;
 var formName=null;
 var form=null;
+var formList=null;
 var rateQuestions;
 var question;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var multiQcounter=0;
 var addressQcounter= -1;
 var answers=[];
+var answerComplete=true;
 var multiAns=[];
 var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
 var nameArr;
@@ -256,7 +260,6 @@ function ansObject(question, ans, type, subType){
 
 
 
-
 class helperFunctions{
 
     static getRandomInt(max) {
@@ -292,20 +295,65 @@ class helperFunctions{
         // Otherwise, update the current  value
         current = current[path[i]];
       }
+
       return current;
     }
 }
+
+
+
+      // Get an object value from a specific path
+      static getObjFromPath(obj, path, def) {
+
+      	// If the path is a string, convert it to an array
+       var stringToArr=function (path) {
+
+      		// If the path isn't a string, return it
+      		if (typeof path !== 'string') return path;
+
+      		var output = [];
+      		path.split('.').forEach(function (item) {
+      			item.split(/\[([^}]+)\]/g).forEach(function (key) {
+      				if (key.length > 0) {
+      					output.push(key);
+      				}
+
+      			});
+
+      		});
+
+      		return output;
+
+      	};
+
+      	path = stringToArr(path); 	// Get the path as an array
+      	var currentObj = obj; 	// Cache the current object
+
+      	for (var i = 0; i < path.length; i++) {
+      		// If the item isn't found, return the default (or null)
+      		if (!currentObj[path[i]]) return def;
+
+      		// Otherwise, update the current  value
+      		currentObj = currentObj[path[i]];
+
+      	}
+
+      	return currentObj;
+
+      }
+
+
 }
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
     'LaunchRequest': function () {
 
-            var speechOutput= "Welcome to the cognito form app, here's a list of the available forms ";
-            var repromptSpeech="You can say cognito get form followed by a form name.";
+            var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
+            var repromptSpeech="You can say: cognito get form, followed by a form name.";
 
             var cardTitle="Welcome to Cognito Forms";
             var cardContent= '';
-
+            formList="";
              //https request to cognito using CognitoformsDev apikey
             https.get(HOST_NAME+apiKey+DIR, (res) => {
 
@@ -325,6 +373,7 @@ const handlers = {
                      for(var i=0; i < forms.length; i++){
                         speechOutput+= ', '+forms[i].InternalName;
                         cardContent+= forms[i].InternalName+', ';
+                        formList+= forms[i].InternalName+', ';
 
                      }
                       speechOutput+= HELP_MESSAGE;
@@ -335,7 +384,7 @@ const handlers = {
 
                   }
                   else{                              // the forms do not exist.
-                      speechOutput="I'm sorry, no forms are currently available";
+                      speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
                       this.emit(':ask',speechOutput, repromptSpeech);
                   }
              });
@@ -350,7 +399,7 @@ const handlers = {
        formName = this.event.request.intent.slots.form_name.value;
        var speechOutput;
 
-       var prompt= ". Say start, to begin the form.";
+       var prompt= ". Say: start, to begin the form.";
 
        var cardTitle;
 
@@ -389,7 +438,7 @@ const handlers = {
 
               }
               else{                              // the form requested does not exist.
-                  speechOutput="I'm sorry, that form is unavailable";
+                  speechOutput="I'm sorry, that form is unavailable. You can say get form, with a different form name, or say end session to end the session.";
                   this.emit(':ask', speechOutput, prompt);
               }
          });
@@ -449,7 +498,7 @@ const handlers = {
 
 
       if(form == null){
-        speechOutput="You have not loaded a form yet, say get form followed by a form name.";
+        speechOutput="You have not loaded a form yet, say: get form, followed by a form name.";
         repromptSpeech= speechOutput;
 
         this.emit(':ask', speechOutput, repromptSpeech);
@@ -862,7 +911,7 @@ const handlers = {
                    }
                  }
                  else {
-                    speechOutput ="I'm sorry, questions using fieldtype "+question.FieldType+" are not supported for this skill."//'I' have a question for you, '+question.Name+',';
+                    speechOutput ="I'm sorry, questions using fieldtype "+question.FieldType+" are not supported for this skill.";//'I' have a question for you, '+question.Name+',';
                     speechOutput+= ' you can say skip, to move to the next question';
 
                     repromptSpeech= speechOutput;
@@ -878,7 +927,7 @@ const handlers = {
 
 
   'answerIntent' : function(){
-
+    answerComplete= false;
     var formAns;
     var slotData= this.event.request.intent.slots;
 
@@ -963,9 +1012,9 @@ const handlers = {
                     answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
                     //questionCounter++;
-                    var formAnsVerbal= (formAns == "true")? 'yes': 'no';
+                     formAns= (formAns == "true")? 'yes': 'no';
 
-                    speechOutput= 'Storing answer, '+formAnsVerbal;
+                    speechOutput= 'Storing answer, '+formAns;
                   }
                   break;
 
@@ -1259,7 +1308,7 @@ const handlers = {
                   else{  // format the extension
                       if(formAns.length > 10){
                         var ext=[];
-                        extension= formAns.slice(10)
+                        extension= formAns.slice(10);
 
                         for(var i=0; i < extension.length; i++){
                           if(isNaN(extension.charAt(i)) == false){
@@ -1288,7 +1337,7 @@ const handlers = {
                   var numArr;
 
                   if(formAns.includes('%'))
-                     formAns= formAns.replace('%','')
+                     formAns= formAns.replace('%','');
 
 
                   numArr = formAns.split(' ');
@@ -1638,7 +1687,7 @@ const handlers = {
      var cardTitle;
      var cardContent;
 
-    if( form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+    if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
         var speechOutput = '';
 
         var HOST = 'services.cognitoforms.com';
@@ -1723,29 +1772,43 @@ const handlers = {
         req.write(postData);
         req.end();
         formSubmission = false;
-        // speechOutput="your form has been submitted.";
-        // var cardTitle="Form Submitted";
-        // var cardContent= "Thank you for using the Cognito Form Alexa app, say end session to exit.";
-        // var repromptSpeech = speechOutput;
-        //
-        //  this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
          this.emit('advertiseIntent');
+
+    }else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
+
+      formSubmission = false;
+      speechOutput='You have not answered any questions, say end session to end this session.';
+      repromptSpeech=speechOutput;
+
+      cardTitle="Blank submission.";
+      cardContent= speechOutput;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
     }
     else if(form ==null){
       formSubmission = false;
       speechOutput='You have not loaded a form yet, say get form followed by a form name.';
+
       repromptSpeech=HELP_MESSAGE;
 
-      cardTitle=speechOutput;
+      cardTitle="No form loaded.";
       cardContent= HELP_MESSAGE;
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     }
     else{
       formSubmission = false;
-      speechOutput='Please answer all questions before you submit your form. ';
-      var reprompt= speechOutput;
-      this.emit(':ask', speechOutput, reprompt);
+      speechOutput='Please answer all questions before you submit your form, say reprompt for the next question.';
+
+      repromptSpeech=speechOutput;
+
+      cardTitle="Incompelete submission.";
+      cardContent=speechOutput;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
     }
 
   },
@@ -1834,9 +1897,9 @@ const handlers = {
       repromptSpeech= "say next, for the next question";
 
       cardTitle=""+question.InternalName;
-      cardContent= ""+formAns;
+      cardContent= "storing answer: "+formAns;
 
-      speechOutput+=". Are these answers correct?";
+      speechOutput+=". Are these answers correct? You can say yes, or no.";
 
       this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
     },
@@ -1895,10 +1958,10 @@ const handlers = {
         }
 
          if(match == false){
-           speechOutput="I'm sorry, that is not a feature that I know about.";
+           speechOutput="I'm sorry, that is not a feature that I know about. You can say tell me more about, followed by a different feature name, or you can say end session.";
 
            cardTitle="Features";
-           cardContent= speechOutput
+           cardContent= speechOutput;
 
            repromptSpeech = speechOutput;
 
@@ -1940,9 +2003,11 @@ const handlers = {
                      var capitalizeLetter = slotData.slice(0,1).toUpperCase();
                      cardTitle =slotData.replace(slotData.slice(0,1), capitalizeLetter);
 
-                     cardContent= speechOutput;
+                     repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
 
-                     repromptSpeech = "If you want to hear about more features, you can say tell me more followed by a feature, or end session";
+                     cardContent= speechOutput+repromptSpeech;
+                     speechOutput+=repromptSpeech;
+
 
                      this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
@@ -1955,6 +2020,7 @@ const handlers = {
 
 //built in intents
       'AMAZON.YesIntent': function(){
+        answerComplete= true;
         if(form != null && formSubmission == false){
 
             if(question.FieldType == 'RatingScale'){
@@ -2010,7 +2076,7 @@ const handlers = {
 
 
       'AMAZON.NoIntent': function(){
-
+        answerComplete= true;
         if(form != null && formSubmission == false){
              if(question.FieldType == 'RatingScale'){
                 if(multiQcounter >= rateQuestions.length)
@@ -2061,15 +2127,9 @@ const handlers = {
 
       },
 
-      'AMAZON.HelpIntent': function () {
-              const speechOutput = HELP_MESSAGE;
-              const reprompt = HELP_REPROMPT;
-              this.emit(':ask', speechOutput, reprompt);
-
-      },
-
 
       'exitIntent': function(){
+             formList= null;
              formName=null;
              form=null;
              rateQuestions=null;
@@ -2077,6 +2137,7 @@ const handlers = {
              multiQcounter=0;
              addressQcounter= -1;
              answers=[];
+             answerComplete=true;
              multiAns=[];
              nameArrCounter=0;
              firstCall = true;
@@ -2093,6 +2154,41 @@ const handlers = {
       },
 
 
+
+      'AMAZON.FallbackIntent':function(){
+        var speechOutput="I'm sorry, but I'm not sure what you meant. Try giving your response again, or say help.";
+        var repromptSpeech= speechOutput;
+
+        var cardTitle="Ambiguous input";
+        var cardContent=speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+      },
+
+
+      'AMAZON.HelpIntent':function(){
+        var prompt1=" Retrieve a form by saying get form, followed by a form name.";
+        var prompt2=" Have a question repeated by saying, reprompt.";
+
+        var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street, city, state, or zip. What you'll need to use is prompted in the question.";
+        var prompt4=" Repeat answers by saying repeat my answers.";
+
+        var prompt5=" verify answers by saying yes or no.";
+        var prompt6=" submit forms by saying, submit form.";
+
+        var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
+        var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
+        var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
+                          prompt8+" What would you like to do?";
+
+        var repromptSpeech= speechOutput;
+
+        var cardTitle="Help prompt";
+        var cardContent=speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+      },
+
       'AMAZON.CancelIntent': function () {
           this.emit('AMAZON.StopIntent');
       },
@@ -2101,6 +2197,7 @@ const handlers = {
       //  this.response.shouldEndSession = true;
         this.emit('exitIntent');
       },
+
 
       'SessionEndedRequest':function(){
           this.emit(':responseReady');

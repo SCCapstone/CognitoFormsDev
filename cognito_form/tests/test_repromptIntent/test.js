@@ -12,7 +12,7 @@ function callback(error, data) {
       console.log('\n repromptIntent test failed.');
   } else {
     //  console.log(data);
-      console.log('\n repromptIntent test pass!');
+      console.log('\n repromptIntent test passed!');
 
   }
 }
