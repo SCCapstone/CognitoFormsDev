@@ -10724,6 +10724,24 @@ if(formName == null){
 }
 
 
+if(formName == null){
+    helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+    helperFunctions.choiceusAddressQ(multiQcounter,answers);
+    helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+    helperFunctions.countquestionCounter(questionCounter,question);
+    helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+    helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+    helperFunctions.choice();
+    helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+    helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+    helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+    helperFunctions.formNamenameArr(answers,features);
+    helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+    helperFunctions.answersform(formSubmission,forms,features);
+    helperFunctions.speechToPass();
+}
+
+
 var feature1= features[helperFunctions.getRandomInt(features.length)];
 var feature2= features[helperFunctions.getRandomInt(features.length)];
 var feature3= features[helperFunctions.getRandomInt(features.length)];
