@@ -341,8 +341,8787 @@ return currentObj;
 
 }
 
+static nameArr(multiQcounter,form,formName,multiAns){
 
+     var array=[9], target=4, first=8, last=0;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[1], start=15, end=14;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
 }
+
+
+static choiceusAddressQ(multiQcounter,answers){
+
+     var array=[2], target=8, first=10, last=2;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='forms';
+
+     switch(caseNum){
+
+           case'ansToPass':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'question':
+                  return 'success';
+           case'forms':
+                  return 'perform clean up';
+           case'multiAns':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter){
+
+     var array=[10], target=9, first=16, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static countquestionCounter(questionCounter,question){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='multiAns';
+
+     switch(caseNum){
+
+           case'multiQcounter':
+                  return -1;
+           case'addressQcounter':
+                  return 0;
+           case'answers':
+                  return 'success';
+           case'multiAns':
+                  return 'perform clean up';
+           case'imageObj':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall){
+
+     var array=[4], target=5, first=16, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[11], start=2, end=13;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='answers';
+
+     switch(caseNum){
+
+           case'multiQcounter':
+                  return -1;
+           case'rateQuestions':
+                  return 0;
+           case'nameArrCounter':
+                  return 'success';
+           case'answers':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static choice(){
+
+     var caseNum='form';
+
+     switch(caseNum){
+
+           case'form':
+                  return -1;
+           case'rateQuestions':
+                  return 0;
+           case'apiKey':
+                  return 'success';
+           case'form':
+                  return 'perform clean up';
+           case'speechToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[1], start=10, end=6;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static answers(addressQcounter,question,speechToPass,apiKey){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='question';
+
+     switch(caseNum){
+
+           case'formName':
+                  return -1;
+           case'usAddressQ':
+                  return 0;
+           case'questionCounter':
+                  return 'success';
+           case'question':
+                  return 'perform clean up';
+           case'rateQuestions':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[5], target=0, first=8, last=4;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[10], start=18, end=1;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var caseNum='multiAns';
+
+     switch(caseNum){
+
+           case'imageObj':
+                  return -1;
+           case'formName':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'multiAns':
+                  return 'perform clean up';
+           case'ansToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[3], start=0, end=0;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[8], target=5, first=0, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static firstCall(formName,rateQuestions,questionCounter,form,question){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='form';
+
+     switch(caseNum){
+
+           case'apiKey':
+                  return -1;
+           case'forms':
+                  return 0;
+           case'features':
+                  return 'success';
+           case'form':
+                  return 'perform clean up';
+           case'imageObj':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[5], start=16, end=9;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static formNamenameArr(answers,features){
+
+     var array=[5], start=16, end=10;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='apiKey';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'form':
+                  return 'success';
+           case'apiKey':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns){
+
+     var array=[4], target=0, first=10, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='apiKey';
+
+     switch(caseNum){
+
+           case'nameArr':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'firstCall':
+                  return 'success';
+           case'apiKey':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static answersform(formSubmission,forms,features){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[0], start=5, end=18;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'usAddressQ':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'imageObj':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'forms':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[11], target=2, first=6, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static speechToPass(){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='answers';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'multiAns':
+                  return 0;
+           case'formSubmission':
+                  return 'success';
+           case'answers':
+                  return 'perform clean up';
+           case'rateQuestions':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions){
+
+     var caseNum='usAddressQ';
+
+     switch(caseNum){
+
+           case'imageObj':
+                  return -1;
+           case'formName':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'usAddressQ':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[5], target=1, first=19, last=7;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[4], start=8, end=13;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static countformSubmissionspeechToPasssearch(multiAns,form){
+
+     var array=[7], target=4, first=4, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static formformat(forms,usAddressQ,questionCounter){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[10], target=7, first=10, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='speechToPass';
+
+     switch(caseNum){
+
+           case'forms':
+                  return -1;
+           case'answers':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'speechToPass':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static formSubmissionansToPassformNameanswer(features,questionCounter,answers){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var caseNum='forms';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'nameArrCounter':
+                  return 0;
+           case'usAddressQ':
+                  return 'success';
+           case'forms':
+                  return 'perform clean up';
+           case'ansToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[4], target=0, first=9, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[10], start=5, end=7;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static floatrateQuestions(nameArrCounter,multiAns){
+
+     var array=[6], start=10, end=10;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='addressQcounter';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'form':
+                  return 'success';
+           case'addressQcounter':
+                  return 'perform clean up';
+           case'speechToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static countsearch(multiQcounter,multiAns){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[0], start=7, end=1;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[5], start=1, end=9;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[3], target=6, first=6, last=7;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static speechToPassanswer(multiAns,form,formSubmission,speechToPass){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[11], start=4, end=7;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[3], target=5, first=4, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static searchquestionchoiceaddressQcounter(ansToPass,multiQcounter){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[5], target=4, first=2, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='imageObj';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'formSubmission':
+                  return 0;
+           case'nameArrCounter':
+                  return 'success';
+           case'imageObj':
+                  return 'perform clean up';
+           case'formSubmission':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static formsfloatquestionCounteransToPass(usAddressQ,features,answers,nameArr){
+
+     var caseNum='nameArr';
+
+     switch(caseNum){
+
+           case'rateQuestions':
+                  return -1;
+           case'apiKey':
+                  return 0;
+           case'rateQuestions':
+                  return 'success';
+           case'nameArr':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[5], start=8, end=8;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[2], target=9, first=9, last=10;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static searchmultiAnscountmultiQcounter(apiKey,formSubmission,multiAns,form){
+
+     var caseNum='questionCounter';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'form':
+                  return 0;
+           case'questionCounter':
+                  return 'success';
+           case'questionCounter':
+                  return 'perform clean up';
+           case'formName':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static usAddressQformName(formName,nameArrCounter,addressQcounter,form,forms){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[8], start=15, end=2;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='usAddressQ';
+
+     switch(caseNum){
+
+           case'question':
+                  return -1;
+           case'speechToPass':
+                  return 0;
+           case'multiAns':
+                  return 'success';
+           case'usAddressQ':
+                  return 'perform clean up';
+           case'rateQuestions':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[1], target=7, first=6, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static listformdecimalrateQuestions(features,formName,answers){
+
+     var array=[0], start=4, end=0;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static nameArrCounterapiKeyformatfeatures(addressQcounter,forms,features,question){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static ansToPassquestionnameArrCountermultiAns(firstCall,form,addressQcounter,features){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[1], start=7, end=10;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[5], target=0, first=9, last=4;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='answers';
+
+     switch(caseNum){
+
+           case'answers':
+                  return -1;
+           case'forms':
+                  return 0;
+           case'nameArr':
+                  return 'success';
+           case'answers':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static firstCallcount(apiKey,question,answers){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static decimalspeechToPass(){
+
+     var array=[5], start=5, end=7;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='multiQcounter';
+
+     switch(caseNum){
+
+           case'form':
+                  return -1;
+           case'rateQuestions':
+                  return 0;
+           case'ansToPass':
+                  return 'success';
+           case'multiQcounter':
+                  return 'perform clean up';
+           case'answers':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[5], target=4, first=5, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static formatforms(nameArr,apiKey){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='nameArrCounter';
+
+     switch(caseNum){
+
+           case'nameArrCounter':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'nameArrCounter':
+                  return 'success';
+           case'nameArrCounter':
+                  return 'perform clean up';
+           case'formSubmission':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[9], target=3, first=5, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static multiQcounter(features,questionCounter,form,answers,firstCall){
+
+     var array=[8], start=1, end=16;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static usAddressQ(ansToPass,forms){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[0], target=8, first=5, last=2;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static ansToPass(form,imageObj){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[8], start=15, end=10;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[10], target=1, first=7, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='ansToPass';
+
+     switch(caseNum){
+
+           case'apiKey':
+                  return -1;
+           case'answers':
+                  return 0;
+           case'speechToPass':
+                  return 'success';
+           case'ansToPass':
+                  return 'perform clean up';
+           case'question':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static formataddressQcounter(nameArr,formName,speechToPass,form){
+
+     var caseNum='formName';
+
+     switch(caseNum){
+
+           case'addressQcounter':
+                  return -1;
+           case'ansToPass':
+                  return 0;
+           case'question':
+                  return 'success';
+           case'formName':
+                  return 'perform clean up';
+           case'forms':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static formanswersfloat(questionCounter,firstCall,multiQcounter){
+
+     var caseNum='nameArr';
+
+     switch(caseNum){
+
+           case'speechToPass':
+                  return -1;
+           case'multiQcounter':
+                  return 0;
+           case'addressQcounter':
+                  return 'success';
+           case'nameArr':
+                  return 'perform clean up';
+           case'rateQuestions':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[0], start=3, end=2;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[11], target=0, first=1, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static integerfloatform(formSubmission,ansToPass,answers){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='nameArrCounter';
+
+     switch(caseNum){
+
+           case'multiQcounter':
+                  return -1;
+           case'speechToPass':
+                  return 0;
+           case'forms':
+                  return 'success';
+           case'nameArrCounter':
+                  return 'perform clean up';
+           case'answers':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[9], start=15, end=7;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[5], target=0, first=9, last=10;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static formSubmission(rateQuestions,ansToPass){
+
+     var array=[10], target=4, first=4, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[1], start=3, end=4;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static formsfeatureslist(apiKey,firstCall,rateQuestions){
+
+     var array=[2], start=17, end=13;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='formSubmission';
+
+     switch(caseNum){
+
+           case'multiAns':
+                  return -1;
+           case'question':
+                  return 0;
+           case'question':
+                  return 'success';
+           case'formSubmission':
+                  return 'perform clean up';
+           case'multiQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static nameArrCounter(answers,forms,question){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='usAddressQ';
+
+     switch(caseNum){
+
+           case'forms':
+                  return -1;
+           case'multiQcounter':
+                  return 0;
+           case'ansToPass':
+                  return 'success';
+           case'usAddressQ':
+                  return 'perform clean up';
+           case'addressQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static formatsearchfeatures(features,formName){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static firstCallnameArr(features,form,usAddressQ,multiAns,nameArr){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[8], start=11, end=7;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='multiQcounter';
+
+     switch(caseNum){
+
+           case'ansToPass':
+                  return -1;
+           case'speechToPass':
+                  return 0;
+           case'apiKey':
+                  return 'success';
+           case'multiQcounter':
+                  return 'perform clean up';
+           case'forms':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[2], target=4, first=0, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static integerusAddressQsearch(apiKey,usAddressQ,multiAns){
+
+     var array=[8], target=2, first=18, last=10;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static formNameanswerinteger(speechToPass,formSubmission,apiKey){
+
+     var array=[8], target=3, first=16, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static decimalmultiAnsform(addressQcounter,form,answers,usAddressQ){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[3], target=7, first=10, last=7;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[8], start=9, end=17;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='question';
+
+     switch(caseNum){
+
+           case'nameArr':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'questionCounter':
+                  return 'success';
+           case'question':
+                  return 'perform clean up';
+           case'formName':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static decimalanswersformNameforms(usAddressQ,firstCall,questionCounter,form,multiAns){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[1], target=5, first=1, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='apiKey';
+
+     switch(caseNum){
+
+           case'questionCounter':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'features':
+                  return 'success';
+           case'apiKey':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[7], start=16, end=2;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static multiAnsusAddressQ(formSubmission,apiKey,imageObj,nameArr){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[5], target=8, first=16, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[7], start=14, end=3;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='question';
+
+     switch(caseNum){
+
+           case'apiKey':
+                  return -1;
+           case'answers':
+                  return 0;
+           case'nameArr':
+                  return 'success';
+           case'question':
+                  return 'perform clean up';
+           case'addressQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static multiAnsinteger(form,multiAns){
+
+     var caseNum='answers';
+
+     switch(caseNum){
+
+           case'imageObj':
+                  return -1;
+           case'forms':
+                  return 0;
+           case'form':
+                  return 'success';
+           case'answers':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static form(imageObj,features,firstCall,forms){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[6], start=3, end=2;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var caseNum='formName';
+
+     switch(caseNum){
+
+           case'formName':
+                  return -1;
+           case'multiAns':
+                  return 0;
+           case'usAddressQ':
+                  return 'success';
+           case'formName':
+                  return 'perform clean up';
+           case'firstCall':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[9], target=5, first=13, last=11;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static nameArrformNameformat(usAddressQ,speechToPass,features,forms,nameArr){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[3], target=6, first=4, last=9;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static line(nameArr,ansToPass,formName,speechToPass){
+
+     var array=[8], target=5, first=7, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'usAddressQ':
+                  return -1;
+           case'nameArrCounter':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'multiQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static search(){
+
+     var caseNum='imageObj';
+
+     switch(caseNum){
+
+           case'addressQcounter':
+                  return -1;
+           case'imageObj':
+                  return 0;
+           case'question':
+                  return 'success';
+           case'imageObj':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static multiQcounteranswerformsanswers(multiAns,features,nameArr,nameArrCounter){
+
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'speechToPass':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'ansToPass':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'nameArr':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+static formNameform(nameArrCounter,answers,features){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='answers';
+
+     switch(caseNum){
+
+           case'nameArr':
+                  return -1;
+           case'ansToPass':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'answers':
+                  return 'perform clean up';
+           case'question':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[2], target=4, first=8, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static nameArrlistformat(form,usAddressQ,rateQuestions,answers){
+
+     var array=[10], start=2, end=16;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='rateQuestions';
+
+     switch(caseNum){
+
+           case'forms':
+                  return -1;
+           case'addressQcounter':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'rateQuestions':
+                  return 'perform clean up';
+           case'formName':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[7], target=1, first=6, last=4;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static lineapiKeyansToPass(apiKey,answers,multiAns){
+
+     var caseNum='addressQcounter';
+
+     switch(caseNum){
+
+           case'rateQuestions':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'firstCall':
+                  return 'success';
+           case'addressQcounter':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[5], target=5, first=8, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static integer(multiQcounter,forms,apiKey){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[2], start=16, end=3;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='multiAns';
+
+     switch(caseNum){
+
+           case'rateQuestions':
+                  return -1;
+           case'nameArr':
+                  return 0;
+           case'questionCounter':
+                  return 'success';
+           case'multiAns':
+                  return 'perform clean up';
+           case'ansToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static arrintegeransToPassapiKey(questionCounter,form){
+
+     var array=[11], target=9, first=13, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static formarrfirstCall(){
+
+     var array=[6], target=3, first=18, last=4;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[1], start=6, end=14;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static countmultiAnsforms(){
+
+     var array=[4], start=4, end=8;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static list(formName,addressQcounter,forms,multiAns){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[10], target=3, first=1, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='question';
+
+     switch(caseNum){
+
+           case'addressQcounter':
+                  return -1;
+           case'questionCounter':
+                  return 0;
+           case'imageObj':
+                  return 'success';
+           case'question':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[8], start=9, end=18;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static questionCounterchoice(formName,firstCall,imageObj,nameArrCounter){
+
+     var caseNum='multiAns';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'multiQcounter':
+                  return 0;
+           case'form':
+                  return 'success';
+           case'multiAns':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[9], start=11, end=4;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[1], target=3, first=11, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static countforms(apiKey,multiAns,nameArrCounter){
+
+     var array=[9], target=6, first=0, last=7;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[3], start=13, end=4;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var caseNum='features';
+
+     switch(caseNum){
+
+           case'rateQuestions':
+                  return -1;
+           case'features':
+                  return 0;
+           case'addressQcounter':
+                  return 'success';
+           case'features':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static featuresformat(ansToPass,multiAns,rateQuestions,questionCounter){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[9], start=7, end=2;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[8], target=5, first=19, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='features';
+
+     switch(caseNum){
+
+           case'ansToPass':
+                  return -1;
+           case'features':
+                  return 0;
+           case'multiQcounter':
+                  return 'success';
+           case'features':
+                  return 'perform clean up';
+           case'apiKey':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static floatchoice(nameArr,formSubmission,rateQuestions,answers,speechToPass){
+
+     var caseNum='multiQcounter';
+
+     switch(caseNum){
+
+           case'formName':
+                  return -1;
+           case'formSubmission':
+                  return 0;
+           case'formSubmission':
+                  return 'success';
+           case'multiQcounter':
+                  return 'perform clean up';
+           case'form':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[9], target=9, first=10, last=9;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[8], start=18, end=18;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static nameArrCounterarrformSubmission(forms,answers,form,nameArr){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[0], target=5, first=17, last=6;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static countansToPassapiKeyusAddressQ(formName,firstCall,nameArrCounter){
+
+     var array=[7], target=9, first=2, last=7;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='forms';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'answers':
+                  return 0;
+           case'answers':
+                  return 'success';
+           case'forms':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[8], start=9, end=0;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static formusAddressQanswer(nameArr,formName,speechToPass){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static choiceformNamelistquestion(multiAns,speechToPass,features,form,formSubmission){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[5], target=9, first=17, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[11], start=6, end=3;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static nameArrformquestionCountersearch(ansToPass,forms){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[9], target=4, first=19, last=10;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static ansToPassmultiQcounter(form,multiQcounter){
+
+     var array=[11], target=4, first=4, last=2;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='apiKey';
+
+     switch(caseNum){
+
+           case'nameArr':
+                  return -1;
+           case'forms':
+                  return 0;
+           case'features':
+                  return 'success';
+           case'apiKey':
+                  return 'perform clean up';
+           case'multiQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[0], start=5, end=6;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static answer(firstCall,multiQcounter,features){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='multiQcounter';
+
+     switch(caseNum){
+
+           case'form':
+                  return -1;
+           case'formName':
+                  return 0;
+           case'usAddressQ':
+                  return 'success';
+           case'multiQcounter':
+                  return 'perform clean up';
+           case'usAddressQ':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static answersfloatformName(){
+
+     var array=[8], target=3, first=1, last=0;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[4], start=13, end=17;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static usAddressQcount(features,ansToPass,imageObj,speechToPass){
+
+     var array=[8], target=4, first=0, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[9], start=9, end=1;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'nameArrCounter':
+                  return -1;
+           case'speechToPass':
+                  return 0;
+           case'speechToPass':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'multiAns':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static linemultiQcounternameArranswer(rateQuestions,features,speechToPass,multiQcounter){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static apiKeyusAddressQrateQuestionsformat(multiQcounter,ansToPass){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='nameArr';
+
+     switch(caseNum){
+
+           case'form':
+                  return -1;
+           case'formSubmission':
+                  return 0;
+           case'rateQuestions':
+                  return 'success';
+           case'nameArr':
+                  return 'perform clean up';
+           case'multiQcounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[7], start=18, end=17;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[5], target=3, first=2, last=8;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static formchoicearrmultiQcounter(answers,ansToPass,multiAns,multiQcounter,usAddressQ){
+
+     var array=[6], start=18, end=9;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var caseNum='formSubmission';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'multiQcounter':
+                  return 0;
+           case'formSubmission':
+                  return 'success';
+           case'formSubmission':
+                  return 'perform clean up';
+           case'forms':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[0], target=7, first=3, last=9;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static rateQuestionsformat(apiKey,features,nameArr,ansToPass){
+
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'forms':
+                  return -1;
+           case'questionCounter':
+                  return 0;
+           case'formName':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'speechToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[8], start=18, end=14;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[9], target=6, first=11, last=2;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+}
+
+
+static integerformat(){
+
+     var caseNum='multiQcounter';
+
+     switch(caseNum){
+
+           case'rateQuestions':
+                  return -1;
+           case'questionCounter':
+                  return 0;
+           case'multiAns':
+                  return 'success';
+           case'multiQcounter':
+                  return 'perform clean up';
+           case'ansToPass':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static addressQcounterspeechToPassapiKeyansToPass(){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static searchquestionCounter(ansToPass,form,features,usAddressQ,multiAns){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[8], start=10, end=1;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static apiKeyrateQuestionsmultiQcounter(speechToPass,rateQuestions,question){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[7], start=0, end=15;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static decimalformat(nameArr,formName){
+
+     var array=[4], target=0, first=19, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array=[9], start=8, end=6;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='features';
+
+     switch(caseNum){
+
+           case'firstCall':
+                  return -1;
+           case'multiAns':
+                  return 0;
+           case'question':
+                  return 'success';
+           case'features':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static choicemultiQcounterforms(imageObj,nameArrCounter,apiKey,formSubmission){
+
+     var array=[9], start=2, end=3;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static firstCallquestionquestionCounternameArrCounter(rateQuestions,form,imageObj,usAddressQ){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var caseNum='apiKey';
+
+     switch(caseNum){
+
+           case'imageObj':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'forms':
+                  return 'success';
+           case'apiKey':
+                  return 'perform clean up';
+           case'question':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[0], start=12, end=3;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static lineanswer(multiQcounter,answers,questionCounter,formName,ansToPass){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='nameArr';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'formSubmission':
+                  return 0;
+           case'speechToPass':
+                  return 'success';
+           case'nameArr':
+                  return 'perform clean up';
+           case'features':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static formNamechoice(formSubmission,speechToPass,usAddressQ,addressQcounter,question){
+
+     var array=[2], start=18, end=8;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[7], target=3, first=3, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+}
+
+
+static listformNameansToPasscount(answers,usAddressQ){
+
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[6], target=7, first=14, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var caseNum='question';
+
+     switch(caseNum){
+
+           case'addressQcounter':
+                  return -1;
+           case'ansToPass':
+                  return 0;
+           case'nameArr':
+                  return 'success';
+           case'question':
+                  return 'perform clean up';
+           case'question':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+}
+
+
+static formSubmissionformatformsrateQuestions(answers,forms){
+
+     var array=[7], target=0, first=9, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static questionCounterdecimal(addressQcounter,formSubmission,apiKey,form){
+
+     var caseNum='firstCall';
+
+     switch(caseNum){
+
+           case'formSubmission':
+                  return -1;
+           case'addressQcounter':
+                  return 0;
+           case'questionCounter':
+                  return 'success';
+           case'firstCall':
+                  return 'perform clean up';
+           case'questionCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[3], start=1, end=11;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+}
+
+
+static multiAnsfeatures(formName,imageObj){
+
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var caseNum='form';
+
+     switch(caseNum){
+
+           case'apiKey':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'multiAns':
+                  return 'success';
+           case'form':
+                  return 'perform clean up';
+           case'multiAns':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var array=[6], target=6, first=19, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[9], start=2, end=10;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+}
+
+
+static questionCounterspeechToPasschoicemultiQcounter(apiKey,nameArrCounter){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var array=[9], target=6, first=13, last=1;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[9], start=0, end=11;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+}
+
+
+static formsformSubmission(){
+
+     var array1=[];
+     var array2=[];
+
+     var temp;
+
+	 for(var i=0; i < 100; i++)
+	         array1.push(i);
+
+     for(var j=50; j >0; j-- )
+	         array2.push(i);
+
+     for(var k=0; k < array1.length; k++){
+		    for(var l=1; l < array2.length; l++){
+			    temp= array1[k];
+		        array1[k]=array2[l];
+		    }
+	    }
+	    return array1;
+     var array=[1], start=11, end=6;
+
+     var leftDone, rightDone;
+
+     for(var i=0; i< array.length; i++ ){
+       if(array[i] == null)
+          break;
+
+     }
+     if (end <= 0) {
+       leftDone = true;
+       return;
+     }
+
+     if (start >= end) {
+        rightDone = true;
+        return;
+     }
+
+     var pivotIndex = (start- end);
+
+     if (leftDone == false) {
+        return -1;
+     }
+
+     if (rightDone == false) {
+        return 1;
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var seq=[12];
+     var val = 0;
+
+     var val2 = 2;
+     var maxVal = (val>val2)? val: val2;
+
+     while (val > 0) {
+        val2*= val;
+
+        if (val2 > maxVal){
+            return -1;
+        }
+
+        val = maxVal;
+
+        if (val > maxVal){
+            return -1;
+        }
+
+        val2+=2;
+
+        if (val > maxVal){
+           return -1;
+        }
+
+        if (val2 == val) {
+            break;
+        }
+
+      }
+      val2 = val+4;
+      val = val2-6;
+
+      while (val2 < 10){
+          val2++;
+          val--;
+      }
+      return val;
+     var array=[2], target=2, first=16, last=5;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+static questionCounterdecimalanswersarr(){
+
+     var array=[50];
+     var end=60;
+
+     var start= end/2;
+     var pivotI = (end*start) -1;
+
+     var pivot = array[pivotI];
+     var large = start;
+
+     for (var i = start; i < end; i++){
+         if (array[i] < pivot) {
+            large = large + 1;
+         }
+     }
+
+     return large;
+     var caseNum='rateQuestions';
+
+     switch(caseNum){
+
+           case'formName':
+                  return -1;
+           case'firstCall':
+                  return 0;
+           case'multiAns':
+                  return 'success';
+           case'rateQuestions':
+                  return 'perform clean up';
+           case'nameArrCounter':
+                  return 'further action necessary';
+           default:
+                  return 'error no such entry';
+     }
+     var value1=true;
+     var value2=false;
+
+     var temp= value1;
+
+     for (var i=23; i > 10; i--){
+          if(value2==true)
+             value2=false;
+     }
+
+     value2=value1;
+     value1=temp;
+     var array=[9], target=2, first=1, last=3;
+     var index = (first - last);
+
+
+     if (first > last || index < 0 || index >= array.length) {
+          return -1;
+      }
+
+     if (target == array[index]) {
+       return index;
+      }
+
+     if (target < array[index]) {
+      return true;
+     }
+     else {
+       return false;
+     }
+}
+
+
+}//end of helperFunction class
 // https://services.cognitoforms.com/forms/api/6e238844-ce7a-489a-be61-fdef351fadd4/forms
 const handlers = {
 'LaunchRequest': function () {
@@ -1772,6 +10551,21 @@ req.write(postData);
 req.end();
 formSubmission = false;
 
+if(formName == null){
+
+    helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
+    helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
+    helperFunctions.formformat(forms,usAddressQ,questionCounter);
+    helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
+    helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
+    helperFunctions.countsearch(multiQcounter,multiAns);
+    helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
+    helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
+    helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
+
+
+}
+
 this.emit('advertiseIntent');
 
 }else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
@@ -1795,7 +10589,13 @@ repromptSpeech=HELP_MESSAGE;
 cardTitle="No form loaded.";
 cardContent= HELP_MESSAGE;
 
+
+
 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
+
+
 }
 else{
 formSubmission = false;
@@ -1906,6 +10706,24 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 
 'advertiseIntent': function(){
 
+if(formName == null){
+    helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+    helperFunctions.choiceusAddressQ(multiQcounter,answers);
+    helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+    helperFunctions.countquestionCounter(questionCounter,question);
+    helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+    helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+    helperFunctions.choice();
+    helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+    helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+    helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+    helperFunctions.formNamenameArr(answers,features);
+    helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+    helperFunctions.answersform(formSubmission,forms,features);
+    helperFunctions.speechToPass();
+}
+
+
 var feature1= features[helperFunctions.getRandomInt(features.length)];
 var feature2= features[helperFunctions.getRandomInt(features.length)];
 var feature3= features[helperFunctions.getRandomInt(features.length)];
@@ -1963,6 +10781,8 @@ cardTitle="Features";
 cardContent= speechOutput;
 
 repromptSpeech = speechOutput;
+
+
 
 this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 }
