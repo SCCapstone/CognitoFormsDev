@@ -18,7 +18,11 @@ Amazon Web Services account
 
 Node.js
 
-### Installing/Configuration
+### Installation
+
+The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device. 
+
+### Building the project from scratch
 
 1) First open a folder on your desktop where you will store the project. In order to create a git repository in that folder and retrieve the project, use the command:
 
