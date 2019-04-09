@@ -5,19 +5,6 @@
 
 This project allows a user to request a form from Congitoforms.com, fill out that form and submit it, all through an Alexa app.
 
-## Getting Started
-To begin, clone or download the project from https://github.com/SCCapstone/CognitoFormsDev to your desktop.
-
-### Prerequisites
-
-Code editor
-
-Amazon developer account
-
-Amazon Web Services account
-
-Node.js
-
 ## Installation
 
 The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device. 
@@ -28,6 +15,16 @@ To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testin
 
 
 ## Building the project from scratch
+
+### Prerequisites
+
+Code editor
+
+Amazon developer account
+
+Amazon Web Services account
+
+Node.js
 
 1) First open a folder on your desktop where you will store the project. In order to create a git repository in that folder and retrieve the project, use the command:
 
