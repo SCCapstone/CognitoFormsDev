@@ -87,10 +87,9 @@ git clone https://github.com/SCCapstone/CognitoFormsDev.git
 
 You are now ready to test the skill.
 
-## Running the tests
+## Running tests
 
-Test json files can be saved and run locally, using the instructions here: cognito_form/tests/README.txt.
-In addition, tests can be run from the test tab of the Amazon developer console.
+To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testing-instructions
 
 ## Built With
 
