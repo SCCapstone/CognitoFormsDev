@@ -1,7 +1,7 @@
 # Cognito Form Alexa app
 
 
-## Project Title
+## Project Description
 
 This project allows a user to request a form from Congitoforms.com, fill out that form and submit it, all through an Alexa app.
 
@@ -9,12 +9,12 @@ This project allows a user to request a form from Congitoforms.com, fill out tha
 
 The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device. 
 
-## Running tests
+## Running Tests
 
 To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testing-instructions
 
 
-## Building the project from scratch
+## Building The Project 
 
 ### Prerequisites
 
