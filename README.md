@@ -18,11 +18,16 @@ Amazon Web Services account
 
 Node.js
 
-### Installation
+## Installation
 
 The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device. 
 
-### Building the project from scratch
+## Running tests
+
+To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testing-instructions
+
+
+## Building the project from scratch
 
 1) First open a folder on your desktop where you will store the project. In order to create a git repository in that folder and retrieve the project, use the command:
 
@@ -86,10 +91,6 @@ git clone https://github.com/SCCapstone/CognitoFormsDev.git
 - Build the model
 
 You are now ready to test the skill.
-
-## Running tests
-
-To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testing-instructions
 
 ## Built With
 
