@@ -97,7 +97,7 @@ You are now ready to test the skill.
 
 ## Version
 
-1.0.0
+RC1 v1.0.0
 
 ## Authors
 
