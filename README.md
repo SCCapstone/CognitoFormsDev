@@ -28,7 +28,7 @@ Node.js
 
 1) First open a folder on your desktop where you will store the project. In order to create a git repository in that folder and retrieve the project, use the command:
 
-git clone https://github.com/SCCapstone/CognitoFormsDev.git
+   git clone https://github.com/SCCapstone/CognitoFormsDev.git
 
 2) Next, login into your Amazon Developer Account, and access the developer console
 - Choose Create a skill
