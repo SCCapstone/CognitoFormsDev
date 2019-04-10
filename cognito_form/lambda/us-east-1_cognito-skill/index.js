@@ -10317,6 +10317,8 @@ case "Currency":
    var min= question.MinValue.replace('$','');
    var max= question.MaxValue.replace('$','');
 
+   var numMin= Number(min);
+   var numMax= Number(max);
 
    if(formAns.includes('$'))
        formAns=formAns.replace('$','');
@@ -10339,18 +10341,26 @@ case "Currency":
               strFormAns+= cents[i];
        }
 
-       if(Number(strFormAns) < 10)
+     if(cents[1]=='cent'|| cents[1]=='cents'){
+       if(Number(strFormAns) < 10){
           if(Number(strFormAns) < 0 )
              strFormAns="-0.0"+(Number(strFormAns)*-1);
           else
              strFormAns="0.0"+strFormAns;
-       else if(Number(strFormAns)>= 10 && Number(strFormAns) < 100)
-          strFormAns="0."+strFormAns;
-        else
-          strFormAns=""+(Number(strFormAns)/ 100);
-
+       }
+       else if(Number(strFormAns)>= 10 && Number(strFormAns) < 100){
+               strFormAns="0."+strFormAns;
+      }
+       else{
+            strFormAns=""+(Number(strFormAns)/ 100);
+          }
 
         numFormAns= Number(strFormAns);
+    }// end of if cents[1]
+    else{// assume dollars or dollar
+        numFormAns= Number(strFormAns);
+       }
+
    }
 
    // speechOutput="numFormAns is "+numFormAns;
@@ -10386,11 +10396,11 @@ case "Currency":
     if(question.MinValue != null && question.MaxValue != null){
           //speechOutput+=" inside null test";
 
-      if(numFormAns < Number(min) || numFormAns > Number(max)){
+      if((numFormAns < numMin) || (numFormAns > numMax)){
 
          repromptSpeech="Say reprompt to hear the question again.";
-         speechOutput="Your response is outside the range of, "+question.MinValue+
-         " to "+question.MaxValue+' '+repromptSpeech;
+         speechOutput="Your response $"+numFormAns+" is outside the range of, $"+numMin+
+                      " to $"+numMax+'. '+repromptSpeech;
 
 
          cardTitle=" Incorrect input";
