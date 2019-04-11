@@ -9412,6 +9412,19 @@ else if(question.FieldType== "Name"){
           nameArr= temp.split(' ');
           firstCall= false;
 
+          var questionSentence =question.Name.split(' ');
+
+          if(questionSentence.length == 1){
+            speechOutput+='What is the '+question.Name+'? ';
+
+
+
+          }
+          else{
+            speechOutput+=question.Name+' '; //starts by inputing default beginning
+
+          }
+
       }
       if(nameArr[nameArrCounter] == "Prefix")
 
@@ -9928,7 +9941,7 @@ case "RatingScale":
 
      if(multiQcounter >= rateQuestions.length){
 
-           speechOutput="processing, rate scale answers";
+           speechOutput="storing "+formAns//"processing, rate scale answers";
            formAns='{ ';
 
            for(var i=0; i < multiAns.length; i++){
@@ -9945,6 +9958,7 @@ case "RatingScale":
 
            answers.push( new ansObject(question.InternalName, formAns,question.FieldType, question.FieldSubType));
            //questionCounter++;
+           //this.emit('nextQuestionIntent');
            // multiQcounter=0;
            // multiAns=[];
      }
@@ -9978,7 +9992,8 @@ case "Address":
              // addressQcounter= -1;
              //
              // multiAns=[];
-             speechOutput+=' ,processing address'; //, pushing '+question.InternalName+', '+formAns;
+             //speechOutput+=' ,processing address'; //, pushing '+question.InternalName+', '+formAns;
+
          }
     }
      break;
@@ -9993,6 +10008,7 @@ case "Name":
 
        if(nameArrCounter >= nameArr.length){
 
+           speechOutput="Storing "+formAns;
            formAns='{ ';
 
              for(var i=0; i < multiAns.length; i++){
@@ -10003,7 +10019,7 @@ case "Name":
              answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
 
              //questionCounter++;
-             speechOutput+=" ,processing name fields";
+
 
              //nameArrCounter=0;
              firstCall=true;
