@@ -10398,8 +10398,8 @@ case "Currency":
 
       if((numFormAns < numMin) || (numFormAns > numMax)){
 
-         repromptSpeech="Say reprompt to hear the question again.";
-         speechOutput="Your response $"+numFormAns+" is outside the range of, $"+numMin+
+          repromptSpeech="Say reprompt to hear the question again. ";
+          speechOutput="Your response $"+numFormAns+" is outside the range of, $"+numMin+
                       " to $"+numMax+'. '+repromptSpeech;
 
 
