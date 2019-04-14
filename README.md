@@ -7,14 +7,14 @@ This project allows a user to request a form from Congitoforms.com, fill out tha
 
 ## Installation
 
-The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device. 
+The latest version of the skill can be downloaded from the Alexa app. Sign into Alexa.amzon.com, select skills, search for "cognito form RC1" and enable the skill on your Alexa app capatable device.
 
 ## Running Tests
 
 To test the skill see: https://github.com/SCCapstone/CognitoFormsDev/wiki/Testing-instructions
 
 
-## Building The Project 
+## Building The Project
 
 ### Prerequisites
 
@@ -51,12 +51,12 @@ Node.js
 5) Open a new tab in your browser and navigate to the Amazon Web Services and login
 - Select 'Lambda' under the services menu
 - Select 'Create function’
-- Select 'blue prints'; in the search bar lookup 'Alex-skill-kit-sdk-factskill' and select that option
+- Select 'blue prints'; in the search bar lookup 'Alexa-skill-kit-sdk-factskill' and select that option
 - Give a name for your lambda function
 - Under the 'Role' drop down choose 'Create a custom role'
 
 6) A new page should appear showing IAM Role 'lambda_basic_execution'
-- Scroll to the bottom of the page and click "Allow" 
+- Scroll to the bottom of the page and click "Allow"
 
 7) You should return to your pevious page, where you named the function. Make sure that all of fields have been entered correctly.
 - Scroll down and click the button labeled “Create function”
@@ -73,7 +73,7 @@ Node.js
 - Return back to the tab with your lambda function configuration
 
 
-10) Scroll to the bottom of the page 
+10) Scroll to the bottom of the page
 - Fill in the Skill-ID box with the Skill Id you acquired from step 9
 - Click 'Add' when done
 - Click on the name of your lambda function to reveal a function editor where the code for the lambda function is stored
