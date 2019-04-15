@@ -21,7 +21,7 @@ const APP_ID = undefined;//'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94
 
 const SKILL_NAME = 'cognito form';
 
-const HELP_MESSAGE ='. You can say get form followed by a form name, or you can say end session... What can I help you with?';
+const HELP_MESSAGE ='. You can say "get form" followed by a form name, or you can say end session... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
 
 const STOP_MESSAGE = 'Thank you for using the Cognito Form Alexa app, goodbye!';
@@ -9127,7 +9127,7 @@ const handlers = {
 'LaunchRequest': function () {
 
 var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
-var repromptSpeech="You can say: cognito get form, followed by a form name.";
+var repromptSpeech="You can say: 'get form', followed by a form name.";
 
 var cardTitle="Welcome to Cognito Forms";
 var cardContent= '';
@@ -9216,7 +9216,7 @@ res.on('end', () => {
 
  }
  else{                              // the form requested does not exist.
-     speechOutput="I'm sorry, that form is unavailable. You can say get form, with a different form name, or say end session to end the session.";
+     speechOutput="I'm sorry, that form is unavailable. You can say 'get form', with a different form name, or say end session to end the session.";
      this.emit(':ask', speechOutput, prompt);
  }
 });
@@ -9276,7 +9276,7 @@ var cardContent;
 
 
 if(form == null){
-speechOutput="You have not loaded a form yet, say: get form, followed by a form name.";
+speechOutput="You have not loaded a form yet, say: 'get form', followed by a form name.";
 repromptSpeech= speechOutput;
 
 this.emit(':ask', speechOutput, repromptSpeech);
@@ -9754,7 +9754,7 @@ var cardContent;
 
 if( form == null){ // no form loaded illegal access
 
-speechOutput='You have not loaded a form yet, say get form followed by a form name.';
+speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 repromptSpeech=HELP_MESSAGE;
 
 cardTitle=speechOutput;
@@ -10608,7 +10608,7 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 }
 else if(form ==null){
 formSubmission = false;
-speechOutput='You have not loaded a form yet, say get form followed by a form name.';
+speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 
 repromptSpeech=HELP_MESSAGE;
 
@@ -11030,7 +11030,7 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 
 
 'AMAZON.HelpIntent':function(){
-var prompt1=" Retrieve a form by saying get form, followed by a form name.";
+var prompt1=" Retrieve a form by saying 'get form', followed by a form name.";
 var prompt2=" Have a question repeated by saying, reprompt.";
 
 var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street, city, state, or zip. What you'll need to use is prompted in the question.";
