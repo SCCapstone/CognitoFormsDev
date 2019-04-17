@@ -9257,7 +9257,7 @@ https.get(HOST_NAME+apiKey+DIR, (res) => {
 
      }
      else{                              // the forms do not exist.
-         speechOutput="I'm sorry, no forms are currently available";
+         speechOutput="I'm sorry, no forms are currently available. Say end session to quit.";
          this.emit(':ask',speechOutput);
      }
 });
