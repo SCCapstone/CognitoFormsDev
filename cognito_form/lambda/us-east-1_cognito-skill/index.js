@@ -9318,7 +9318,7 @@ if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
    }
    else{
-     speechOutput = ''+question.Name+'? The options are: '; //starts by inputing default beginning
+     speechOutput = ''+question.Name+' The options are: '; //starts by inputing default beginning
 
      for(var i = 0; i < question.Choices.length; i++){
 
