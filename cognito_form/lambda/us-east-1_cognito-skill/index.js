@@ -9350,7 +9350,7 @@ else if(question.FieldType =="RatingScale"){
         speechOutput+= question.Choices[i].Label+', ';
 
       }
-      speechOutput+= 'you can say answer, followed by your response';
+      speechOutput+= 'Say answer, followed by your response';
       repromptSpeech = speechOutput;
       cardTitle = '' + question.Name;
 
@@ -9382,8 +9382,8 @@ else if(question.FieldType =="Address"){
   }
 
   else{
-    speechOutput="The next question asks, for an address. Do I"+
-                 " have permission to use it? You can say answer yes, or no.";
+    speechOutput='The next question asks, for an address. Do I'+
+                 ' have permission to use it? Say "answer," followed by yes, or no.';
 
   }
    repromptSpeech = speechOutput;
@@ -9429,7 +9429,7 @@ else if(question.FieldType== "Name"){
       if(nameArr[nameArrCounter] == "Prefix")
 
          speechOutput+="What is the title?"+
-         " you can say answer, followed by your response.";
+         " Say answer, followed by your response.";
 
       else if(nameArr[nameArrCounter]=="Suffix")
 
@@ -9441,7 +9441,7 @@ else if(question.FieldType== "Name"){
 
       else
          speechOutput+= "What is the "+nameArr[nameArrCounter]+
-         " name, you can say answer followed by your response";
+         " name, Say answer followed by your response";
 
      repromptSpeech = speechOutput;
      cardTitle = '' + question.Name;
