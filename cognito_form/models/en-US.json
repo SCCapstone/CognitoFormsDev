@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cognito forms",
+            "invocationName": "testing branch",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -36,9 +36,6 @@
                         }
                     ],
                     "samples": [
-                        "begin {form_name}",
-                        "form {form_name}",
-                        "start {form_name}",
                         "get form {form_name}"
                     ]
                 },
@@ -83,18 +80,13 @@
                         {
                             "name": "zip",
                             "type": "AMAZON.SearchQuery"
-                        },
-                        {
-                            "name": "firstname",
-                            "type": "AMAZON.US_FIRST_NAME"
                         }
                     ],
                     "samples": [
-                        "{firstname}",
                         "zip {zip}",
                         "state {state}",
-                        "city {city}",
-                        "street {street}",
+                        "city address {city}",
+                        "street address {street}",
                         "time {time}",
                         "date {date}",
                         "answer {response}"
@@ -192,6 +184,46 @@
                         "list forms",
                         "list available forms"
                     ]
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
                 }
             ],
             "types": []
@@ -251,13 +283,6 @@
                             "confirmationRequired": false,
                             "elicitationRequired": false,
                             "prompts": {}
-                        },
-                        {
-                            "name": "firstname",
-                            "type": "AMAZON.US_FIRST_NAME",
-                            "confirmationRequired": false,
-                            "elicitationRequired": false,
-                            "prompts": {}
                         }
                     ]
                 },
@@ -284,10 +309,10 @@
             {
                 "id": "Elicit.Slot.320058184487.1149066116793",
                 "variations": [
-                  {
-                    "type": "PlainText",
-                    "value": "tell me an option"
-                  }
+                    {
+                        "type": "PlainText",
+                        "value": "tell me an option"
+                    }
                 ]
             },
             {
