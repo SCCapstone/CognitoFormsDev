@@ -9474,7 +9474,7 @@ else if(question.FieldType== "Name"){
 
           }
           else{
-            speechOutput+=question.Name+' '; //starts by inputing default beginning
+             speechOutput+=question.Name+' '; 
 
           }
 
