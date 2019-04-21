@@ -51,6 +51,59 @@ var answers=[];
 var answerComplete=true;
 var multiAns=[];
 var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
+
+var statesArr=[
+'alabama',
+'alaska',
+'arizona',
+'arkansas',
+'california',
+'colorado',
+'connecticut',
+'delaware',
+'florida',
+'georgia',
+'hawaii',
+'idaho',
+'illinois',
+'indiana',
+'iowa',
+'kansas',
+'kentucky',
+'louisiana',
+'maine',
+'maryland',
+'massachusetts',
+'michigan',
+'minnesota',
+'mississippi',
+'missouri',
+'montana',
+'nebraska',
+'nevada',
+'new hampshire',
+'new jersey',
+'new mexico',
+'new york',
+'north carolina',
+'north dakota',
+'ohio',
+'oklahoma',
+'oregon',
+'pennsylvania',
+'rhode island',
+'south carolina',
+'south dakota',
+'tennessee',
+'texas',
+'utah',
+'vermont',
+'virginia',
+'washington',
+'west virginia',
+'wisconsin',
+'wyoming'
+];
 var nameArr;
 var nameArrCounter=0;
 var firstCall = true;
@@ -9177,7 +9230,7 @@ https.get(HOST_NAME+apiKey+DIR, (res) => {
 formName = this.event.request.intent.slots.form_name.value;
 var speechOutput;
 
-var prompt= ". Say: start, to begin the form.";
+var prompt= ". Say start, to begin the form.";
 
 var cardTitle;
 
@@ -9367,11 +9420,11 @@ else if(question.FieldType =="Address"){
      if( addressQcounter < US_ADDRESS_LENGTH){
 
        if(addressQcounter == 0)
-         speechOutput= 'please tell me the street address, you can say street, followed '
+         speechOutput= 'please tell me the street address, you can say street address, followed '
                        + 'by a number and street name';
        else
          speechOutput= 'please tell me the '+usAddressQ[addressQcounter]+
-                        ', you can say, city, state, or zip, followed by your response.';
+                        ', you can say, city address, state, or zip, followed by your response.';
      }
   }
   else if(question.FieldSubType=="InternationalAddress"){
@@ -9383,7 +9436,7 @@ else if(question.FieldType =="Address"){
 
   else{
     speechOutput='The next question asks, for an address. Do I'+
-                 ' have permission to use it? Say "answer," followed by yes, or no.';
+                 ' have permission to use it? Say "answer", followed by "yes", or "no".';
 
   }
    repromptSpeech = speechOutput;
@@ -9973,29 +10026,171 @@ case "Address":
         this.emit('skipQuestionIntent');
     }
     else{
-        multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
-        speechOutput= "storing "+ formAns;
-         addressQcounter++;
+         var ansArr;
+         var checkedFailed= false;
 
-         if(addressQcounter >= US_ADDRESS_LENGTH){
+         if(usAddressQ[addressQcounter] == 'Line1'){
+            ansArr= formAns.split(' ');
 
-             formAns='{ ';
 
-             for(var i=0; i < multiAns.length; i++){
-               formAns+= '"'+multiAns[i].key+'"'+ ':'+'"'+multiAns[i].value+'",';
+            for(var i=0; i < ansArr.length; i++){
+
+               if(i == 0 && isNaN(ansArr[i])==true){
+                 repromptSpeech="Say reprompt to hear the question again.";
+                 speechOutput="Your response must start with a number. "+repromptSpeech;
+
+                 cardTitle="Incorrect input";
+                 cardContent= speechOutput+repromptSpeech;
+
+                 checkedFailed = true;
+                 break;
+               }
+               if( i > 0){
+                   if(ansArr[i].length == 1){
+
+                     repromptSpeech="Say reprompt to hear the question again.";
+                     speechOutput="Your response must contain a street name. "+repromptSpeech;
+
+                     cardTitle="Incorrect input";
+                     cardContent= speechOutput+repromptSpeech;
+
+                     checkedFailed=true;
+                     break;
+                   }
+
+              }
+            }
+
+            if(checkedFailed == false){
+              multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
+              speechOutput= "storing "+ formAns;
+              addressQcounter++;
+
+            }
+            else{
+              this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+            }
+        }// end of Line1 case
+        else if(usAddressQ[addressQcounter] == 'City'){
+             ansArr= formAns.split(' ');
+
+             for(var i=0; i < ansArr.length; i++){
+
+                if( i >= 0){
+                    if(ansArr[i].length == 1){
+                      repromptSpeech="Say reprompt to hear the question again.";
+                      speechOutput="Your response must be a valid city name. "+repromptSpeech;
+
+
+                      cardTitle=" Incorrect input";
+                      cardContent= speechOutput+repromptSpeech;
+
+                      checkedFailed= true;
+                      break;
+                    }
+                    else if(isNaN(ansArr[i])==false){
+                      repromptSpeech="Say reprompt to hear the question again.";
+                      speechOutput="Your response must be a valid city name. "+repromptSpeech;
+
+
+                      cardTitle=" Incorrect input";
+                      cardContent= speechOutput+repromptSpeech;
+
+                      checkedFailed=true;
+                      break;
+                    }
+                }
              }
+             if(checkedFailed == false){
+               multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
+               speechOutput= "storing "+ formAns;
+               addressQcounter++;
 
-             formAns= formAns.replace(/,+$/, "")+'}';
-             answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+             }
+             else{
+                this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+             }
+        }// end of city case
+        else if(usAddressQ[addressQcounter] == 'State'){
+            var validState= false;
+            speechOutput="";
+            for(var i=0; i < statesArr.length; i++ ){
 
-             //questionCounter++;
-             // addressQcounter= -1;
-             //
-             // multiAns=[];
-             //speechOutput+=' ,processing address'; //, pushing '+question.InternalName+', '+formAns;
+               if(formAns.toLowerCase() == statesArr[i].toLowerCase()){
+                   validState= true;
+                   i=statesArr.length;
+               }
 
-         }
-    }
+            }
+
+            if(validState == false){
+              repromptSpeech="Say reprompt to hear the question again.";
+              speechOutput="Your response must contain a valid State name. "+repromptSpeech;
+
+
+              cardTitle=" Incorrect input";
+              cardContent= speechOutput+repromptSpeech;
+
+              checkedFailed =true;
+           }
+
+           if(validState ==true){
+             multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
+             speechOutput= "storing "+ formAns;
+             addressQcounter++;
+           }
+           else{
+             this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+           }
+         } //end of State case
+        else if(usAddressQ[addressQcounter] == 'PostalCode'){
+
+           if(isNaN(formAns)==true){
+
+             repromptSpeech="Say reprompt to hear the question again.";
+             speechOutput="Your response must contain a number. "+repromptSpeech;
+
+             cardTitle=" Incorrect input";
+             cardContent= speechOutput+repromptSpeech;
+
+             checkedFailed= true;
+
+           }
+           else if(formAns.length < 5 || formAns.length > 5 ){
+
+             repromptSpeech="Say reprompt to hear the question again.";
+             speechOutput="Your response must contain five digits. "+repromptSpeech;
+
+             cardTitle=" Incorrect input";
+             cardContent= speechOutput+repromptSpeech;
+
+             checkedFailed=true;
+           }
+           if(checkedFailed == false){
+
+              multiAns.push(new ansObject(usAddressQ[addressQcounter], formAns, question.FieldType, question.FieldSubType));
+              speechOutput= "storing "+ formAns;
+              addressQcounter++;
+
+              if(addressQcounter >= US_ADDRESS_LENGTH){
+
+                   formAns='{ ';
+
+                   for(var i=0; i < multiAns.length; i++){
+                     formAns+= '"'+multiAns[i].key+'"'+ ':'+'"'+multiAns[i].value+'",';
+                   }
+
+                   formAns= formAns.replace(/,+$/, "")+'}';
+                   answers.push( new ansObject(question.InternalName, formAns, question.FieldType, question.FieldSubType));
+
+               }
+
+           }
+           else{
+              this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+           }
+        }//end of PostalCode case
+    }//end of else clause for address
      break;
 case "Name":
 
@@ -10484,157 +10679,154 @@ this.emit('nextQuestionIntent');
 
 
 'submitIntent' : function(){
-formSubmission = true;
+    formSubmission = true;
 
-var repromptSpeech;
+    var repromptSpeech;
 
-var cardTitle;
-var cardContent;
+    var cardTitle;
+    var cardContent;
 
-if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
-var speechOutput = '';
+    if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+          var speechOutput = '';
 
-var HOST = 'services.cognitoforms.com';
-var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
+          var HOST = 'services.cognitoforms.com';
+          var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
 
-var postData = '{';
+          var postData = '{';
 
-//format the answers data into appropriate JSON syntax
-for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
-{
-//todo apply new fieldTypes
-if(answers[i].type == "Choice" && answers[i].subType=="Checkboxes"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else if(answers[i].type == "RatingScale"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else if(answers[i].type =="Address"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else if(answers[i].type == "Name"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else if(answers[i].type == "Text" ){
-   postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-}
-else if(answers[i].type == "Email" ){
-   postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-}
-else if(answers[i].type == "Phone" ){
-   postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-}
-else if(answers[i].type =="Number"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else if(answers[i].type == "Website" ){
-   postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-}
-else if(answers[i].type =="Currency"){
-   postData += '"'+answers[i].key+'":'+answers[i].value+',';
-}
-else{
-   postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
-}
+          //format the answers data into appropriate JSON syntax
+          for (var i=0 ; i<answers.length ; i++)  //combine answers into a single string value
+          {
+          //todo apply new fieldTypes
+          if(answers[i].type == "Choice" && answers[i].subType=="Checkboxes"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else if(answers[i].type == "RatingScale"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else if(answers[i].type =="Address"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else if(answers[i].type == "Name"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else if(answers[i].type == "Text" ){
+             postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+          }
+          else if(answers[i].type == "Email" ){
+             postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+          }
+          else if(answers[i].type == "Phone" ){
+             postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+          }
+          else if(answers[i].type =="Number"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else if(answers[i].type == "Website" ){
+             postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+          }
+          else if(answers[i].type =="Currency"){
+             postData += '"'+answers[i].key+'":'+answers[i].value+',';
+          }
+          else{
+             postData += '"'+answers[i].key+'":"'+answers[i].value+'",';
+          }
 
-}
+          }
 
-postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
+          postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
-// this.response.speak(postData);
-// this.emit(':responseReady');
+          // this.response.speak(postData);
+          // this.emit(':responseReady');
 
-var options = {
-hostname: HOST,
-port: 443,
-path: fullPath,
-method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-'Content-Length': postData.length
-}
-};
+          var options = {
+          hostname: HOST,
+          port: 443,
+          path: fullPath,
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': postData.length
+          }
+          };
 
-var req = https.request(options, function(res) {
+          var req = https.request(options, function(res) {
 
-console.log('Status: ' + res.statusCode);
-//  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
+          console.log('Status: ' + res.statusCode);
+          //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
 
-var returnData = '';
+          var returnData = '';
 
-res.on('data', function (body) {
-console.log('Body: ' + body); //not sure if should silence yet.
-returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
-});
+          res.on('data', function (body) {
+          console.log('Body: ' + body); //not sure if should silence yet.
+          returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+          });
 
-res.on('end', () => {
+          res.on('end', () => {
 
-});
+          });
 
-});
+          });
 
-req.write(postData);
-req.end();
-formSubmission = false;
+          req.write(postData);
+          req.end();
+          formSubmission = false;
 
-if(formName == null){
+          if(formName == null){
 
-    helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
-    helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
-    helperFunctions.formformat(forms,usAddressQ,questionCounter);
-    helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
-    helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
-    helperFunctions.countsearch(multiQcounter,multiAns);
-    helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
-    helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
-    helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
-
-
-}
-
-this.emit('advertiseIntent');
-
-}else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
-
-formSubmission = false;
-speechOutput='You have not answered any questions, say end session to end this session.';
-repromptSpeech=speechOutput;
-
-cardTitle="Blank submission.";
-cardContent= speechOutput;
-
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
-}
-else if(form ==null){
-formSubmission = false;
-speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
-
-repromptSpeech=HELP_MESSAGE;
-
-cardTitle="No form loaded.";
-cardContent= HELP_MESSAGE;
+              helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
+              helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
+              helperFunctions.formformat(forms,usAddressQ,questionCounter);
+              helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
+              helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
+              helperFunctions.countsearch(multiQcounter,multiAns);
+              helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
+              helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
+              helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
 
 
+          }
 
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+          this.emit('advertiseIntent');
+
+    }
+    else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
+
+        formSubmission = false;
+        speechOutput='You have not answered any questions, say end session to end this session.';
+        repromptSpeech=speechOutput;
+
+        cardTitle="Blank submission.";
+        cardContent= speechOutput;
+
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+    }
+    else if(form ==null){
+      formSubmission = false;
+      speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
+
+      repromptSpeech=HELP_MESSAGE;
+
+      cardTitle="No form loaded.";
+      cardContent= HELP_MESSAGE;
+
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 
+    }
+    else{
+        formSubmission = false;
+        speechOutput='Please answer all questions before you submit your form, say reprompt for the next question.';
 
+        repromptSpeech=speechOutput;
 
-}
-else{
-formSubmission = false;
-speechOutput='Please answer all questions before you submit your form, say reprompt for the next question.';
+        cardTitle="Incompelete submission.";
+        cardContent=speechOutput;
 
-repromptSpeech=speechOutput;
+        this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
-cardTitle="Incompelete submission.";
-cardContent=speechOutput;
-
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
-}
+    }
 
 },
 
