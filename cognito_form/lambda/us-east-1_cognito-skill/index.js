@@ -9180,7 +9180,7 @@ const handlers = {
 'LaunchRequest': function () {
 
 var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
-var repromptSpeech="You can say: 'get form', followed by a form name.";
+ var repromptSpeech="You can say: 'get form', followed by a form name.";
 
 var cardTitle="Welcome to Cognito Forms";
 var cardContent= '';
