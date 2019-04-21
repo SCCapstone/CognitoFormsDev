@@ -9706,7 +9706,7 @@ else if(question.FieldType == "Signature"){
       var questionSentence =question.Name.split(' ');
 
       if(questionSentence.length == 1){
-        speechOutput="What is the "+question.Name+' Say date, followed by your response.';
+        speechOutput="What is the "+question.Name+' Say date, followed by the month, day, and year.';
 
         repromptSpeech = speechOutput;
         cardTitle = '' + question.Name;
@@ -9717,7 +9717,7 @@ else if(question.FieldType == "Signature"){
 
       }
       else{
-        speechOutput= question.Name+' Say date, followed by your response.';
+        speechOutput= question.Name+' Say date, followed by the month, day, and year.';
 
         repromptSpeech = speechOutput;
         cardTitle = '' + question.Name;
@@ -9733,7 +9733,7 @@ else if(question.FieldType == "Signature"){
         var questionSentence =question.Name.split(' ');
 
         if(questionSentence.length == 1){
-          speechOutput="What is the "+question.Name+' Say time, followed by your response.';
+          speechOutput="What is the "+question.Name+' Say time, followed by the time you want, followed by am or pm. For example 5 pm, or 2:30 am.';
 
           repromptSpeech = speechOutput;
           cardTitle = '' + question.Name;
@@ -9744,7 +9744,7 @@ else if(question.FieldType == "Signature"){
 
         }
         else{
-          speechOutput= question.Name+' Say time, followed by your response.';
+          speechOutput= question.Name+' Say time, followed by the time you want, followed by am or pm. For example 5 pm, or 2:30 am.';
 
           repromptSpeech = speechOutput;
           cardTitle = '' + question.Name;
