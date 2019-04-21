@@ -9474,7 +9474,7 @@ else if(question.FieldType== "Name"){
 
           }
           else{
-             speechOutput+=question.Name+' '; 
+             speechOutput+=question.Name+' ';
 
           }
 
@@ -9486,15 +9486,15 @@ else if(question.FieldType== "Name"){
 
       else if(nameArr[nameArrCounter]=="Suffix")
 
-         speechOutput+= "What is the suffix";
+         speechOutput+= "What is the suffix? say answer, followed by your response.";
 
       else if(nameArr[nameArrCounter]=="MiddleInitial")
 
-         speechOutput+= "What is the Middle initial";
+         speechOutput+= "What is the Middle initial? say answer, followed by your response.";
 
       else
          speechOutput+= "What is the "+nameArr[nameArrCounter]+
-         " name, Say answer followed by your response";
+         " name? Say answer followed by your response";
 
      repromptSpeech = speechOutput;
      cardTitle = '' + question.Name;
