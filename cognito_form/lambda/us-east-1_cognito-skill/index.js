@@ -10833,45 +10833,55 @@ this.emit('nextQuestionIntent');
 
 'repeatAnswerIntent': function () {
 
-var speechOutput='';
-var repromptSpeech;
+  var speechOutput='';
+  var repromptSpeech;
 
-var cardTitle="Your Answers:";
-var cardContent;
+  var cardTitle="Your Answers:";
+  var cardContent;
 
 if (questionCounter < 0 || answers.length <= 0) {
-speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
-"then I will be able to repeat your given answers.";
-this.emit(':ask', speechOutput, repromptSpeech);
+
+
+  speechOutput = "You haven't given me enough answers yet. Please fill out your form first," +
+  "then I will be able to repeat your given answers.";
+
+  repromptSpeech= speechOutput;
+  cardTitle="No answers given."
+
+  cardContent= speechOutput;
+
+
+  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
 
 }
 else {
-for (var i = 0; i < answers.length; i++) {
 
-   speechOutput+= 'For question: '  +  answers[i].key + '. You gave: ';
+    for (var i = 0; i < answers.length; i++) {
 
-   if(answers[i].type == "YesNo"){
-       if(answers[i].value == 'true')
-           speechOutput+= 'yes, as your answer. ';
-       else {
-           speechOutput+='no, as your answer. ';
+       speechOutput+= 'For question: '  +  answers[i].key + '. You gave: ';
+
+       if(answers[i].type == "YesNo"){
+           if(answers[i].value == 'true')
+               speechOutput+= 'yes, as your answer. ';
+           else {
+               speechOutput+='no, as your answer. ';
+           }
+
+       }
+       else{
+             speechOutput+= answers[i].value + ', as your answer. ';
        }
 
-   }
-   else{
-         speechOutput+= answers[i].value + ', as your answer. ';
-  }
+    }
 
-}
+      var prompt = ' Say submit form to complete your submission.';
+      speechOutput+= prompt;
+      repromptSpeech =prompt;
 
-var prompt = ' say submit form to complete your submission.';
-speechOutput+= prompt;
-repromptSpeech =prompt;
+      cardContent= speechOutput+prompt;
 
-cardContent= speechOutput+prompt;
-
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
-}
+      this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent,imageObj);
+}//end of big else
 
 
 },
@@ -11011,16 +11021,16 @@ for(var i=0; i < features.length; i++){
 }
 
 if(match == false){
-speechOutput="I'm sorry, that is not a feature that I know about. You can say tell me more about, followed by a different feature name, or you can say end session.";
+  speechOutput="I'm sorry, that is not a feature that I know about. You can say tell me more about, followed by a different feature name, or you can say end session.";
 
-cardTitle="Features";
-cardContent= speechOutput;
+  cardTitle="Features";
+  cardContent= speechOutput;
 
-repromptSpeech = speechOutput;
+  repromptSpeech = speechOutput;
 
 
 
-this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+  this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 }
 else{
       // TODO:  go get the jason file with the descriptions and read the correct one
