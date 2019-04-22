@@ -1,6 +1,0 @@
-***11-18-18***
-JMeisten
-+ Added repeatAnswerIntent
-+ Added Yes intent
-+ Added Nointent
-+ Added variables to aid in repeat intent along with changes throughout to add questions and answers to arrays for repeatintent
