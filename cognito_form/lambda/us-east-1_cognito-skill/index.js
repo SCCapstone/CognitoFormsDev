@@ -542,7 +542,7 @@ else if(question.FieldType =="RatingScale"){
       var rQuestion=rateQuestions[multiQcounter].InternalName;
 
       if(multiQcounter == 0)
-         speechOutput = 'This next question has mulitple parts. How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
+         speechOutput = 'This next question has multiple parts. How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
        else
          speechOutput = 'How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
 
