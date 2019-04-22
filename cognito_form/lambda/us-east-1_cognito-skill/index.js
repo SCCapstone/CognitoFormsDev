@@ -10898,26 +10898,26 @@ var cardContent;
 
 if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
 
-if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
+    if(question.FieldType == 'RatingScale'|| question.Fieldtype== 'Address'|| question.FieldType =='Name'){
 
 
- if(form.Fields.length-(questionCounter+1) == 1){
+         if(form.Fields.length-(questionCounter+1) == 1){
 
-     if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
-           speechOutput+=' , only one question remains';
+             if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
+                   speechOutput+=' , good news only one question remains, but it does have multiple parts.';
 
- }
- else{
-     speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
- }
+         }
+         else{
+             speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
+         }
 
-}
-else{
- if(form.Fields.length-(questionCounter+1) == 1)
-    speechOutput+=' , only one question remains';
- else
-    speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
-}
+    }
+    else{
+       if(form.Fields.length-(questionCounter+1) == 1)
+          speechOutput+=' , only one question remains';
+       else
+          speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
+    }
 }
 
 
