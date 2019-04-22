@@ -2040,7 +2040,7 @@ if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
          if(form.Fields.length-(questionCounter+1) == 1){
 
              if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
-                   speechOutput+=' , good news only one question remains, but it does have multiple parts.';
+                   speechOutput+=' , good news only one question remains.';
 
          }
          else{
@@ -2050,9 +2050,9 @@ if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
     }
     else{
        if(form.Fields.length-(questionCounter+1) == 1)
-          speechOutput+=' , only one question remains';
+          speechOutput+=' , only one question remains.';
        else
-          speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
+          speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain.';
     }
 }
 
