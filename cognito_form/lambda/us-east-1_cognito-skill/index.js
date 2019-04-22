@@ -48,7 +48,8 @@ var questionCounter = -1; //used to track what question you are on. -1 means no 
 var multiQcounter=0;
 var addressQcounter= -1;
 var answers=[];
-var answerComplete=true;
+var answerComplete=false;//true;
+var awryError= false;
 var multiAns=[];
 var usAddressQ=['Line1', 'City', 'State', 'PostalCode'];
 
@@ -9771,7 +9772,7 @@ else if(question.FieldType == "Signature"){
 
 
 'answerIntent' : function(){
-answerComplete= false;
+//answerComplete= false;
 var formAns;
 var slotData= this.event.request.intent.slots;
 
@@ -10655,8 +10656,13 @@ case "Currency":
       break;
 default:
        speechOutput="I'm sorry, but something went awry";
+       awryError= true;
       break;
 }//end of switch
+
+if(awryError == false){
+  answerComplete= true;
+}
 
 speechToPass= speechOutput;
 ansToPass= formAns;
@@ -11085,110 +11091,120 @@ else{
 
 //built in intents
 'AMAZON.YesIntent': function(){
-answerComplete= true;
-if(form != null && formSubmission == false){
+    //answerComplete= true;
+    if(form != null && formSubmission == false && answerComplete == true){
 
-if(question.FieldType == 'RatingScale'){
+        answerComplete= false;
 
-   if(multiQcounter >= rateQuestions.length){
-     questionCounter++;
-     multiQcounter=0;
-     multiAns=[];
-     this.emit('nextQuestionIntent');
-   }
-   else{
-     this.emit('nextQuestionIntent');
-   }
-}
-else if(question.FieldType== 'Address'){
+        if(question.FieldType == 'RatingScale'){
 
-     if(addressQcounter >= US_ADDRESS_LENGTH){
-       questionCounter++;
-       addressQcounter= -1;
-       multiAns=[];
-       this.emit('nextQuestionIntent');
+           if(multiQcounter >= rateQuestions.length){
+             questionCounter++;
+             multiQcounter=0;
+             multiAns=[];
+             this.emit('nextQuestionIntent');
+           }
+           else{
+             this.emit('nextQuestionIntent');
+           }
+        }
+        else if(question.FieldType== 'Address'){
 
-     }
-     else {
-       this.emit('nextQuestionIntent');
-     }
-}
-else if(question.FieldType =='Name'){
+             if(addressQcounter >= US_ADDRESS_LENGTH){
+               questionCounter++;
+               addressQcounter= -1;
+               multiAns=[];
+               this.emit('nextQuestionIntent');
 
-     if(nameArrCounter >= nameArr.length){
-        questionCounter++;
-        nameArrCounter=0;
-        multiAns=[];
-     //   speechToPass+="Triggering if under name";
+             }
+             else {
+               this.emit('nextQuestionIntent');
+             }
+        }
+        else if(question.FieldType =='Name'){
+
+             if(nameArrCounter >= nameArr.length){
+                questionCounter++;
+                nameArrCounter=0;
+                multiAns=[];
+             //   speechToPass+="Triggering if under name";
+                this.emit('nextQuestionIntent');
+             }
+             else{
+               //speechToPass+="Triggering else under name";
+                this.emit('nextQuestionIntent');
+             }
+        }
+        else{
+            //speechToPass+="Triggering outer else condition for non-meta questions. "
+           questionCounter++;
+           this.emit('nextQuestionIntent');
+        }
+
+
+    }
+    else{
+
+    //speechToPass+="Triggering Outer most else form null or in submit phase";
         this.emit('nextQuestionIntent');
-     }
-     else{
-       //speechToPass+="Triggering else under name";
-        this.emit('nextQuestionIntent');
-     }
-}
-else{
-   //speechToPass+="Triggering outer else condition for non-meta questions. "
-   questionCounter++;
-   this.emit('nextQuestionIntent');
-}
-}
-else{
-//speechToPass+="Triggering Outer most else form null or in submit phase";
-this.emit('nextQuestionIntent');
-}
+    }
 },
 
 
 'AMAZON.NoIntent': function(){
-answerComplete= true;
-if(form != null && formSubmission == false){
-if(question.FieldType == 'RatingScale'){
-   if(multiQcounter >= rateQuestions.length)
-     answers.pop();
-   if(multiAns.length > 0 )
-      multiAns.pop();
-   if(multiQcounter > 0)
-      multiQcounter--;
+    //answerComplete= true;
+    if(form != null && formSubmission == false && answerComplete == true){
 
-   this.emit('repromptIntent');
-}
-else if(question.FieldType== 'Address'){
-  if(addressQcounter >= US_ADDRESS_LENGTH)
-     answers.pop();
-  if(multiAns.length > 0)
-     multiAns.pop();
-  if(addressQcounter > 0)
-     addressQcounter--;
+        answerComplete= false;
 
-     // this.response.speak('Enter no under Address');
-     // this.emit(':responseReady');
+        if(question.FieldType == 'RatingScale'){
 
-  this.emit('repromptIntent');
-}
-else if(question.FieldType =='Name'){
-  if(nameArrCounter >= nameArr.length)
-     answers.pop();
-  if(multiAns.length > 0 )
-     multiAns.pop();
-  if(nameArrCounter > 0)
-     nameArrCounter--;
 
-  this.emit('repromptIntent');
-}
-else{
-    if(answers.length > 0)
-       answers.pop();
-       // this.response.speak('Enter no under inner else default case where form loaded and no submit qFieldtype: '+queston.FieldType);
-       // this.emit(':responseReady');
-    this.emit('repromptIntent');
-}
-}
-else{
-// this.response.speak('Enter no under outer most else');
-// this.emit(':responseReady');
-this.emit('repromptIntent');
-}
+           if(multiQcounter >= rateQuestions.length)
+             answers.pop();
+           if(multiAns.length > 0 )
+              multiAns.pop();
+           if(multiQcounter > 0)
+              multiQcounter--;
+
+           this.emit('repromptIntent');
+        }
+        else if(question.FieldType== 'Address'){
+          if(addressQcounter >= US_ADDRESS_LENGTH)
+             answers.pop();
+          if(multiAns.length > 0)
+             multiAns.pop();
+          if(addressQcounter > 0)
+             addressQcounter--;
+
+             // this.response.speak('Enter no under Address');
+             // this.emit(':responseReady');
+
+          this.emit('repromptIntent');
+        }
+        else if(question.FieldType =='Name'){
+          if(nameArrCounter >= nameArr.length)
+             answers.pop();
+          if(multiAns.length > 0 )
+             multiAns.pop();
+          if(nameArrCounter > 0)
+             nameArrCounter--;
+
+          this.emit('repromptIntent');
+        }
+        else{
+            if(answers.length > 0)
+               answers.pop();
+               // this.response.speak('Enter no under inner else default case where form loaded and no submit qFieldtype: '+queston.FieldType);
+               // this.emit(':responseReady');
+            this.emit('repromptIntent');
+        }
+    }
+    else{
+    // this.response.speak('Enter no under outer most else');
+    // this.emit(':responseReady');
+        this.emit('repromptIntent');
+    }
 
 },
 
@@ -11202,7 +11218,7 @@ questionCounter = -1;
 multiQcounter=0;
 addressQcounter= -1;
 answers=[];
-answerComplete=true;
+answerComplete=false;//true;
 multiAns=[];
 nameArrCounter=0;
 firstCall = true;
@@ -11274,8 +11290,8 @@ this.emit(':responseReady');
 
 exports.handler = function (event, context, callback) {
 //context.callbackWaitsForEmptyEventLoop = false;
-const alexa = Alexa.handler(event, context, callback);
-alexa.appId = APP_ID;
-alexa.registerHandlers(handlers);
-alexa.execute();
+  const alexa = Alexa.handler(event, context, callback);
+  alexa.appId = APP_ID;
+  alexa.registerHandlers(handlers);
+  alexa.execute();
 };
