@@ -9397,8 +9397,10 @@ else if(question.FieldType =="RatingScale"){
   if(multiQcounter < rateQuestions.length ){
       var rQuestion=rateQuestions[multiQcounter].InternalName;
 
-
-      speechOutput = 'How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
+      if(multiQcounter == 0)
+         speechOutput = 'This next question has mulitple parts. How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
+       else
+         speechOutput = 'How would you rate '+rQuestion+' of '+question.Name+', the options are: ';
 
       for(var i = 0; i < question.Choices.length; i++){
         speechOutput+= question.Choices[i].Label+', ';
@@ -9421,7 +9423,7 @@ else if(question.FieldType =="Address"){
      if( addressQcounter < US_ADDRESS_LENGTH){
 
        if(addressQcounter == 0)
-         speechOutput= 'please tell me the street address, you can say street address, followed '
+         speechOutput= 'This next question has multiply parts, please tell me the street address, you can say street address, followed '
                        + 'by a number and street name';
        else
          speechOutput= 'please tell me the '+usAddressQ[addressQcounter]+
@@ -9469,13 +9471,13 @@ else if(question.FieldType== "Name"){
           var questionSentence =question.Name.split(' ');
 
           if(questionSentence.length == 1){
-            speechOutput+='What is the '+question.Name+'? ';
+            speechOutput+='This next question has multiple parts. What is the '+question.Name+'? ';
 
 
 
           }
           else{
-             speechOutput+=question.Name+' ';
+             speechOutput+='This next question has multiple parts. '+question.Name+' ';
 
           }
 
@@ -10910,7 +10912,7 @@ if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
          if(form.Fields.length-(questionCounter+1) == 1){
 
              if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
-                   speechOutput+=' , good news only one question remains, but it does have multiple parts.';
+                   speechOutput+=' , only one question remains.';
 
          }
          else{
