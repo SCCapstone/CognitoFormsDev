@@ -375,7 +375,7 @@ https.get(HOST_NAME+apiKey+DIR, (res) => {
 formName = this.event.request.intent.slots.form_name.value;
 var speechOutput;
 
-var prompt= ". Say start, to begin the form.";
+var prompt= " Say start, to begin the form.";
 
 var cardTitle;
 
@@ -408,7 +408,7 @@ res.on('end', () => {
     form = JSON.parse(returnData);
 
     questionCounter = 0;
-    speechOutput='Readying form, '+formName+ ''+prompt ;
+    speechOutput='Readying form, '+formName+ '. '+prompt ;
 
    this.emit(':askWithCard', speechOutput, prompt, cardTitle, prompt, imageObj);
 
@@ -2110,7 +2110,6 @@ var cardTitle;
 var cardContent;
 
 var repromptSpeech;
-
 
 
 for(var i=0; i < features.length; i++){
