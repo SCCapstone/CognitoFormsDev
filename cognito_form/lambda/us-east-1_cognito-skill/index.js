@@ -333,7 +333,7 @@ formList="";
 //https request to cognito using CognitoformsDev apikey
 https.get(HOST_NAME+apiKey+DIR, (res) => {
 
- console.log('statusCode:', res.statusCode);
+ console.log('statusCodeFromLaunchRequest:', res.statusCode);
 //  console.log('headers:', res.headers); silenced because it shows in unit tests.
 
  var returnData = '';
@@ -394,7 +394,7 @@ for(var i=0; i< temp.length; i++)
 //https request to cognito using CognitoformsDev apikey
 https.get(HOST_NAME+apiKey+DIR+formName, (res) => {
 
-console.log('statusCode:', res.statusCode);
+console.log('statusCodeFromGetNewForm:', res.statusCode);
 //  console.log('headers:', res.headers); silenced because it shows in unit tests.
 
 var returnData = '';
@@ -430,7 +430,7 @@ var cardContent= '';
 //https request to cognito using CognitoformsDev apikey
 https.get(HOST_NAME+apiKey+DIR, (res) => {
 
- console.log('statusCode:', res.statusCode);
+ console.log('statusCodeFromListForms:', res.statusCode);
  var repromptSpeech = 'What do you want to do';
  var returnData = '';
 
@@ -567,11 +567,11 @@ else if(question.FieldType =="Address"){
      if( addressQcounter < US_ADDRESS_LENGTH){
 
        if(addressQcounter == 0)
-         speechOutput= 'This next question has multiply parts, please tell me the street address, you can say street address, followed '
+         speechOutput= 'This next question has multiple parts, please tell me the street address, you can say street address, followed '
                        + 'by a number and street name';
        else
          speechOutput= 'please tell me the '+usAddressQ[addressQcounter]+
-                        ', you can say, city address, state, or zip, followed by your response.';
+                        ', you can say, city name, state, or zip, followed by your response.';
      }
   }
   else if(question.FieldSubType=="InternationalAddress"){
@@ -1904,13 +1904,13 @@ this.emit('nextQuestionIntent');
 
           var req = https.request(options, function(res) {
 
-          console.log('Status: ' + res.statusCode);
+          console.log('statusCodeFromSubmit: ' + res.statusCode);
           //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
 
           var returnData = '';
 
           res.on('data', function (body) {
-          console.log('Body: ' + body); //not sure if should silence yet.
+          console.log('submitBody: ' + body); //not sure if should silence yet.
           returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
           });
 
@@ -1922,10 +1922,20 @@ this.emit('nextQuestionIntent');
 
           req.write(postData);
           req.end();
+
           formSubmission = false;
 
+         //this.emit('advertiseIntent');
+         speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
+                       " To hear about features available on the cognitoforms.com website, say feature."+
+                       " To exit, say end session.";
+         cardTitle="Form Submitted";
+         cardContent= speechOutput;
 
-          this.emit('advertiseIntent');
+         repromptSpeech = speechOutput;
+
+
+         this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
     }
     else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
@@ -2073,25 +2083,40 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 'advertiseIntent': function() {
 
 
-var feature1= features[helperFunctions.getRandomInt(features.length)];
-var feature2= features[helperFunctions.getRandomInt(features.length)];
-var feature3= features[helperFunctions.getRandomInt(features.length)];
+var ranNum1=helperFunctions.getRandomInt(features.length);
+var ranNum2=helperFunctions.getRandomInt(features.length);
+var ranNum3=helperFunctions.getRandomInt(features.length);
 
-while(feature2 == feature1)
-   feature2=features[helperFunctions.getRandomInt(features.length)];
 
-while(feature3 == feature2 || feature3 == feature1)
-     feature3= features[helperFunctions.getRandomInt(features.length)];
+var feature1= features[ranNum1];
+var feature2= features[ranNum2];
+var feature3= features[ranNum3];
+
+console.log("My consolelog: The length of features is "+features.length+" The three random #s before f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+
+while(feature2 == feature1){
+   ranNum2=helperFunctions.getRandomInt(features.length);
+   console.log("My consolelog: The length of features is "+features.length+" The three random #s during f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+   feature2= features[ranNum2];
+}
+   console.log("My consolelog: The length of features is "+features.length+" The three random #s after f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+
+while(feature3 == feature2 || feature3 == feature1){
+  ranNum3=helperFunctions.getRandomInt(features.length);
+  console.log("My consolelog: The length of features is "+features.length+" The three random #s during f3 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+  feature3= features[ranNum3];
+}
+
+console.log("My consolelog: The length of features is "+features.length+" The three random #s after f3 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
 
 var prompt=" Visit cognitoforms.com to utilize more advanced features, such as: "+
-             feature1+','+feature2+','+feature3+" and many more.";
+             feature1+', '+feature2+', '+feature3+" and many more.";
 
 var prompt2=" To hear more about a feature say, tell me more about, followed by the feature name, or you can say end session.";
 
-var speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
-                 prompt+prompt2;
+var speechOutput=prompt+prompt2;
 
-var cardTitle="Form Submitted";
+var cardTitle="Features";
 var cardContent= speechOutput;
 
 var repromptSpeech = speechOutput;
@@ -2141,8 +2166,8 @@ else{
      var file="Cognito_features.json";
 
      https.get(hostName+file, (res) => {
-     console.log('statusCode:', res.statusCode);
-     console.log('headers:', res.headers);
+     console.log('statusCodeFromTellMeMore:', res.statusCode);
+     console.log('tellMeMoreheaders:', res.headers);
 
 
      var returnData='';

@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cognito forms",
+            "invocationName": "testing branch",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
@@ -85,8 +85,8 @@
                     "samples": [
                         "zip {zip}",
                         "state {state}",
-                        "city {city}",
-                        "street {street}",
+                        "city name {city}",
+                        "street address {street}",
                         "time {time}",
                         "date {date}",
                         "answer {response}"
@@ -157,7 +157,9 @@
                 {
                     "name": "advertiseIntent",
                     "slots": [],
-                    "samples": []
+                    "samples": [
+                        "feature"
+                    ]
                 },
                 {
                     "name": "tellMeMoreIntent",
@@ -174,15 +176,56 @@
                     ]
                 },
                 {
-                    "name": "listFormIntent",
+                    "name": "listFormsIntent",
                     "slots": [],
                     "samples": [
                         "what forms are available",
                         "show surveys",
                         "list surveys",
                         "show forms",
-                        "list forms"
+                        "list forms",
+                        "list available forms"
                     ]
+                },
+                {
+                    "name": "AMAZON.MoreIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateSettingsIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NextIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageUpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PageDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.PreviousIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollRightIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollDownIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollLeftIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.ScrollUpIntent",
+                    "samples": []
                 }
             ],
             "types": []
