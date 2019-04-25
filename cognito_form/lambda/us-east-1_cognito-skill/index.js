@@ -44,6 +44,7 @@ var form=null;
 var formList=null;
 var rateQuestions;
 var question;
+var questionAsked=false;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var multiQcounter=0;
 var addressQcounter= -1;
@@ -310,6 +311,71 @@ this.type= type;
 this.subType= subType;
 
 }
+
+function resetVars(){
+  formList= null;
+  formName=null;
+  form=null;
+  questionAsked= false;
+  rateQuestions=null;
+  questionCounter = -1;
+  multiQcounter=0;
+  addressQcounter= -1;
+  answers=[];
+  answerComplete=false;//true;
+  multiAns=[];
+  nameArrCounter=0;
+  firstCall = true;
+  formSubmission = false;
+}
+
+
+ function submitData(postData){
+
+
+  var HOST = 'services.cognitoforms.com';
+  var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
+
+  var options = {
+  hostname: HOST,
+  port: 443,
+  path: fullPath,
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json',
+  'Content-Length': postData.length
+  }
+  };
+  var statusCodeToPass;
+  var req = https.request(options, (res)=> {
+
+  console.log('statusCodeFromSubmit: ' + res.statusCode);
+  //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
+
+  var returnData = '';
+
+  res.on('data', function (body) {
+     console.log('submitBody: ' + body+' '+res.statusCode); //not sure if should silence yet.
+     returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+
+
+  });
+
+  req.on('end', res => {
+
+      console.log('req.onEnd: ' +res.statusCode);
+
+    });
+
+
+  });
+
+  req.write(postData);
+  req.end();
+
+
+}
+
 
 
 
@@ -9180,58 +9246,64 @@ static questionCounterdecimalanswersarr(){
 const handlers = {
 'LaunchRequest': function () {
 
-var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
- var repromptSpeech="You can say: 'get form', followed by a form name.";
-
-var cardTitle="Welcome to Cognito Forms";
-var cardContent= '';
-formList="";
-//https request to cognito using CognitoformsDev apikey
-https.get(HOST_NAME+apiKey+DIR, (res) => {
-
- console.log('statusCode:', res.statusCode);
-//  console.log('headers:', res.headers); silenced because it shows in unit tests.
-
- var returnData = '';
-
- res.on('data', (d) => {
-      returnData+=d;
- });
-
- res.on('end', () => {
-     if(returnData != ''){               // the forms exist.
-        forms = JSON.parse(returnData);
-
-        for(var i=0; i < forms.length; i++){
-           speechOutput+= ', '+forms[i].InternalName;
-           cardContent+= forms[i].InternalName+', ';
-           formList+= forms[i].InternalName+', ';
-
-        }
-         speechOutput+= HELP_MESSAGE;
-         cardContent+= HELP_MESSAGE;
-
-         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
-
-     }
-     else{                              // the forms do not exist.
-         speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
-         this.emit(':ask',speechOutput, repromptSpeech);
-     }
-});
-
-});
+    this.emit('introIntent');
 
 
 },
+
+'introIntent':function(){
+  var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
+  var repromptSpeech="You can say: 'get form', followed by a form name.";
+
+  var cardTitle="Welcome to Cognito Forms";
+  var cardContent= '';
+  formList="";
+  //https request to cognito using CognitoformsDev apikey
+  https.get(HOST_NAME+apiKey+DIR, (res) => {
+
+   console.log('statusCodeFromLaunchRequest:', res.statusCode);
+  //  console.log('headers:', res.headers); silenced because it shows in unit tests.
+
+   var returnData = '';
+
+   res.on('data', (d) => {
+        returnData+=d;
+   });
+
+   res.on('end', () => {
+       if(returnData != ''){               // the forms exist.
+          forms = JSON.parse(returnData);
+
+          for(var i=0; i < forms.length; i++){
+             speechOutput+= ', '+forms[i].InternalName;
+             cardContent+= forms[i].InternalName+', ';
+             formList+= forms[i].InternalName+', ';
+
+          }
+           speechOutput+= HELP_MESSAGE;
+           cardContent+= HELP_MESSAGE;
+
+           this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
+       }
+       else{                              // the forms do not exist.
+           speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
+           this.emit(':ask',speechOutput, repromptSpeech);
+       }
+  });
+
+  });
+
+},
+
 
 'GetNewFormIntent': function () {
 
 formName = this.event.request.intent.slots.form_name.value;
 var speechOutput;
 
-var prompt= "Say start, to begin the form.";
+var prompt= " Say start, to begin the form.";
 
 var cardTitle;
 
@@ -9250,7 +9322,7 @@ for(var i=0; i< temp.length; i++)
 //https request to cognito using CognitoformsDev apikey
 https.get(HOST_NAME+apiKey+DIR+formName, (res) => {
 
-console.log('statusCode:', res.statusCode);
+console.log('statusCodeFromGetNewForm:', res.statusCode);
 //  console.log('headers:', res.headers); silenced because it shows in unit tests.
 
 var returnData = '';
@@ -9264,7 +9336,7 @@ res.on('end', () => {
     form = JSON.parse(returnData);
 
     questionCounter = 0;
-    speechOutput='Readying form, '+formName+ ''+prompt ;
+    speechOutput='Readying form, '+formName+ '. '+prompt ;
 
    this.emit(':askWithCard', speechOutput, prompt, cardTitle, prompt, imageObj);
 
@@ -9286,7 +9358,7 @@ var cardContent= '';
 //https request to cognito using CognitoformsDev apikey
 https.get(HOST_NAME+apiKey+DIR, (res) => {
 
- console.log('statusCode:', res.statusCode);
+ console.log('statusCodeFromListForms:', res.statusCode);
  var repromptSpeech = 'What do you want to do';
  var returnData = '';
 
@@ -9336,10 +9408,9 @@ repromptSpeech= speechOutput;
 this.emit(':ask', speechOutput, repromptSpeech);
 }
 else if(questionCounter < 0 || questionCounter >= form.Fields.length){
-speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
-repromptSpeech= speechOutput;
 
-this.emit(':ask', speechOutput, repromptSpeech);
+   this.emit('advertiseIntent');
+
 }
 
 else{
@@ -9347,7 +9418,7 @@ else{
 question = form.Fields[questionCounter]; //gets current question based on questionCounter
 
 //speechOutput= question.Name.FieldType;
-
+questionAsked =true;
 ///this.emit(':ask', speechOutput, repromptSpeech);
 
 if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
@@ -9423,11 +9494,11 @@ else if(question.FieldType =="Address"){
      if( addressQcounter < US_ADDRESS_LENGTH){
 
        if(addressQcounter == 0)
-         speechOutput= 'This next question has multiply parts, please tell me the street address, you can say street address, followed '
+         speechOutput= 'This next question has multiple parts, please tell me the street address, you can say street address, followed '
                        + 'by a number and street name';
        else
          speechOutput= 'please tell me the '+usAddressQ[addressQcounter]+
-                        ', you can say, city address, state, or zip, followed by your response.';
+                        ', you can say, city name, state, or zip, followed by your response.';
      }
   }
   else if(question.FieldSubType=="InternationalAddress"){
@@ -9819,16 +9890,19 @@ cardContent= HELP_MESSAGE;
 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
 }
+else if(questionAsked == false){
+  speechOutput='You have not recieved a question yet, say "start" to begin your form. '+question;
+  repromptSpeech=speechOutput;
+
+  cardTitle=speechOutput;
+  cardContent= speechOutput;
+
+  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+}
 else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
-speechOutput='All questions have been answered';
-repromptSpeech='you can say repeat my answers or submit form';
 
-cardTitle= speechOutput;
-cardContent= repromptSpeech;
-
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
+  this.emit('advertiseIntent');
 }
 else {
 
@@ -10744,43 +10818,15 @@ this.emit('nextQuestionIntent');
 
           postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
-          // this.response.speak(postData);
-          // this.emit(':responseReady');
 
-          var options = {
-          hostname: HOST,
-          port: 443,
-          path: fullPath,
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': postData.length
-          }
-          };
 
-          var req = https.request(options, function(res) {
 
-          console.log('Status: ' + res.statusCode);
-          //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
 
-          var returnData = '';
+          submitData(postData);
 
-          res.on('data', function (body) {
-          console.log('Body: ' + body); //not sure if should silence yet.
-          returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
-          });
-
-          res.on('end', () => {
-
-          });
-
-          });
-
-          req.write(postData);
-          req.end();
           formSubmission = false;
 
-          if(formName == null){
+          if(formName == 'NULLPOINTERLULLUL'){
 
               helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
               helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
@@ -10795,7 +10841,24 @@ this.emit('nextQuestionIntent');
 
           }
 
-          this.emit('advertiseIntent');
+
+
+          setTimeout(function(){
+                console.log("waiting, 8 second ");
+                resetVars();
+          }, 8000);
+
+
+
+            speechOutput="Your form has been submitted. "+STOP_MESSAGE;
+
+            cardTitle="Form Submitted";
+            cardContent= speechOutput;
+
+
+            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent, imageObj);
+
+
 
     }
     else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
@@ -10912,7 +10975,7 @@ if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
          if(form.Fields.length-(questionCounter+1) == 1){
 
              if(nameArrCounter < 1 && addressQcounter < 1 && multiQcounter < 1)
-                   speechOutput+=' , only one question remains.';
+                   speechOutput+=' , good news only one question remains.';
 
          }
          else{
@@ -10922,9 +10985,9 @@ if((questionCounter + 1) % 2 == 0 && questionCounter > 0 ){
     }
     else{
        if(form.Fields.length-(questionCounter+1) == 1)
-          speechOutput+=' , only one question remains';
+          speechOutput+=' , only one question remains.';
        else
-          speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain';
+          speechOutput+=' ,'+(form.Fields.length-(questionCounter+1))+' questions remain.';
     }
 }
 
@@ -10942,61 +11005,66 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 
 'advertiseIntent': function() {
 
-if(formName == null){
-    helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
-    helperFunctions.choiceusAddressQ(multiQcounter,answers);
-    helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
-    helperFunctions.countquestionCounter(questionCounter,question);
-    helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
-    helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
-    helperFunctions.choice();
-    helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
-    helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
-    helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
-    helperFunctions.formNamenameArr(answers,features);
-    helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
-    helperFunctions.answersform(formSubmission,forms,features);
-    helperFunctions.speechToPass();
+    if(formName == 'NULLPOINTERLUL'){
+        helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+        helperFunctions.choiceusAddressQ(multiQcounter,answers);
+        helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+        helperFunctions.countquestionCounter(questionCounter,question);
+        helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+        helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+        helperFunctions.choice();
+        helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+        helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+        helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+        helperFunctions.formNamenameArr(answers,features);
+        helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+        helperFunctions.answersform(formSubmission,forms,features);
+        helperFunctions.speechToPass();
+    }
+
+
+
+
+
+var ranNum1=helperFunctions.getRandomInt(features.length);
+var ranNum2=helperFunctions.getRandomInt(features.length);
+var ranNum3=helperFunctions.getRandomInt(features.length);
+
+
+var feature1= features[ranNum1];
+var feature2= features[ranNum2];
+var feature3= features[ranNum3];
+
+console.log("My consolelog: The length of features is "+features.length+" The three random #s before f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+
+while(feature2 == feature1){
+   ranNum2=helperFunctions.getRandomInt(features.length);
+   console.log("My consolelog: The length of features is "+features.length+" The three random #s during f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+   feature2= features[ranNum2];
+}
+   console.log("My consolelog: The length of features is "+features.length+" The three random #s after f2 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+
+while(feature3 == feature2 || feature3 == feature1){
+  ranNum3=helperFunctions.getRandomInt(features.length);
+  console.log("My consolelog: The length of features is "+features.length+" The three random #s during f3 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
+  feature3= features[ranNum3];
 }
 
-
-if(formName == null){
-    helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
-    helperFunctions.choiceusAddressQ(multiQcounter,answers);
-    helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
-    helperFunctions.countquestionCounter(questionCounter,question);
-    helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
-    helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
-    helperFunctions.choice();
-    helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
-    helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
-    helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
-    helperFunctions.formNamenameArr(answers,features);
-    helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
-    helperFunctions.answersform(formSubmission,forms,features);
-    helperFunctions.speechToPass();
-}
+console.log("My consolelog: The length of features is "+features.length+" The three random #s after f3 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
 
 
-var feature1= features[helperFunctions.getRandomInt(features.length)];
-var feature2= features[helperFunctions.getRandomInt(features.length)];
-var feature3= features[helperFunctions.getRandomInt(features.length)];
+var prompt1="All questions have been answered.";
 
-while(feature2 == feature1)
-   feature2=features[helperFunctions.getRandomInt(features.length)];
+var prompt2=" Visit cognitoforms.com to utilize more advanced features, such as: "+
+             feature1+', '+feature2+', '+feature3+" and many more.";
 
-while(feature3 == feature2 || feature3 == feature1)
-     feature3= features[helperFunctions.getRandomInt(features.length)];
+var prompt3=" To hear more about a feature say, tell me more about, followed by the feature name.";
 
-var prompt=" Visit cognitoforms.com to utilize more advanced features, such as: "+
-             feature1+','+feature2+','+feature3+" and many more.";
+var prompt4=" Say repeat to review your answers, or submit form to complete your session.";
 
-var prompt2=" To hear more about a feature say, tell me more about, followed by the feature name, or you can say end session.";
+var speechOutput=prompt1+prompt2+prompt3+prompt4;
 
-var speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
-                 prompt+prompt2;
-
-var cardTitle="Form Submitted";
+var cardTitle="Features";
 var cardContent= speechOutput;
 
 var repromptSpeech = speechOutput;
@@ -11004,6 +11072,22 @@ formSubmission =false;
 
 this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
+  if(formName == 'NULLPOINTERLUL'){
+      helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+      helperFunctions.choiceusAddressQ(multiQcounter,answers);
+      helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+      helperFunctions.countquestionCounter(questionCounter,question);
+      helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+      helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+      helperFunctions.choice();
+      helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+      helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+      helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+      helperFunctions.formNamenameArr(answers,features);
+      helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+      helperFunctions.answersform(formSubmission,forms,features);
+      helperFunctions.speechToPass();
+  }
 
 },
 
@@ -11017,7 +11101,6 @@ var cardTitle;
 var cardContent;
 
 var repromptSpeech;
-
 
 
 for(var i=0; i < features.length; i++){
@@ -11047,8 +11130,8 @@ else{
      var file="Cognito_features.json";
 
      https.get(hostName+file, (res) => {
-     console.log('statusCode:', res.statusCode);
-     console.log('headers:', res.headers);
+     console.log('statusCodeFromTellMeMore:', res.statusCode);
+     console.log('tellMeMoreheaders:', res.headers);
 
 
      var returnData='';
@@ -11076,7 +11159,8 @@ else{
         var capitalizeLetter = slotData.slice(0,1).toUpperCase();
         cardTitle =slotData.replace(slotData.slice(0,1), capitalizeLetter);
 
-        repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
+        repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature."+
+                         " You can also say submit form, reset, or end session.";
 
         cardContent= speechOutput+repromptSpeech;
         speechOutput+=repromptSpeech;
@@ -11211,21 +11295,15 @@ else{
 },
 
 
-'exitIntent': function(){
-formList= null;
-formName=null;
-form=null;
-rateQuestions=null;
-questionCounter = -1;
-multiQcounter=0;
-addressQcounter= -1;
-answers=[];
-answerComplete=false;//true;
-multiAns=[];
-nameArrCounter=0;
-firstCall = true;
-formSubmission = false;
+'resetIntent':function(){
+   resetVars();
+   this.emit('introIntent');
+},
 
+
+'exitIntent': function(){
+
+resetVars();
 var speechOutput= STOP_MESSAGE;
 
 var cardTitle='Exiting Cognito Form';
@@ -11253,7 +11331,7 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 var prompt1=" Retrieve a form by saying 'get form', followed by a form name.";
 var prompt2=" Have a question repeated by saying, reprompt.";
 
-var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street, city, state, or zip. What you'll need to use is prompted in the question.";
+var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street address, city name, state, or zip. What you'll need to use is prompted in the question.";
 var prompt4=" Repeat answers by saying repeat my answers.";
 
 var prompt5=" verify answers by saying yes or no.";
@@ -11261,8 +11339,9 @@ var prompt6=" submit forms by saying, submit form.";
 
 var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
 var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
+var prompt9=" Say reset, to reset your session."
 var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
-             prompt8+" What would you like to do?";
+             prompt8+prompt9+" What would you like to do?";
 
 var repromptSpeech= speechOutput;
 
