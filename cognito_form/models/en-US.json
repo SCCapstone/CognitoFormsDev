@@ -226,6 +226,21 @@
                 {
                     "name": "AMAZON.ScrollUpIntent",
                     "samples": []
+                },
+                {
+                    "name": "introIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "resetIntent",
+                    "slots": [],
+                    "samples": [
+                        "reset app",
+                        "reset survey",
+                        "reset form",
+                        "reset"
+                    ]
                 }
             ],
             "types": []

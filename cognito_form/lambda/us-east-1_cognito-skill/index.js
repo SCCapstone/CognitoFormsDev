@@ -44,6 +44,7 @@ var form=null;
 var formList=null;
 var rateQuestions;
 var question;
+var questionAsked=false;
 var questionCounter = -1; //used to track what question you are on. -1 means no form loaded.
 var multiQcounter=0;
 var addressQcounter= -1;
@@ -312,6 +313,146 @@ this.subType= subType;
 }
 
 
+// function slowDown(){
+//
+//     return new Promise(
+//
+//         (resolve, reject)=>{
+//          try{
+//              setTimeout(function(){console.log("waiting, 1 second ");}, 1000);
+//              resolve("done");
+//           }
+//           catch(error){
+//             console.log("setTimeout failed.");
+//              reject(error.message);
+//           }
+//
+//         }
+//
+//     );
+// }
+//
+// async function callSlowDown(){
+//     try{
+//       await slowDown();
+//     }
+//     catch(error){
+//         console.log(error.message);
+//     }
+//
+// }
+
+ function submitData(postData){
+  return new Promise( function (resolve, reject){
+
+
+
+
+  var HOST = 'services.cognitoforms.com';
+  var fullPath = '/forms/api/'+apiKey+DIR+formName+'/entry';
+
+  var options = {
+  hostname: HOST,
+  port: 443,
+  path: fullPath,
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json',
+  'Content-Length': postData.length
+  }
+  };
+  var statusCodeToPass;
+  var req = https.request(options, (res)=> {
+
+  console.log('statusCodeFromSubmit: ' + res.statusCode);
+  //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
+
+  var returnData = '';
+
+  res.on('data', function (body) {
+  console.log('submitBody: ' + body+' '+res.statusCode); //not sure if should silence yet.
+  returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+
+   //resolve(res.statusCode);
+  });
+
+  // req.on('end', res => {
+  //     //statusCodeToPass=res.statusCode;
+  //     console.log('req.onEnd: ' +res.statusCode);
+  //     resolve(res.statusCode);
+  //   });
+
+    // req.on('error', err => {
+    //   //statusCodeToPass=res.statusCode;
+    //   console.log('req.onError: ' +res.statusCode);
+    //   reject(err);
+    // });
+  res.on('error', err => {
+    console.log('res.onError: ' +res.statusCode);
+
+  //  reject(err);
+  });
+  //
+  // req.on('Error',()=>{
+  //   statusCodeToPass= res.statusCode;
+  // });
+
+  });
+
+  req.write(postData);
+  req.end();
+
+    resolve('done');
+   //reject(req.statusCode);
+  }//end of resolve and reject
+
+);//end of the promise
+
+
+  //await slowDown(); setTimeout(function(){console.log("waiting, 6 seconds "+statusCodeToPass);}, 6000);
+  //callSlowDown();
+ // while(statusCodeToPass== undefined ){
+ //    callSlowDown();
+ // }
+
+  // return new Promise(
+  //
+  //     (resolve, reject)=>{
+  //
+  //       if(statusCodeToPass == 200){
+  //
+  //          resolve("I sent the data.");
+  //       }
+  //       else{
+  //          const reason= new Error ('StatusCode is not 200. got statusCode: '+statusCodeToPass);
+  //          reject(reason);
+  //       }
+  //
+  //     }
+  //
+  // );
+}
+
+
+async function callSubmitData(postData){
+
+  try{
+         await submitData(postData).then( res =>{
+
+          setTimeout(function(){console.log("inside then"),1000});
+
+      });
+
+
+  }
+  catch(error){
+     console.log("Error in submitting to cognitoforms: "+error.message)
+
+  }
+}
+
+
+
 class helperFunctions{
 
 static getRandomInt(max) {
@@ -324,51 +465,57 @@ static getRandomInt(max) {
 const handlers = {
 'LaunchRequest': function () {
 
-var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
- var repromptSpeech="You can say: 'get form', followed by a form name.";
-
-var cardTitle="Welcome to Cognito Forms";
-var cardContent= '';
-formList="";
-//https request to cognito using CognitoformsDev apikey
-https.get(HOST_NAME+apiKey+DIR, (res) => {
-
- console.log('statusCodeFromLaunchRequest:', res.statusCode);
-//  console.log('headers:', res.headers); silenced because it shows in unit tests.
-
- var returnData = '';
-
- res.on('data', (d) => {
-      returnData+=d;
- });
-
- res.on('end', () => {
-     if(returnData != ''){               // the forms exist.
-        forms = JSON.parse(returnData);
-
-        for(var i=0; i < forms.length; i++){
-           speechOutput+= ', '+forms[i].InternalName;
-           cardContent+= forms[i].InternalName+', ';
-           formList+= forms[i].InternalName+', ';
-
-        }
-         speechOutput+= HELP_MESSAGE;
-         cardContent+= HELP_MESSAGE;
-
-         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
-
-     }
-     else{                              // the forms do not exist.
-         speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
-         this.emit(':ask',speechOutput, repromptSpeech);
-     }
-});
-
-});
+    this.emit('introIntent');
 
 
 },
+
+'introIntent':function(){
+  var speechOutput= "Welcome to the Cognito Forms app, here's a list of the available forms ";
+  var repromptSpeech="You can say: 'get form', followed by a form name.";
+
+  var cardTitle="Welcome to Cognito Forms";
+  var cardContent= '';
+  formList="";
+  //https request to cognito using CognitoformsDev apikey
+  https.get(HOST_NAME+apiKey+DIR, (res) => {
+
+   console.log('statusCodeFromLaunchRequest:', res.statusCode);
+  //  console.log('headers:', res.headers); silenced because it shows in unit tests.
+
+   var returnData = '';
+
+   res.on('data', (d) => {
+        returnData+=d;
+   });
+
+   res.on('end', () => {
+       if(returnData != ''){               // the forms exist.
+          forms = JSON.parse(returnData);
+
+          for(var i=0; i < forms.length; i++){
+             speechOutput+= ', '+forms[i].InternalName;
+             cardContent+= forms[i].InternalName+', ';
+             formList+= forms[i].InternalName+', ';
+
+          }
+           speechOutput+= HELP_MESSAGE;
+           cardContent+= HELP_MESSAGE;
+
+           this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
+
+
+       }
+       else{                              // the forms do not exist.
+           speechOutput="I'm sorry, no forms are currently available, say end session to exit.";
+           this.emit(':ask',speechOutput, repromptSpeech);
+       }
+  });
+
+  });
+
+},
+
 
 'GetNewFormIntent': function () {
 
@@ -491,7 +638,7 @@ else{
 question = form.Fields[questionCounter]; //gets current question based on questionCounter
 
 //speechOutput= question.Name.FieldType;
-
+questionAsked =true;
 ///this.emit(':ask', speechOutput, repromptSpeech);
 
 if(question.FieldType == "YesNo"|| question.FieldType == "Choice"||
@@ -962,6 +1109,15 @@ cardContent= HELP_MESSAGE;
 
 this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
+}
+else if(questionAsked == false){
+  speechOutput='You have not recieved a question yet, say "start" to begin your form. '+question;
+  repromptSpeech=speechOutput;
+
+  cardTitle=speechOutput;
+  cardContent= speechOutput;
+
+  this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 }
 else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
@@ -1891,51 +2047,114 @@ this.emit('nextQuestionIntent');
           // this.response.speak(postData);
           // this.emit(':responseReady');
 
-          var options = {
-          hostname: HOST,
-          port: 443,
-          path: fullPath,
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': postData.length
-          }
-          };
+          // var options = {
+          // hostname: HOST,
+          // port: 443,
+          // path: fullPath,
+          // method: 'POST',
+          // headers: {
+          // 'Content-Type': 'application/json',
+          // 'Content-Length': postData.length
+          // }
+          // };
+          //
+          // var req = https.request(options, function(res) {
+          //
+          // console.log('statusCodeFromSubmit: ' + res.statusCode);
+          // //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
+          //
+          // var returnData = '';
+          //
+          // res.on('data', function (body) {
+          // console.log('submitBody: ' + body); //not sure if should silence yet.
+          // returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+          // });
+          //
+          // res.on('end', () => {
+          //
+          // });
+          //
+          // });
+          //
+          // req.write(postData);
+          // req.end();
 
-          var req = https.request(options, function(res) {
-
-          console.log('statusCodeFromSubmit: ' + res.statusCode);
-          //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
-
-          var returnData = '';
-
-          res.on('data', function (body) {
-          console.log('submitBody: ' + body); //not sure if should silence yet.
-          returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
-          });
-
-          res.on('end', () => {
-
-          });
-
-          });
-
-          req.write(postData);
-          req.end();
-
-          formSubmission = false;
-
-         //this.emit('advertiseIntent');
-         speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
-                       " To hear about features available on the cognitoforms.com website, say feature."+
-                       " To exit, say end session.";
-         cardTitle="Form Submitted";
-         cardContent= speechOutput;
-
-         repromptSpeech = speechOutput;
+        // var resultOfSubmit;
 
 
-         this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
+
+             callSubmitData(postData)
+
+              formSubmission = false;
+
+             //this.emit('advertiseIntent');
+
+
+                 speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
+                               " To hear about features available on the cognitoforms.com website, say feature."+
+                               " To exit, say end session.";
+                 cardTitle="Form Submitted";
+                 cardContent= speechOutput;
+
+                 repromptSpeech = speechOutput;
+
+
+                 this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
+
+
+
+
+
+           // catch(error){
+           //   console.log(error.message);
+           //
+           //   speechOutput="Your form has been submitted, but it might take time to show up. "+
+           //                 " To exit, say end session. "+"resultOfSubmit is "+resultOfSubmit;
+           //   cardTitle="Form Submitted";
+           //   cardContent= speechOutput;
+           //
+           //   repromptSpeech = speechOutput;
+           //
+           //   this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+
+
+
+
+
+
+       //    formSubmission = false;
+       //
+       //   //this.emit('advertiseIntent');
+       //
+       //   if(resultOfSubmit == true){
+       //       speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
+       //                     " To hear about features available on the cognitoforms.com website, say feature."+
+       //                     " To exit, say end session.";
+       //       cardTitle="Form Submitted";
+       //       cardContent= speechOutput;
+       //
+       //       repromptSpeech = speechOutput;
+       //
+       //
+       //       this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+       // }
+       // else{
+       //
+       //
+       //
+       //   speechOutput="Your form has been submitted, but it might take time to show up. "+
+       //                 " To exit, say end session. "+"resultOfSubmit is "+resultOfSubmit;
+       //   cardTitle="Form Submitted";
+       //   cardContent= speechOutput;
+       //
+       //   repromptSpeech = speechOutput;
+       //
+       //   this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+       //
+       //
+       // }
 
     }
     else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
@@ -2334,6 +2553,7 @@ else{
 formList= null;
 formName=null;
 form=null;
+questionAsked= false;
 rateQuestions=null;
 questionCounter = -1;
 multiQcounter=0;
