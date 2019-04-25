@@ -312,40 +312,25 @@ this.subType= subType;
 
 }
 
+function resetVars(){
+  formList= null;
+  formName=null;
+  form=null;
+  questionAsked= false;
+  rateQuestions=null;
+  questionCounter = -1;
+  multiQcounter=0;
+  addressQcounter= -1;
+  answers=[];
+  answerComplete=false;//true;
+  multiAns=[];
+  nameArrCounter=0;
+  firstCall = true;
+  formSubmission = false;
+}
 
-// function slowDown(){
-//
-//     return new Promise(
-//
-//         (resolve, reject)=>{
-//          try{
-//              setTimeout(function(){console.log("waiting, 1 second ");}, 1000);
-//              resolve("done");
-//           }
-//           catch(error){
-//             console.log("setTimeout failed.");
-//              reject(error.message);
-//           }
-//
-//         }
-//
-//     );
-// }
-//
-// async function callSlowDown(){
-//     try{
-//       await slowDown();
-//     }
-//     catch(error){
-//         console.log(error.message);
-//     }
-//
-// }
 
  function submitData(postData){
-  return new Promise( function (resolve, reject){
-
-
 
 
   var HOST = 'services.cognitoforms.com';
@@ -370,86 +355,27 @@ this.subType= subType;
   var returnData = '';
 
   res.on('data', function (body) {
-  console.log('submitBody: ' + body+' '+res.statusCode); //not sure if should silence yet.
-  returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+     console.log('submitBody: ' + body+' '+res.statusCode); //not sure if should silence yet.
+     returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
 
-   //resolve(res.statusCode);
+
   });
 
-  // req.on('end', res => {
-  //     //statusCodeToPass=res.statusCode;
-  //     console.log('req.onEnd: ' +res.statusCode);
-  //     resolve(res.statusCode);
-  //   });
+  req.on('end', res => {
 
-    // req.on('error', err => {
-    //   //statusCodeToPass=res.statusCode;
-    //   console.log('req.onError: ' +res.statusCode);
-    //   reject(err);
-    // });
-  res.on('error', err => {
-    console.log('res.onError: ' +res.statusCode);
+      console.log('req.onEnd: ' +res.statusCode);
 
-  //  reject(err);
-  });
-  //
-  // req.on('Error',()=>{
-  //   statusCodeToPass= res.statusCode;
-  // });
+    });
+
 
   });
 
   req.write(postData);
   req.end();
 
-    resolve('done');
-   //reject(req.statusCode);
-  }//end of resolve and reject
 
-);//end of the promise
-
-
-  //await slowDown(); setTimeout(function(){console.log("waiting, 6 seconds "+statusCodeToPass);}, 6000);
-  //callSlowDown();
- // while(statusCodeToPass== undefined ){
- //    callSlowDown();
- // }
-
-  // return new Promise(
-  //
-  //     (resolve, reject)=>{
-  //
-  //       if(statusCodeToPass == 200){
-  //
-  //          resolve("I sent the data.");
-  //       }
-  //       else{
-  //          const reason= new Error ('StatusCode is not 200. got statusCode: '+statusCodeToPass);
-  //          reject(reason);
-  //       }
-  //
-  //     }
-  //
-  // );
 }
 
-
-async function callSubmitData(postData){
-
-  try{
-         await submitData(postData).then( res =>{
-
-          setTimeout(function(){console.log("inside then"),1000});
-
-      });
-
-
-  }
-  catch(error){
-     console.log("Error in submitting to cognitoforms: "+error.message)
-
-  }
-}
 
 
 
@@ -627,10 +553,9 @@ repromptSpeech= speechOutput;
 this.emit(':ask', speechOutput, repromptSpeech);
 }
 else if(questionCounter < 0 || questionCounter >= form.Fields.length){
-speechOutput = 'All questions have been answered, you can say repeat my answers, or submit form';
-repromptSpeech= speechOutput;
 
-this.emit(':ask', speechOutput, repromptSpeech);
+   this.emit('advertiseIntent');
+
 }
 
 else{
@@ -1121,14 +1046,8 @@ else if(questionAsked == false){
 }
 else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
-speechOutput='All questions have been answered';
-repromptSpeech='you can say repeat my answers or submit form';
 
-cardTitle= speechOutput;
-cardContent= repromptSpeech;
-
-this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
-
+  this.emit('advertiseIntent');
 }
 else {
 
@@ -2084,77 +2003,26 @@ this.emit('nextQuestionIntent');
 
 
 
-             callSubmitData(postData)
+          submitData(postData);
 
-              formSubmission = false;
+          formSubmission = false;
 
-             //this.emit('advertiseIntent');
-
-
-                 speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
-                               " To hear about features available on the cognitoforms.com website, say feature."+
-                               " To exit, say end session.";
-                 cardTitle="Form Submitted";
-                 cardContent= speechOutput;
-
-                 repromptSpeech = speechOutput;
-
-
-                 this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+          setTimeout(function(){
+                console.log("waiting, 8 second ");
+                resetVars();
+          }, 8000);
 
 
 
+            speechOutput="Your form has been submitted. "+STOP_MESSAGE;
+
+            cardTitle="Form Submitted";
+            cardContent= speechOutput;
 
 
-
-           // catch(error){
-           //   console.log(error.message);
-           //
-           //   speechOutput="Your form has been submitted, but it might take time to show up. "+
-           //                 " To exit, say end session. "+"resultOfSubmit is "+resultOfSubmit;
-           //   cardTitle="Form Submitted";
-           //   cardContent= speechOutput;
-           //
-           //   repromptSpeech = speechOutput;
-           //
-           //   this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
+            this.emit(':tellWithCard', speechOutput, cardTitle, cardContent, imageObj);
 
 
-
-
-
-
-       //    formSubmission = false;
-       //
-       //   //this.emit('advertiseIntent');
-       //
-       //   if(resultOfSubmit == true){
-       //       speechOutput="Your form has been submitted. Thank you for using the Cognito Form Alexa app."+
-       //                     " To hear about features available on the cognitoforms.com website, say feature."+
-       //                     " To exit, say end session.";
-       //       cardTitle="Form Submitted";
-       //       cardContent= speechOutput;
-       //
-       //       repromptSpeech = speechOutput;
-       //
-       //
-       //       this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
-       // }
-       // else{
-       //
-       //
-       //
-       //   speechOutput="Your form has been submitted, but it might take time to show up. "+
-       //                 " To exit, say end session. "+"resultOfSubmit is "+resultOfSubmit;
-       //   cardTitle="Form Submitted";
-       //   cardContent= speechOutput;
-       //
-       //   repromptSpeech = speechOutput;
-       //
-       //   this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
-       //
-       //
-       // }
 
     }
     else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
@@ -2328,12 +2196,17 @@ while(feature3 == feature2 || feature3 == feature1){
 
 console.log("My consolelog: The length of features is "+features.length+" The three random #s after f3 check are "+ranNum1+', '+ranNum2+', '+ranNum3);
 
-var prompt=" Visit cognitoforms.com to utilize more advanced features, such as: "+
+
+var prompt1="All questions have been answered.";
+
+var prompt2=" Visit cognitoforms.com to utilize more advanced features, such as: "+
              feature1+', '+feature2+', '+feature3+" and many more.";
 
-var prompt2=" To hear more about a feature say, tell me more about, followed by the feature name, or you can say end session.";
+var prompt3=" To hear more about a feature say, tell me more about, followed by the feature name.";
 
-var speechOutput=prompt+prompt2;
+var prompt4=" Say repeat to review your answers, or submit form to complete your session.";
+
+var speechOutput=prompt1+prompt2+prompt3+prompt4;
 
 var cardTitle="Features";
 var cardContent= speechOutput;
@@ -2414,7 +2287,8 @@ else{
         var capitalizeLetter = slotData.slice(0,1).toUpperCase();
         cardTitle =slotData.replace(slotData.slice(0,1), capitalizeLetter);
 
-        repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature, or you can say end session.";
+        repromptSpeech = " If you want to hear about more features, you can say tell me more about, followed by a feature."+
+                         " You can also say submit form, reset, or end session.";
 
         cardContent= speechOutput+repromptSpeech;
         speechOutput+=repromptSpeech;
@@ -2549,22 +2423,15 @@ else{
 },
 
 
-'exitIntent': function(){
-formList= null;
-formName=null;
-form=null;
-questionAsked= false;
-rateQuestions=null;
-questionCounter = -1;
-multiQcounter=0;
-addressQcounter= -1;
-answers=[];
-answerComplete=false;//true;
-multiAns=[];
-nameArrCounter=0;
-firstCall = true;
-formSubmission = false;
+'resetIntent':function(){
+   resetVars();
+   this.emit('introIntent');
+},
 
+
+'exitIntent': function(){
+
+resetVars();
 var speechOutput= STOP_MESSAGE;
 
 var cardTitle='Exiting Cognito Form';
@@ -2592,7 +2459,7 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 var prompt1=" Retrieve a form by saying 'get form', followed by a form name.";
 var prompt2=" Have a question repeated by saying, reprompt.";
 
-var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street, city, state, or zip. What you'll need to use is prompted in the question.";
+var prompt3=" provide an answer to a question using one of the key words like, answer, date, time, street address, city name, state, or zip. What you'll need to use is prompted in the question.";
 var prompt4=" Repeat answers by saying repeat my answers.";
 
 var prompt5=" verify answers by saying yes or no.";
@@ -2600,8 +2467,9 @@ var prompt6=" submit forms by saying, submit form.";
 
 var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
 var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
+var prompt9=" Say reset, to reset your session."
 var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
-             prompt8+" What would you like to do?";
+             prompt8+prompt9+" What would you like to do?";
 
 var repromptSpeech= speechOutput;
 
