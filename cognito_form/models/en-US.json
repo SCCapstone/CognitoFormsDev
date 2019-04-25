@@ -85,7 +85,7 @@
                     "samples": [
                         "zip {zip}",
                         "state {state}",
-                        "city address {city}",
+                        "city name {city}",
                         "street address {street}",
                         "time {time}",
                         "date {date}",
@@ -157,7 +157,9 @@
                 {
                     "name": "advertiseIntent",
                     "slots": [],
-                    "samples": []
+                    "samples": [
+                        "feature"
+                    ]
                 },
                 {
                     "name": "tellMeMoreIntent",
@@ -224,6 +226,21 @@
                 {
                     "name": "AMAZON.ScrollUpIntent",
                     "samples": []
+                },
+                {
+                    "name": "introIntent",
+                    "slots": [],
+                    "samples": []
+                },
+                {
+                    "name": "resetIntent",
+                    "slots": [],
+                    "samples": [
+                        "reset app",
+                        "reset survey",
+                        "reset form",
+                        "reset"
+                    ]
                 }
             ],
             "types": []
