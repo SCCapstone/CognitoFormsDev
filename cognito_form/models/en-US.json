@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "cognito forms app",
+            "invocationName": "cognito forms talk",
             "intents": [
                 {
                     "name": "AMAZON.FallbackIntent",
