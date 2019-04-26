@@ -17,9 +17,9 @@ const Cog= require('./Cog');
 
 
 
-const APP_ID = undefined;//'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
+const APP_ID = undefined;//'amzn1.ask.skill.e316ddf4-2b2e-4511-9d10-cec4a1c629f9';//old 'amzn1.ask.skill.6de2dbec-ee9f-4bd8-95dd-4a45efd79b94';
 
-const SKILL_NAME = 'cognito form';
+const SKILL_NAME = 'cognito forms 1.0';
 
 const HELP_MESSAGE ='. You can say "get form" followed by a form name, or you can say end session... What can I help you with?';
 const HELP_REPROMPT = 'What can I help you with?';
@@ -9401,13 +9401,13 @@ var cardTitle;
 var cardContent;
 
 
-if(form == null){
+if(formName == null||questionCounter < 0){
 speechOutput="You have not loaded a form yet, say: 'get form', followed by a form name.";
 repromptSpeech= speechOutput;
 
 this.emit(':ask', speechOutput, repromptSpeech);
 }
-else if(questionCounter < 0 || questionCounter >= form.Fields.length){
+else if(questionCounter >= form.Fields.length){
 
    this.emit('advertiseIntent');
 
@@ -9879,7 +9879,7 @@ var cardTitle;
 var cardContent;
 
 
-if( form == null){ // no form loaded illegal access
+if( formName == null){ // no form loaded illegal access
 
 speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 repromptSpeech=HELP_MESSAGE;
@@ -9902,7 +9902,7 @@ else if(questionAsked == false){
 else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
 
-  this.emit('advertiseIntent');
+  this.emit('nextQuestionIntent');
 }
 else {
 
@@ -10768,7 +10768,7 @@ this.emit('nextQuestionIntent');
     var cardTitle;
     var cardContent;
 
-    if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+    if( answers.length > 0 && formName != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
           var speechOutput = '';
 
           var HOST = 'services.cognitoforms.com';
@@ -10818,30 +10818,62 @@ this.emit('nextQuestionIntent');
 
           postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
+          // this.response.speak(postData);
+          // this.emit(':responseReady');
+
+          // var options = {
+          // hostname: HOST,
+          // port: 443,
+          // path: fullPath,
+          // method: 'POST',
+          // headers: {
+          // 'Content-Type': 'application/json',
+          // 'Content-Length': postData.length
+          // }
+          // };
+          //
+          // var req = https.request(options, function(res) {
+          //
+          // console.log('statusCodeFromSubmit: ' + res.statusCode);
+          // //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
+          //
+          // var returnData = '';
+          //
+          // res.on('data', function (body) {
+          // console.log('submitBody: ' + body); //not sure if should silence yet.
+          // returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
+          // });
+          //
+          // res.on('end', () => {
+          //
+          // });
+          //
+          // });
+          //
+          // req.write(postData);
+          // req.end();
+
+        // var resultOfSubmit;
 
 
+        if(formName == 'NULLPOINTERLULLUL'){
 
+            helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
+            helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
+            helperFunctions.formformat(forms,usAddressQ,questionCounter);
+            helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
+            helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
+            helperFunctions.countsearch(multiQcounter,multiAns);
+            helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
+            helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
+            helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
+
+
+        }
 
           submitData(postData);
 
           formSubmission = false;
-
-          if(formName == 'NULLPOINTERLULLUL'){
-
-              helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
-              helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
-              helperFunctions.formformat(forms,usAddressQ,questionCounter);
-              helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
-              helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
-              helperFunctions.countsearch(multiQcounter,multiAns);
-              helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
-              helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
-              helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
-
-
-          }
-
-
 
           setTimeout(function(){
                 console.log("waiting, 8 second ");
@@ -10861,7 +10893,7 @@ this.emit('nextQuestionIntent');
 
 
     }
-    else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
+    else if(formName != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
 
         formSubmission = false;
         speechOutput='You have not answered any questions, say end session to end this session.';
@@ -10873,7 +10905,7 @@ this.emit('nextQuestionIntent');
         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
     }
-    else if(form ==null){
+    else if(formName ==null){
       formSubmission = false;
       speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 
@@ -10917,7 +10949,7 @@ if (questionCounter < 0 || answers.length <= 0) {
   "then I will be able to repeat your given answers.";
 
   repromptSpeech= speechOutput;
-  cardTitle="No answers given."
+  cardTitle="No answers given.";
 
   cardContent= speechOutput;
 
@@ -11005,26 +11037,22 @@ this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, 
 
 'advertiseIntent': function() {
 
-    if(formName == 'NULLPOINTERLUL'){
-        helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
-        helperFunctions.choiceusAddressQ(multiQcounter,answers);
-        helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
-        helperFunctions.countquestionCounter(questionCounter,question);
-        helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
-        helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
-        helperFunctions.choice();
-        helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
-        helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
-        helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
-        helperFunctions.formNamenameArr(answers,features);
-        helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
-        helperFunctions.answersform(formSubmission,forms,features);
-        helperFunctions.speechToPass();
-    }
-
-
-
-
+  if(formName == 'NULLPOINTERLUL'){
+      helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+      helperFunctions.choiceusAddressQ(multiQcounter,answers);
+      helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+      helperFunctions.countquestionCounter(questionCounter,question);
+      helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+      helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+      helperFunctions.choice();
+      helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+      helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+      helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+      helperFunctions.formNamenameArr(answers,features);
+      helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+      helperFunctions.answersform(formSubmission,forms,features);
+      helperFunctions.speechToPass();
+  }
 
 var ranNum1=helperFunctions.getRandomInt(features.length);
 var ranNum2=helperFunctions.getRandomInt(features.length);
@@ -11072,22 +11100,22 @@ formSubmission =false;
 
 this.emit(':askWithCard', speechOutput, repromptSpeech,cardTitle, cardContent, imageObj);
 
-  if(formName == 'NULLPOINTERLUL'){
-      helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
-      helperFunctions.choiceusAddressQ(multiQcounter,answers);
-      helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
-      helperFunctions.countquestionCounter(questionCounter,question);
-      helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
-      helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
-      helperFunctions.choice();
-      helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
-      helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
-      helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
-      helperFunctions.formNamenameArr(answers,features);
-      helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
-      helperFunctions.answersform(formSubmission,forms,features);
-      helperFunctions.speechToPass();
-  }
+if(formName == 'NULLPOINTERLUL'){
+    helperFunctions.nameArr(multiQcounter,form,formName,multiAns);
+    helperFunctions.choiceusAddressQ(multiQcounter,answers);
+    helperFunctions.answerapiKeyquestion(questionCounter,speechToPass,rateQuestions,multiQcounter);
+    helperFunctions.countquestionCounter(questionCounter,question);
+    helperFunctions.floatquestionCounterspeechToPasschoice(questionCounter,features,apiKey,firstCall);
+    helperFunctions.apiKeycountanswer(firstCall,features,formSubmission,usAddressQ,ansToPass);
+    helperFunctions.choice();
+    helperFunctions.answers(addressQcounter,question,speechToPass,apiKey);
+    helperFunctions.multiQcounteraddressQcounter(ansToPass,multiQcounter,formSubmission,form,answers);
+    helperFunctions.firstCall(formName,rateQuestions,questionCounter,form,question);
+    helperFunctions.formNamenameArr(answers,features);
+    helperFunctions.answernameArrCounterfloatinteger(imageObj,features,firstCall,usAddressQ,multiAns);
+    helperFunctions.answersform(formSubmission,forms,features);
+    helperFunctions.speechToPass();
+}
 
 },
 
@@ -11178,7 +11206,7 @@ else{
 //built in intents
 'AMAZON.YesIntent': function(){
     //answerComplete= true;
-    if(form != null && formSubmission == false && answerComplete == true){
+    if(formName != null && formSubmission == false && answerComplete == true){
 
         answerComplete= false;
 
@@ -11239,7 +11267,7 @@ else{
 
 'AMAZON.NoIntent': function(){
     //answerComplete= true;
-    if(form != null && formSubmission == false && answerComplete == true){
+    if(formName != null && formSubmission == false && answerComplete == true){
 
         answerComplete= false;
 
@@ -11339,7 +11367,7 @@ var prompt6=" submit forms by saying, submit form.";
 
 var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
 var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
-var prompt9=" Say reset, to reset your session."
+var prompt9=" Say reset, to reset your session.";
 var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
              prompt8+prompt9+" What would you like to do?";
 
