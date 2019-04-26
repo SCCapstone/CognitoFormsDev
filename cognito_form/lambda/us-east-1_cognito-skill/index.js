@@ -546,13 +546,13 @@ var cardTitle;
 var cardContent;
 
 
-if(form == null){
+if(formName == null||questionCounter < 0){
 speechOutput="You have not loaded a form yet, say: 'get form', followed by a form name.";
 repromptSpeech= speechOutput;
 
 this.emit(':ask', speechOutput, repromptSpeech);
 }
-else if(questionCounter < 0 || questionCounter >= form.Fields.length){
+else if(questionCounter >= form.Fields.length){
 
    this.emit('advertiseIntent');
 
@@ -1024,7 +1024,7 @@ var cardTitle;
 var cardContent;
 
 
-if( form == null){ // no form loaded illegal access
+if( formName == null){ // no form loaded illegal access
 
 speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 repromptSpeech=HELP_MESSAGE;
@@ -1047,7 +1047,7 @@ else if(questionAsked == false){
 else if(questionCounter >= form.Fields.length  ){ // prevent user from answering past the last question, giving junk data.
 
 
-  this.emit('advertiseIntent');
+  this.emit('nextQuestionIntent');
 }
 else {
 
@@ -1913,7 +1913,7 @@ this.emit('nextQuestionIntent');
     var cardTitle;
     var cardContent;
 
-    if( answers.length > 0 && form != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
+    if( answers.length > 0 && formName != null && questionCounter == form.Fields.length ){//answers.length == form.Fields.length){ //submission only allowed if all questions answered
           var speechOutput = '';
 
           var HOST = 'services.cognitoforms.com';
@@ -2025,7 +2025,7 @@ this.emit('nextQuestionIntent');
 
 
     }
-    else if(form != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
+    else if(formName != null && answers.length <= 0 && questionCounter > 0){//loaded a form skipped then tried to submit.
 
         formSubmission = false;
         speechOutput='You have not answered any questions, say end session to end this session.';
@@ -2037,7 +2037,7 @@ this.emit('nextQuestionIntent');
         this.emit(':askWithCard', speechOutput, repromptSpeech, cardTitle, cardContent, imageObj);
 
     }
-    else if(form ==null){
+    else if(formName ==null){
       formSubmission = false;
       speechOutput='You have not loaded a form yet, say "get form" followed by a form name.';
 
@@ -2081,7 +2081,7 @@ if (questionCounter < 0 || answers.length <= 0) {
   "then I will be able to repeat your given answers.";
 
   repromptSpeech= speechOutput;
-  cardTitle="No answers given."
+  cardTitle="No answers given.";
 
   cardContent= speechOutput;
 
@@ -2306,7 +2306,7 @@ else{
 //built in intents
 'AMAZON.YesIntent': function(){
     //answerComplete= true;
-    if(form != null && formSubmission == false && answerComplete == true){
+    if(formName != null && formSubmission == false && answerComplete == true){
 
         answerComplete= false;
 
@@ -2367,7 +2367,7 @@ else{
 
 'AMAZON.NoIntent': function(){
     //answerComplete= true;
-    if(form != null && formSubmission == false && answerComplete == true){
+    if(formName != null && formSubmission == false && answerComplete == true){
 
         answerComplete= false;
 
@@ -2467,7 +2467,7 @@ var prompt6=" submit forms by saying, submit form.";
 
 var prompt7=" Learn more about cognito forms features, by saying tell me more about, followed by the feature name.";
 var prompt8=" Quit the application and erase current unsubmitted form data by saying, end session.";
-var prompt9=" Say reset, to reset your session."
+var prompt9=" Say reset, to reset your session.";
 var speechOutput="Here's what you can do with this skill. "+prompt1+prompt2+prompt3+prompt4+prompt5+prompt6+prompt7+
              prompt8+prompt9+" What would you like to do?";
 
