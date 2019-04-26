@@ -7,10 +7,10 @@ var mockContext = new context();
 function callback(error, data) {
   if(error) {
     //  console.log('error: ' + error);
-      console.log('Launch test failed.');
+      console.log('YesIntent failed.');
   } else {
     //  console.log(data);
-      console.log('\n Launch test passed!');
+      console.log('\n YesIntent passed passed!');
 
   }
 }
