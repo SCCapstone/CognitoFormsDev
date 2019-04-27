@@ -113,7 +113,7 @@ var speechToPass="";
 var ansToPass;
 var formSubmission = false;
 var features=[ 'Card on File',
-'Countries Languages & Currencies',
+'Countries Languages and Currencies',
 'Email Notifications',
 'Entry Management',
 'Form Confirmations',
@@ -127,7 +127,7 @@ var features=[ 'Card on File',
 'Spam Prevention',
 'Style Customization',
 'Template Sharing',
-'Unlimited Forms & Fields',
+'Unlimited Forms and Fields',
 'Website Embedding',
 'Calculations',
 'Entry Sharing',
@@ -9408,7 +9408,7 @@ repromptSpeech= speechOutput;
 this.emit(':ask', speechOutput, repromptSpeech);
 }
 else if(questionCounter >= form.Fields.length){
-
+   console.log("emit to the advertisement");
    this.emit('advertiseIntent');
 
 }
@@ -10818,65 +10818,26 @@ this.emit('nextQuestionIntent');
 
           postData = postData.replace(/,+$/, "")+'}';  //remove the trailing comma//
 
-          // this.response.speak(postData);
-          // this.emit(':responseReady');
+          if(formName == 'NULLPOINTERLULLUL'){
 
-          // var options = {
-          // hostname: HOST,
-          // port: 443,
-          // path: fullPath,
-          // method: 'POST',
-          // headers: {
-          // 'Content-Type': 'application/json',
-          // 'Content-Length': postData.length
-          // }
-          // };
-          //
-          // var req = https.request(options, function(res) {
-          //
-          // console.log('statusCodeFromSubmit: ' + res.statusCode);
-          // //  console.log('Headers: ' + JSON.stringify(res.headers)); silenced for unit test
-          //
-          // var returnData = '';
-          //
-          // res.on('data', function (body) {
-          // console.log('submitBody: ' + body); //not sure if should silence yet.
-          // returnData += body; //There is a field in this body which specifies if the form has been submitted successfully 'Form>Entry>Status'
-          // });
-          //
-          // res.on('end', () => {
-          //
-          // });
-          //
-          // });
-          //
-          // req.write(postData);
-          // req.end();
+              helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
+              helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
+              helperFunctions.formformat(forms,usAddressQ,questionCounter);
+              helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
+              helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
+              helperFunctions.countsearch(multiQcounter,multiAns);
+              helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
+              helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
+              helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
 
-        // var resultOfSubmit;
-
-
-        if(formName == 'NULLPOINTERLULLUL'){
-
-            helperFunctions.formquestionmultiQcounter(apiKey,ansToPass,nameArr,rateQuestions);
-            helperFunctions.countformSubmissionspeechToPasssearch(multiAns,form);//last stop
-            helperFunctions.formformat(forms,usAddressQ,questionCounter);
-            helperFunctions.formSubmissionansToPassformNameanswer(features,questionCounter,answers);
-            helperFunctions.floatrateQuestions(nameArrCounter,multiAns);
-            helperFunctions.countsearch(multiQcounter,multiAns);
-            helperFunctions.integerspeechToPassfloatforms(nameArrCounter,questionCounter,answers,nameArr);
-            helperFunctions.formlinecountforms(multiQcounter,addressQcounter,rateQuestions,usAddressQ,questionCounter);
-            helperFunctions.speechToPassanswer(multiAns,form,formSubmission,speechToPass);
-
-
-        }
+          }
 
           submitData(postData);
 
           formSubmission = false;
 
           setTimeout(function(){
-                console.log("waiting, 8 second ");
+                console.log("waiting 8 seconds, fired from submitIntent ");
                 resetVars();
           }, 8000);
 
@@ -11252,6 +11213,7 @@ else{
         else{
             //speechToPass+="Triggering outer else condition for non-meta questions. "
            questionCounter++;
+           console.log("yes intent fired on normal questions");
            this.emit('nextQuestionIntent');
         }
 
