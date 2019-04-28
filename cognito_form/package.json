@@ -15,9 +15,10 @@
     "test4": "node ./tests/test_repromptIntent/test.js",
     "test5": "node ./tests/test_answerIntent/test.js",
     "test6": "node ./tests/repeat_answers/test.js",
-    "test7": "node ./tests/test_yesIntent/test.js",  
+    "test7": "node ./tests/test_yesIntent/test.js", 
+    "test8": "node ./tests/test_resetIntent/test.js",  
     "behave1": "npm-run-all test[1-3]",
-    "behave2": "npm-run-all test[1-5,6]"
+    "behave2": "npm-run-all test[1-5,6,7,8]"
     
   },
   "keywords": [],
